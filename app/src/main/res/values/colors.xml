@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="Dark.Mode.1">#5e6a75</color>
+    <color name="Dark.Mode.2">#3d454D</color>
+    <color name="Dark.Mode.3">#323d5c</color>
+    <color name="Dark.Mode.4">#10273B</color>
+    <color name="Dark.Mode.Text">#f6fff2</color>
+
+    <color name="Light.Mode.1">#cc9f8a</color>
+    <color name="Light.Mode.2">#c27e55</color>
+    <color name="Light.Mode.3">#ff9169</color>
+    <color name="Light.Mode.4">#cc8b90</color>
+    <color name="Light.Mode.Text">#150021 </color>
 </resources>

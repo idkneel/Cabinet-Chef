@@ -74,7 +74,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Register.this,"Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this,"Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -87,6 +87,9 @@ public class Register extends AppCompatActivity {
 
                                     Toast.makeText(Register.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
 
                                     Toast.makeText(Register.this, "Authentication failed.",

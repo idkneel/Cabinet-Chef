@@ -33,6 +33,13 @@
                 android:theme="@style/Theme.CabinetChef">
             </activity>
 
+            <activity
+                android:name=".Login.Register"
+                android:exported="true"
+                android:label="@string/app_name"
+                android:theme="@style/Theme.CabinetChef">
+            </activity>
+
         </application>
 
     </manifest>

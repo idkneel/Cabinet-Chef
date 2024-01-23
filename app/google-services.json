@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "198309437500",
+    "project_id": "cabinet-chef",
+    "storage_bucket": "cabinet-chef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198309437500:android:28adecabb3212c59e52339",
+        "android_client_info": {
+          "package_name": "com.example.cabinetchef"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN6N3pjif1N-nO8rPtcvkQPKxgCFeekIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

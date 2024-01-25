@@ -1,8 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!-- res/layout/home_screen.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/Light.Mode.1">
+
+    <!--background tint is background color
+        typeface is font
+        fontfamily is custom fonts
+        custom textcolors are setup in colors.xml
+    -->
 
     <EditText
         android:layout_width="wrap_content"
@@ -10,8 +18,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:hint="Search..."
-        android:minHeight="48dp" />
+        android:hint="@string/search"
+        android:minHeight="48dp"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/showPopupButton"
@@ -20,13 +31,24 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="..."/>
+        android:backgroundTint="@color/Dark.Mode.4"
+        android:textColor="@color/Dark.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/menu_button"
+        android:textSize="25sp" />
 
     <Button
+        android:id="@+id/showFiltersButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="III" />
+        android:textSize="25sp"
+        android:padding="8dp"
+        android:backgroundTint="@color/Dark.Mode.4"
+        android:textColor="@color/Dark.Mode.Text"
+        android:text="@string/menu_button" />
+
+
 </RelativeLayout>

@@ -34,16 +34,36 @@ public class Home_screen extends AppCompatActivity {
         popupWindow.setBackgroundDrawable(null);
 
         // Show popup when the button is clicked
-        Button showPopupButton = findViewById(R.id.showPopupButton);
-        showPopupButton.setOnClickListener(new View.OnClickListener() {
+        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
+        showScreenSelectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup();
+                showScreenSelectPopup();
+            }
+        });
+        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
+        showFilterPopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterPopup();
             }
         });
     }
 
-    private void showPopup() {
+    private void showScreenSelectPopup() {
+        // Get the root view of the current activity
+        View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+
+        // Calculate the width and height of the screen
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        // Show popup on the left half of the screen
+        popupWindow.setWidth(width);
+        popupWindow.setHeight(height);
+        popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+    }
+    private void showFilterPopup() {
         // Get the root view of the current activity
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 

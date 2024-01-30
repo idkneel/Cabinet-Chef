@@ -16,4 +16,11 @@
     <string name="click_to_register">Click to register</string>
     <string name="hello_world">Hello World</string>
     <string name="logout">LOGOUT</string>
+    <string name="filters">FILTERS</string>
+    <string name="meal_time">Meal Time</string>
+    <string name="item_preferences">Item preferences</string>
+    <string name="price">Price</string>
+    <string name="cooking_difficulty">Cooking Difficulty</string>
+    <string name="search">Search…</string>
+    <string name="menu_button">=</string>
 </resources>

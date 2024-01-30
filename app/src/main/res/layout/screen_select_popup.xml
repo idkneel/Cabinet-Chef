@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/popup_menu_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/Dark.Mode.4"
+    android:layout_weight="1" >
+    <!--background tint is background color
+        typeface is font
+        fontfamily is custom fonts
+        custom textcolors are setup in colors.xml
+    -->
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="Profile"/>
+
+    <Button
+        android:id="@+id/Favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.2"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="Favorites"/>
+
+    <Button
+        android:id="@+id/Pantry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="Pantry"/>
+
+    <Button
+        android:id="@+id/Utencils"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.4"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="Utencils"/>
+
+    <Button
+        android:id="@+id/Settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.4"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="Favorites"/>
+
+    <!-- Add more buttons or views as needed -->
+
+</LinearLayout>

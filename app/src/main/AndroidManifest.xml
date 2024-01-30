@@ -36,6 +36,11 @@
                 android:exported="true">
             </activity>
 
+            <activity
+                android:name=".Home_screen"
+                android:exported="true">
+            </activity>
+
         </application>
 
     </manifest>

@@ -5,6 +5,12 @@
       <entry key="Home_screen">
         <State />
       </entry>
+      <entry key="MainActivity">
+        <State />
+      </entry>
+      <entry key="ProfileScreen">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

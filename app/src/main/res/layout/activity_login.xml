@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
+    android:background="@color/Dark.Mode.1"
     android:padding="15dp"
     tools:context=".Login.Login">
 
@@ -14,6 +15,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"
+        android:textColor="@color/Light.Mode.Text"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -25,6 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:hint="@string/email"
+            android:textColor="@color/Light.Mode.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -36,6 +39,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
+            android:textColor="@color/Light.Mode.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -61,6 +65,7 @@
         android:gravity="center"
         android:layout_marginTop="20dp"
         android:text="@string/click_to_register"
+        android:textColor="@color/Light.Mode.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

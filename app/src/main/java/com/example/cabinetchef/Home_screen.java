@@ -1,5 +1,6 @@
 package com.example.cabinetchef;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Home_screen extends AppCompatActivity {
 
     private PopupWindow popupWindow;
+    private PopupWindow filtersWindow;
     private View popupView;
+    private View filtersPopupView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +31,17 @@ public class Home_screen extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true
         );
+        filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
+        filtersWindow = new PopupWindow(
+                filtersPopupView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+        );
 
         // Customize popupWindow appearance and behavior
-        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        popupWindow.setBackgroundDrawable(null);
+        filtersWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        filtersWindow.setBackgroundDrawable(null);
 
         // Show popup when the button is clicked
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
@@ -54,6 +64,17 @@ public class Home_screen extends AppCompatActivity {
         // Get the root view of the current activity
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
+        Button profileButton = popupView.findViewById(R.id.profile);
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_screen.this, ProfileScreen.class);
+                startActivity(intent);
+                popupWindow.dismiss(); // Dismiss the popup after navigating
+            }
+        });
+
         // Calculate the width and height of the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -72,9 +93,10 @@ public class Home_screen extends AppCompatActivity {
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         // Show popup on the left half of the screen
-        popupWindow.setWidth(width);
-        popupWindow.setHeight(height);
-        popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+        filtersWindow.setWidth(width);
+        filtersWindow.setHeight(height);
+        filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
     }
 
 }
+

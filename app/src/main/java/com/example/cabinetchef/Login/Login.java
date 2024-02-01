@@ -145,7 +145,7 @@ public class Login  extends AppCompatActivity {
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
 
-                dialog.findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
+                dialogView.findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String userEmail = emailBox.getText().toString();

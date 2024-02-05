@@ -65,6 +65,8 @@ public class Home_screen extends AppCompatActivity {
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
         Button profileButton = popupView.findViewById(R.id.profile);
+        Button favoritesButton = popupView.findViewById(R.id.Favorites);
+        Button pantryButton = popupView.findViewById(R.id.Pantry);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +74,22 @@ public class Home_screen extends AppCompatActivity {
                 Intent intent = new Intent(Home_screen.this, ProfileScreen.class);
                 startActivity(intent);
                 popupWindow.dismiss(); // Dismiss the popup after navigating
+            }
+        });
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_screen.this, FavoritesScreen.class);
+                startActivity(intent);
+                popupWindow.dismiss(); // Dismiss the popup after navigating
+            }
+        });
+        pantryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_screen.this, Pantry.class);
+                startActivity(intent);
+                popupWindow.dismiss();
             }
         });
 

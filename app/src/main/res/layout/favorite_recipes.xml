@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/Dark.Mode.1">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:hint="@string/search"
-        android:minHeight="48dp"
-        android:inputType="text"
-        android:importantForAutofill="no"
-        android:padding="16dp"/>
+        android:layout_marginTop="0dp"
+        tools:ignore="UselessParent">
+
+        <!-- LinearLayout content or views -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:backgroundTint="@color/Light.Mode.2"
+            android:text="@string/back"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/Light.Mode.Text"
+            android:hint="@string/search"
+            android:paddingBottom="8dp"
+            android:inputType="text"
+            android:backgroundTint="@color/Light.Mode.2"
+            android:importantForAutofill="no"
+            android:padding="16dp"/>
+    </LinearLayout>
+
 </RelativeLayout>

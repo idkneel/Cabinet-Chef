@@ -16,6 +16,11 @@
     <string name="click_to_register">Click to register</string>
     <string name="hello_world">Hello World</string>
     <string name="logout">LOGOUT</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="please_enter_your_email_address">Please enter your email address:</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+
     <string name="filters">FILTERS</string>
     <string name="meal_time">Meal Time</string>
     <string name="item_preferences">Item preferences</string>

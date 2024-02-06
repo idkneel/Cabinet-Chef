@@ -5,11 +5,15 @@
       <entry key="Home_screen">
         <State />
       </entry>
-      <entry key="MainActivity">
-        <State />
-      </entry>
-      <entry key="ProfileScreen">
-        <State />
+      <entry key="app">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-01-25T20:40:10.323550900Z" />
+        </State>
       </entry>
     </value>
   </component>

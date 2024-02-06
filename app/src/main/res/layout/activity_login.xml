@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-    android:background="@color/Dark.Mode.1"
     android:padding="15dp"
     tools:context=".Login.Login">
 
@@ -15,7 +14,6 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/Light.Mode.Text"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -27,7 +25,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:hint="@string/email"
-            android:textColor="@color/Light.Mode.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -39,7 +36,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
-            android:textColor="@color/Light.Mode.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,13 +55,23 @@
         android:textColor="@color/Light.Mode.Text"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot_password"
+        android:text="@string/forgot_password"
+        android:textColor="@color/Light.Mode.Text"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:layout_margin="5dp"/>
+
+    <TextView
         android:id="@+id/registerNow"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="@string/click_to_register"
-        android:textColor="@color/Light.Mode.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

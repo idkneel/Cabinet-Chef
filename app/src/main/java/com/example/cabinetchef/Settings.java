@@ -6,11 +6,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cabinetchef.R;
 
-public class Pantry extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pantry_screen);
+        setContentView(R.layout.settings_screen);
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -21,5 +23,4 @@ public class Pantry extends AppCompatActivity {
         });
 
     }
-
 }

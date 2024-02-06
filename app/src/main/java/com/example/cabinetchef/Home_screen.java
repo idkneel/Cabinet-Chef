@@ -67,6 +67,8 @@ public class Home_screen extends AppCompatActivity {
         Button profileButton = popupView.findViewById(R.id.profile);
         Button favoritesButton = popupView.findViewById(R.id.Favorites);
         Button pantryButton = popupView.findViewById(R.id.Pantry);
+        Button utensilsButton = popupView.findViewById(R.id.Utencils);
+        Button settingsButton = popupView.findViewById(R.id.Settings);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +90,22 @@ public class Home_screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_screen.this, Pantry.class);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        utensilsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_screen.this, UtensilsScreen.class);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_screen.this, Settings.class);
                 startActivity(intent);
                 popupWindow.dismiss();
             }

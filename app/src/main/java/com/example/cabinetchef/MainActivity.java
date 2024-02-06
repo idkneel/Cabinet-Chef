@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Button logout_button = findViewById(R.id.logout);
         textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
+
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);

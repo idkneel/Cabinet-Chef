@@ -34,4 +34,6 @@
     <string name="back">Back</string>
     <string name="select">Select</string>
     <string name="to_home_screen">Home Screen</string>
+    <string name="LightMode">Light Mode</string>
+    <string name="textSize">Text Size</string>
 </resources>

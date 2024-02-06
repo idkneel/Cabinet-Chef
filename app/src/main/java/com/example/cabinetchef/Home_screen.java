@@ -10,6 +10,11 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+
 public class Home_screen extends AppCompatActivity {
 
     private PopupWindow popupWindow;
@@ -48,6 +53,7 @@ public class Home_screen extends AppCompatActivity {
                 showFilterPopup();
             }
         });
+
     }
 
     private void showScreenSelectPopup() {

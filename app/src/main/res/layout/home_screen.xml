@@ -13,6 +13,7 @@
     -->
 
     <EditText
+        android:id="@+id/searchEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -49,6 +50,8 @@
         android:backgroundTint="@color/Dark.Mode.4"
         android:textColor="@color/Dark.Mode.Text"
         android:text="@string/menu_button" />
+
+
 
 
 </RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Dark.Mode.1">
+
+    <!-- Other UI elements for the profile screen at the top -->
+    <Button
+        android:id="@+id/allergies_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/Allergies"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        />
+
+    <Button
+        android:id="@+id/household_members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/household_member_count"
+        android:layout_below="@+id/allergies_page"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        />
+
+    <Button
+        android:id="@+id/ingredients_to_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/ingredients_to_use"
+        android:layout_below="@+id/household_members"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        />
+
+    <!-- "Back" button at the bottom-left -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:text="@string/back"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        />
+</RelativeLayout>

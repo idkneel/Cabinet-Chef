@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/popup_menu_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@color/Dark.Mode.1"
+    android:layout_weight="1" >
+
+    <!--background tint is background color
+        typeface is font
+        fontfamily is custom fonts
+        custom textcolors are setup in colors.xml
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/filters"/>
+
+    <Button
+        android:id="@+id/Meal_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/meal_time"/>
+
+    <Button
+        android:id="@+id/Item_preferences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.2"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/item_preferences"/>
+
+    <Button
+        android:id="@+id/Price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/price"/>
+
+    <Button
+        android:id="@+id/Cooking_difficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.4"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/cooking_difficulty"/>
+
+
+
+    <!-- Add more buttons or views as needed -->
+
+</LinearLayout>

@@ -123,7 +123,7 @@ public class Login  extends AppCompatActivity {
                                     finish();
                                 } else {
                                     // If authentication failed, show a toast message
-                                    Toast.makeText(Login.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Sign-in Failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

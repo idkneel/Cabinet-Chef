@@ -84,14 +84,15 @@ public class Register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-
                                     Toast.makeText(Register.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
-                                } else {
-
+                                } else if (password.length() < 6) {
+                                    Toast.makeText(Register.this, "Password is too short",
+                                            Toast.LENGTH_SHORT).show();
+                                } else{
                                     Toast.makeText(Register.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }

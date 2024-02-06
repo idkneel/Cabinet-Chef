@@ -56,7 +56,7 @@
         android:backgroundTint="@color/Light.Mode.4"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Favorites"/>
+        android:text="Settings"/>
 
     <!-- Add more buttons or views as needed -->
 

@@ -29,12 +29,16 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        // Setting an onClickListener for the logout button
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
+                // Signing out the user
                 FirebaseAuth.getInstance().signOut();
+                // Redirecting to the Login activity
                 Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
+                // Finishing the current activity
                 finish();
             }
         });

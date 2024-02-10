@@ -29,4 +29,8 @@
     <string name="back">Back</string>
     <string name="select">Select</string>
     <string name="to_home_screen">Home Screen</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="dinner">Dinner</string>
+    <string name="lunch">Lunch</string>
+    <string name="other_buttons">Other</string>
 </resources>

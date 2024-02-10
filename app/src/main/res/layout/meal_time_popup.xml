@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@color/Dark.Mode.1"
+    android:background="@color/Dark.Mode.2"
     android:padding="8dp"
     android:layout_weight="1" >
 
-    <!--background tint is background color
+    <!--background tint is background color for everything except layout
         typeface is font
         fontfamily is custom fonts
         custom textcolors are setup in colors.xml
+        padding in the layout parameters will make the buttons not touch the edge
     -->
     <TextView
         android:layout_width="match_parent"
@@ -22,54 +23,62 @@
         android:textSize="30sp"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="@string/filters"/>
-
-    <Button
-        android:id="@+id/meal_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.1"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:textStyle="bold"
-        android:padding="9dp"
         android:text="@string/meal_time"/>
 
     <Button
-        android:id="@+id/Item_preferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:id="@+id/breakfastButton"
+        android:text="@string/breakfast"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:padding="9dp"
-        android:text="@string/item_preferences"/>
+        android:backgroundTint="@color/Light.Mode.4"
+        />
 
     <Button
-        android:id="@+id/Price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.3"
+        android:id="@+id/lunchButton"
+        android:text="@string/lunch"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:padding="9dp"
-        android:text="@string/price"/>
+        android:backgroundTint="@color/Light.Mode.4"
+        />
 
     <Button
-        android:id="@+id/Cooking_difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/dinnerButton"
+        android:text="@string/dinner"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:backgroundTint="@color/Light.Mode.4"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/otherMealsButton"
+        android:text="@string/other_buttons"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:backgroundTint="@color/Light.Mode.4"
+        />
+
+    <Button
+        android:id="@+id/backButton"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
         android:backgroundTint="@color/Light.Mode.4"
         android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:textStyle="bold"
-        android:padding="9dp"
-        android:text="@string/cooking_difficulty"/>
+        android:text="@string/back"
+        />
 
-
-
-    <!-- Add more buttons or views as needed -->
 
 </LinearLayout>

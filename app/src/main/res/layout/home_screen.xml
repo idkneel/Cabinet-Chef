@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     android:background="@color/Light.Mode.1">
 
     <!--background tint is background color
@@ -17,6 +18,7 @@
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
+        android:padding="8dp"
         tools:ignore="UselessParent">
 
         <!-- LinearLayout content or views -->
@@ -29,7 +31,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/Dark.Mode.4"
             android:textColor="@color/Dark.Mode.Text"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="@string/menu_button"
             android:textSize="25sp" />
 
@@ -43,7 +45,7 @@
             android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"
-            android:padding="8dp"
+            android:padding="4dp"
             tools:ignore="RelativeOverlap" />
 
         <Button
@@ -53,7 +55,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textSize="25sp"
-            android:padding="8dp"
+            android:padding="4dp"
             android:backgroundTint="@color/Dark.Mode.4"
             android:textColor="@color/Dark.Mode.Text"
             android:text="@string/menu_button" />

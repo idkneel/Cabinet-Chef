@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:background="@color/Dark.Mode.1"
+    android:padding="8dp"
     android:layout_weight="1" >
 
     <!--background tint is background color
@@ -19,7 +20,6 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:padding="8dp"
         android:backgroundTint="@color/Light.Mode.2"
         android:text="@string/back"
         />

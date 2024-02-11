@@ -51,6 +51,9 @@ dependencies {
     implementation ("com.google.firebase:firebase-database")
     implementation ("com.google.firebase:firebase-database:20.3.0")
     implementation ("com.google.firebase:firebase-analytics:21.5.0")
-    //implementation ("com.google.firebase:firebase-database")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.10")
+
 
 }

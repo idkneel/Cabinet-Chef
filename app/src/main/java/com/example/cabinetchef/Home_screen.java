@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Arrays;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Home_screen extends AppCompatActivity {
 
@@ -25,59 +27,75 @@ public class Home_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
 
-        // Initialize popupWindow and popupView
         popupView = LayoutInflater.from(this).inflate(R.layout.screen_select_popup, null);
-        popupWindow = new PopupWindow(
-                popupView,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                true
-        );
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-        // Customize popupWindow appearance and behavior
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         popupWindow.setBackgroundDrawable(null);
 
-        // Show popup when the button is clicked
-        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
-        showScreenSelectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showScreenSelectPopup();
-            }
-        });
-        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-        showFilterPopupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterPopup();
-            }
-        });
+        initializeButtons();
+    }
 
+    private void initializeButtons() {
+        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
+        showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
+
+        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
+        showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
+
+        Button fetchDataButton = findViewById(R.id.firebaseTestButton);
+        fetchDataButton.setOnClickListener(v -> fetchDataAndSaveToFirebase());
+    }
+
+    private void fetchDataAndSaveToFirebase() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.spoonacular.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonacularService service = retrofit.create(SpoonacularService.class);
+        Call<RecipesResponse> recipesCall = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", "pasta");
+
+        recipesCall.enqueue(new Callback<RecipesResponse>() {
+            @Override
+            public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    saveDataToFirebase(response.body().getResults());
+                } else {
+                    // will handle the error later
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                // will handle failure maybe idk ))
+            }
+        });
+    }
+
+    private void saveDataToFirebase(List<Recipe> recipes) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
+        for (Recipe recipe : recipes) {
+            databaseReference.push().setValue(recipe);
+        }
     }
 
     private void showScreenSelectPopup() {
-        // Get the root view of the current activity
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
-        // Calculate the width and height of the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        // Show popup on the left half of the screen
         popupWindow.setWidth(width);
         popupWindow.setHeight(height);
         popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
     }
     private void showFilterPopup() {
-        // Get the root view of the current activity
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
-        // Calculate the width and height of the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        // Show popup on the left half of the screen
         popupWindow.setWidth(width);
         popupWindow.setHeight(height);
         popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);

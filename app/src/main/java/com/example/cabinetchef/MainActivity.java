@@ -33,6 +33,13 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
@@ -72,13 +79,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference recipesRef = database.getReference("recipes");
-
-                Recipe newRecipe = new Recipe("Chocolate Cake",
-                        Arrays.asList("Chocolate", "Flour", "Sugar"),
-                        "Bake for 30 minutes...");
-                recipesRef.child("recipe1").setValue(newRecipe);
+                fetchDataAndSaveToFirebase();
             }
         });
 
@@ -98,4 +99,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void fetchDataAndSaveToFirebase() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.spoonacular.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonacularService service = retrofit.create(SpoonacularService.class);
+        Call<RecipesResponse> recipesCall = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", "pasta");
+
+        recipesCall.enqueue(new Callback<RecipesResponse>() {
+            @Override
+            public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Recipe> recipes = response.body().getResults();
+                    saveDataToFirebase(recipes);
+                } else {
+                    // log error later
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                // log error later
+            }
+        });
+    }
+    private void saveDataToFirebase(List<Recipe> recipes) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
+        for (Recipe recipe : recipes) {
+            databaseReference.push().setValue(recipe);
+        }
+    }
+
+
+
+
 }

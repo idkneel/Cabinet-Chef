@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         String[] searchQueries = {"pasta", "salad", "chicken", "beef", "vegetarian", "soup", "dessert"};
 
         for (String query : searchQueries) {
-            Call<RecipesResponse> call = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query);
+            Call<RecipesResponse> call = service.getRecipes(String.valueOf(R.string.apiKey), query);
             call.enqueue(new Callback<RecipesResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<RecipesResponse> call, @NonNull Response<RecipesResponse> response) {
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
-        Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec");
+        Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, String.valueOf(R.string.apiKey));
         recipeDetailCall.enqueue(new Callback<RecipeDetail>() {
             @Override
             public void onResponse(@NonNull Call<RecipeDetail> call, @NonNull Response<RecipeDetail> response) {

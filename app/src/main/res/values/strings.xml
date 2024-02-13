@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="apiKey">cb765e381a874b6abf2f6f605c92ecec</string>
 
 
     <string name="login">Login</string>

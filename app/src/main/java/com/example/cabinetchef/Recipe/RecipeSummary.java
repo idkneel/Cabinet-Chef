@@ -1,4 +1,4 @@
-package com.example.cabinetchef;
+package com.example.cabinetchef.Recipe;
 
 public class RecipeSummary {
     private int id;

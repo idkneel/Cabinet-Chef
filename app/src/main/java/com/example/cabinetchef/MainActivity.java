@@ -2,20 +2,18 @@ package com.example.cabinetchef;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.cabinetchef.Listeners.SpoonacularService;
 import com.example.cabinetchef.Login.Login;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.cabinetchef.Recipe.Recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.example.cabinetchef.Recipe.RecipeSummary;
+import com.example.cabinetchef.Recipe.RecipesResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -89,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
                 fetchDataAndSaveToFirebase();
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
-        // Setting an onClickListener for the logout button
+
         logout_button.setOnClickListener(new View.OnClickListener() {
+            // Setting an onClickListener for the logout button
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 // Signing out the user
                 FirebaseAuth.getInstance().signOut();
                 // Redirecting to the Login activity
@@ -114,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         Button addButton = findViewById(R.id.firebaseTestButton);

@@ -1,4 +1,4 @@
-package com.example.cabinetchef;
+package com.example.cabinetchef.Recipe;
 
 import java.util.List;
 

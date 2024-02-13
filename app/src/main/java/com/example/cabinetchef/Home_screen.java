@@ -8,7 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cabinetchef.Listeners.SpoonacularService;
+import com.example.cabinetchef.Recipe.Recipe;
+import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.example.cabinetchef.Recipe.RecipeSummary;
+import com.example.cabinetchef.Recipe.RecipesResponse;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -54,23 +61,14 @@ public class Home_screen extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true // Focusable
         );
-        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
-        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        popupWindow.setBackgroundDrawable(null);
         // Setting animation style for the filters window to use default dialog animations
         filtersWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // Setting the background to null for the filters window
         filtersWindow.setBackgroundDrawable(null);
 
-        initializeButtons();
-    }
-
-    private void initializeButtons() {
         // Finding and setting up the button to show the screen selection popup
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
-        showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
-
         showScreenSelectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,77 +77,12 @@ public class Home_screen extends AppCompatActivity {
         });
         // Finding and setting up the button to show the filters popup
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-        showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
-
-        Button fetchDataButton = findViewById(R.id.firebaseTestButton);
-        fetchDataButton.setOnClickListener(v -> fetchDataAndSaveToFirebase());
-    }
-
-    private Recipe convertToRecipe(RecipeDetail detail) {
-        List<String> ingredients = detail.getExtendedIngredients().stream()
-                .map(ingredient -> ingredient.getName() + " - " + ingredient.getAmount() + " " + ingredient.getUnit())
-                .collect(Collectors.toList());
-        String instructions = detail.getInstructions();
-
-        return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), Arrays.asList(instructions.split("\\r?\\n")));
-    }
-
-    private void fetchDataAndSaveToFirebase() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.spoonacular.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        SpoonacularService service = retrofit.create(SpoonacularService.class);
-
-        // Example of fetching recipes based on user input or predefined queries
-        String[] queries = {"pasta", "salad", "chicken", "beef"};
-        for (String query : queries) {
-            service.getRecipes("YOUR_API_KEY", query).enqueue(new Callback<RecipesResponse>() {
-                @Override
-                public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        for (RecipeSummary summary : response.body().getResults()) {
-                            fetchRecipeDetailsById(summary.getId(), service);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RecipesResponse> call, Throwable t) {
-                    // Log failure
-                }
-            });
-        }
-    }
-
-    private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
-        service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec").enqueue(new Callback<RecipeDetail>() {
+        showFilterPopupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showFilterPopup(); // Call method to show the filter popup
-            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    RecipeDetail detail = response.body();
-                    Recipe recipe = convertToRecipe(detail);
-                    saveDataToFirebase(Arrays.asList(recipe));
-                } else {
-                    // Handle error
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RecipeDetail> call, Throwable t) {
-                // Handle failure
             }
         });
-    }
-
-    private void saveDataToFirebase(List<Recipe> recipes) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
-        for (Recipe recipe : recipes) {
-            databaseReference.push().setValue(recipe);
-        }
     }
 
     // Method to show the screen selection popup
@@ -161,7 +94,7 @@ public class Home_screen extends AppCompatActivity {
         Button profileButton = popupView.findViewById(R.id.profile);
         Button favoritesButton = popupView.findViewById(R.id.Favorites);
         Button pantryButton = popupView.findViewById(R.id.Pantry);
-        Button utensilsButton = popupView.findViewById(R.id.Utencils);
+        Button utensilsButton = popupView.findViewById(R.id.Utensils);
         Button settingsButton = popupView.findViewById(R.id.Settings);
 
         // Set up onClick listeners for each button to start different activities and dismiss the popup
@@ -207,8 +140,69 @@ public class Home_screen extends AppCompatActivity {
         filtersWindow.setWidth(width);
         filtersWindow.setHeight(height);
         filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
-        popupWindow.setWidth(width);
-        popupWindow.setHeight(height);
-        popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+    }
+    private Recipe convertToRecipe(RecipeDetail detail) {
+        List<String> ingredients = detail.getExtendedIngredients().stream()
+                .map(ingredient -> ingredient.getName() + " - " + ingredient.getAmount() + " " + ingredient.getUnit())
+                .collect(Collectors.toList());
+        String instructions = detail.getInstructions();
+
+        return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), Arrays.asList(instructions.split("\\r?\\n")));
+    }
+
+    private void fetchDataAndSaveToFirebase() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.spoonacular.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SpoonacularService service = retrofit.create(SpoonacularService.class);
+
+        // Example of fetching recipes based on user input or predefined queries
+        String[] queries = {"pasta", "salad", "chicken", "beef"};
+        for (String query : queries) {
+            service.getRecipes("YOUR_API_KEY", query).enqueue(new Callback<RecipesResponse>() {
+                @Override
+                public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        for (RecipeSummary summary : response.body().getResults()) {
+                            fetchRecipeDetailsById(summary.getId(), service);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                    // Log failure
+                }
+            });
+        }
+    }
+
+    private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
+        service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec").enqueue(new Callback<RecipeDetail>() {
+            @Override
+            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RecipeDetail detail = response.body();
+                    Recipe recipe = convertToRecipe(detail);
+                    saveDataToFirebase(Arrays.asList(recipe));
+                } else {
+                    // Handle error
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecipeDetail> call, Throwable t) {
+                // Handle failure
+            }
+        });
+    }
+
+    private void saveDataToFirebase(List<Recipe> recipes) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
+        for (Recipe recipe : recipes) {
+            databaseReference.push().setValue(recipe);
+        }
     }
 }

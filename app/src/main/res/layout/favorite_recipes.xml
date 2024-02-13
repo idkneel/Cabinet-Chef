@@ -22,6 +22,7 @@
             android:layout_marginTop="16dp"
             android:padding="8dp"
             android:backgroundTint="@color/Light.Mode.2"
+            android:textColor="@color/Light.Mode.Text"
             android:text="@string/back"
             />
         <EditText
@@ -30,7 +31,7 @@
             android:layout_marginTop="16dp"
             android:minHeight="48dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/Light.Mode.Text"
+            android:textColor="@color/Dark.Mode.Text"
             android:hint="@string/search"
             android:paddingBottom="8dp"
             android:inputType="text"

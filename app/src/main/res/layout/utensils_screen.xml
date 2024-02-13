@@ -21,6 +21,7 @@
         android:layout_marginTop="16dp"
         android:padding="8dp"
         android:backgroundTint="@color/Light.Mode.2"
+        android:textColor="@color/Light.Mode.Text"
         android:text="@string/back"
         />
 

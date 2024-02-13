@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.1"
-        android:textColor="@color/Dark.Mode.Text"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/profile"/>
 
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.2"
-        android:textColor="@color/Dark.Mode.Text"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/favorites"/>
 
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.3"
-        android:textColor="@color/Dark.Mode.Text"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/pantry"/>
 
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.4"
-        android:textColor="@color/Dark.Mode.Text"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/utensils"/>
 
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.4"
-        android:textColor="@color/Dark.Mode.Text"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/settings"/>
 

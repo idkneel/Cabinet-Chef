@@ -40,7 +40,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
-            app:Tint="@color/Light.Mode.1"
             android:textColor="@color/Light.Mode.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

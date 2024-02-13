@@ -68,66 +68,57 @@ public class Login  extends AppCompatActivity {
         textView = findViewById(R.id.registerNow);
 
         // Set a click listener for the "Register Now" TextView
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create an Intent to navigate to the Register activity
-                Intent intent = new Intent(getApplicationContext(), Register.class);
+        textView.setOnClickListener(view -> {
+            // Create an Intent to navigate to the Register activity
+            Intent intent = new Intent(getApplicationContext(), Register.class);
 
-                // Start the Register activity using the created Intent
-                startActivity(intent);
+            // Start the Register activity using the created Intent
+            startActivity(intent);
 
-                // Finish the current activity to prevent going back to the login screen
-                finish();
-            }
+            // Finish the current activity to prevent going back to the login screen
+            finish();
         });
 
         // Set a click listener for the Login button
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Make the progress bar visible to indicate ongoing login attempt
-                progressBar.setVisibility(View.VISIBLE);
+        buttonLogin.setOnClickListener(view -> {
+            // Make the progress bar visible to indicate ongoing login attempt
+            progressBar.setVisibility(View.VISIBLE);
 
-                // Get email and password from the corresponding EditText fields
-                String email = String.valueOf(editTextEmail.getText());
-                String password = String.valueOf(editTextPassword.getText());
+            // Get email and password from the corresponding EditText fields
+            String email = String.valueOf(editTextEmail.getText());
+            String password = String.valueOf(editTextPassword.getText());
 
-                // Validate if email and password are not empty
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Use Firebase Authentication to sign in with email and password
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // Hide the progress bar after authentication attempt is complete
-                                progressBar.setVisibility(View.GONE);
-
-                                // Check if the authentication was successful
-                                if (task.isSuccessful()) {
-                                    // If successful, show a toast message and navigate to MainActivity
-                                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-
-                                    // Finish the current activity to prevent going back to the login screen
-                                    finish();
-                                } else {
-                                    // If authentication failed, show a toast message
-                                    Toast.makeText(Login.this, "Sign-in Failed.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            // Validate if email and password are not empty
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Use Firebase Authentication to sign in with email and password
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        // Hide the progress bar after authentication attempt is complete
+                        progressBar.setVisibility(View.GONE);
+
+                        // Check if the authentication was successful
+                        if (task.isSuccessful()) {
+                            // If successful, show a toast message and navigate to MainActivity
+                            Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+
+                            // Finish the current activity to prevent going back to the login screen
+                            finish();
+                        } else {
+                            // If authentication failed, show a toast message
+                            Toast.makeText(Login.this, "Sign-in Failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
     }
 }

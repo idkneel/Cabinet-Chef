@@ -1,5 +1,6 @@
 package com.example.cabinetchef;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,24 +12,6 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cabinetchef.Listeners.SpoonacularService;
-import com.example.cabinetchef.Recipe.Recipe;
-import com.example.cabinetchef.Recipe.RecipeDetail;
-import com.example.cabinetchef.Recipe.RecipeSummary;
-import com.example.cabinetchef.Recipe.RecipesResponse;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 // Defines the Home_screen class that extends AppCompatActivity for basic Android activity behavior
 public class Home_screen extends AppCompatActivity {
 
@@ -38,8 +21,8 @@ public class Home_screen extends AppCompatActivity {
 
     // Declaration of View objects for inflating layout resources
     private View popupView;
-    private View filtersPopupView;
 
+    @SuppressLint("InflateParams")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +37,7 @@ public class Home_screen extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true // Focusable
         );
-        filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
+        View filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
         filtersWindow = new PopupWindow(
                 filtersPopupView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -69,26 +52,21 @@ public class Home_screen extends AppCompatActivity {
 
         // Finding and setting up the button to show the screen selection popup
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
-        showScreenSelectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showScreenSelectPopup(); // Call method to show the screen selection popup
-            }
+        showScreenSelectButton.setOnClickListener(v -> {
+            showScreenSelectPopup(); // Call method to show the screen selection popup
         });
         // Finding and setting up the button to show the filters popup
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-        showFilterPopupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterPopup(); // Call method to show the filter popup
-            }
+        showFilterPopupButton.setOnClickListener(v -> {
+            showFilterPopup(); // Call method to show the filter popup
         });
     }
 
     // Method to show the screen selection popup
+    @SuppressLint("RtlHardcoded")
     private void showScreenSelectPopup() {
         // Inflating the root view of the home_screen layout for use in showing the popup
-        View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
         // Finding buttons within the popupView and setting their onClick listeners to launch different activities
         Button profileButton = popupView.findViewById(R.id.profile);
@@ -129,9 +107,10 @@ public class Home_screen extends AppCompatActivity {
     }
 
     // Method to show the filter popup
+    @SuppressLint("RtlHardcoded")
     private void showFilterPopup() {
         // Inflating the root view of the home_screen layout for use in showing the popup
-        View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
         // Setting the width and height for the filters window and displaying it on the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
@@ -140,69 +119,5 @@ public class Home_screen extends AppCompatActivity {
         filtersWindow.setWidth(width);
         filtersWindow.setHeight(height);
         filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
-    }
-    private Recipe convertToRecipe(RecipeDetail detail) {
-        List<String> ingredients = detail.getExtendedIngredients().stream()
-                .map(ingredient -> ingredient.getName() + " - " + ingredient.getAmount() + " " + ingredient.getUnit())
-                .collect(Collectors.toList());
-        String instructions = detail.getInstructions();
-
-        return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), Arrays.asList(instructions.split("\\r?\\n")));
-    }
-
-    private void fetchDataAndSaveToFirebase() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.spoonacular.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        SpoonacularService service = retrofit.create(SpoonacularService.class);
-
-        // Example of fetching recipes based on user input or predefined queries
-        String[] queries = {"pasta", "salad", "chicken", "beef"};
-        for (String query : queries) {
-            service.getRecipes("YOUR_API_KEY", query).enqueue(new Callback<RecipesResponse>() {
-                @Override
-                public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        for (RecipeSummary summary : response.body().getResults()) {
-                            fetchRecipeDetailsById(summary.getId(), service);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RecipesResponse> call, Throwable t) {
-                    // Log failure
-                }
-            });
-        }
-    }
-
-    private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
-        service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec").enqueue(new Callback<RecipeDetail>() {
-            @Override
-            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    RecipeDetail detail = response.body();
-                    Recipe recipe = convertToRecipe(detail);
-                    saveDataToFirebase(Arrays.asList(recipe));
-                } else {
-                    // Handle error
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RecipeDetail> call, Throwable t) {
-                // Handle failure
-            }
-        });
-    }
-
-    private void saveDataToFirebase(List<Recipe> recipes) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
-        for (Recipe recipe : recipes) {
-            databaseReference.push().setValue(recipe);
-        }
     }
 }

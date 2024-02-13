@@ -1,5 +1,6 @@
 package com.example.cabinetchef;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import com.example.cabinetchef.Listeners.SpoonacularService;
 import com.example.cabinetchef.Login.Login;
 import com.example.cabinetchef.Recipe.Recipe;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Firebase authentication object
     FirebaseAuth auth;
-
     // TextView for displaying user details
     FirebaseDatabase database;
     Button button;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     // FirebaseUser object for the current user
     FirebaseUser user;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = recipeSnapshot.getValue(Recipe.class);
                     //use or display recipes - later
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 //errors - later
             }
         });
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             Call<RecipesResponse> call = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query);
             call.enqueue(new Callback<RecipesResponse>() {
                 @Override
-                public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                public void onResponse(@NonNull Call<RecipesResponse> call, @NonNull Response<RecipesResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         for (RecipeSummary summary : response.body().getResults()) {
                             fetchRecipeDetailsById(summary.getId(), service);

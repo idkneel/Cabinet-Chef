@@ -13,11 +13,8 @@ public class Pantry extends AppCompatActivity {
         setContentView(R.layout.pantry_screen);
 
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Close the current activity and go back
-            }
+        backButton.setOnClickListener(v -> {
+            finish(); // Close the current activity and go back
         });
 
     }

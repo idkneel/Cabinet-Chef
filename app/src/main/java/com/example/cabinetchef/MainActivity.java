@@ -11,8 +11,6 @@ import com.example.cabinetchef.Recipe.Recipe;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
 import com.example.cabinetchef.Recipe.RecipeDetail;
 import com.example.cabinetchef.Recipe.RecipeSummary;
 import com.example.cabinetchef.Recipe.RecipesResponse;
@@ -30,6 +28,7 @@ import android.widget.TextView;
 // MainActivity class definition
 import java.util.Arrays;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,46 +80,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Button testFirebaseButton = findViewById(R.id.firebaseTestButton);
-        testFirebaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchDataAndSaveToFirebase();
-            }
-        });
+        testFirebaseButton.setOnClickListener(view -> fetchDataAndSaveToFirebase());
 
-        logout_button.setOnClickListener(new View.OnClickListener() {
-            // Setting an onClickListener for the logout button
-            @Override
-            public void onClick(View view) {
-                // Signing out the user
-                FirebaseAuth.getInstance().signOut();
-                // Redirecting to the Login activity
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                // Finishing the current activity
-                finish();
-            }
+        // Setting an onClickListener for the logout button
+        logout_button.setOnClickListener(view -> {
+            // Signing out the user
+            FirebaseAuth.getInstance().signOut();
+            // Redirecting to the Login activity
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            // Finishing the current activity
+            finish();
         });
 
         // Finding the home screen button by its ID and setting its onClickListener
         Button homeScreenButton = findViewById(R.id.home_screen_button);
-        homeScreenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Intent to navigate to the Home_screen activity
-                Intent intent = new Intent(MainActivity.this, Home_screen.class);
-                startActivity(intent);
-            }
+        homeScreenButton.setOnClickListener(view -> {
+            // Intent to navigate to the Home_screen activity
+            Intent intent = new Intent(MainActivity.this, Home_screen.class);
+            startActivity(intent);
         });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         Button addButton = findViewById(R.id.firebaseTestButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchDataAndSaveToFirebase();
-            }
-        });
+        addButton.setOnClickListener(view -> fetchDataAndSaveToFirebase());
 
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
@@ -163,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<RecipesResponse> call, @NonNull Throwable t) {
                     // API error
                 }
             });
@@ -174,19 +157,20 @@ public class MainActivity extends AppCompatActivity {
         Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec");
         recipeDetailCall.enqueue(new Callback<RecipeDetail>() {
             @Override
-            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
+            public void onResponse(@NonNull Call<RecipeDetail> call, @NonNull Response<RecipeDetail> response) {
                 if (response.isSuccessful()) {
                     RecipeDetail detail = response.body();
 
+                    assert detail != null;
                     Recipe recipe = convertToRecipe(detail);
-                    saveDataToFirebase(Arrays.asList(recipe));
+                    saveDataToFirebase(Collections.singletonList(recipe));
                 } else {
                     // Handle error
                 }
             }
 
             @Override
-            public void onFailure(Call<RecipeDetail> call, Throwable t) {
+            public void onFailure(@NonNull Call<RecipeDetail> call, @NonNull Throwable t) {
                 // Handle failure
             }
         });

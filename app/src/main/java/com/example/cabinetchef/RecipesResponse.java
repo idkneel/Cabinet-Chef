@@ -3,15 +3,13 @@ package com.example.cabinetchef;
 import java.util.List;
 
 public class RecipesResponse {
-    private List<Recipe> results;
+    private List<RecipeSummary> results;
 
-    public RecipesResponse() {}
-
-    public List<Recipe> getResults() {
+    public List<RecipeSummary> getResults() {
         return results;
     }
 
-    public void setResults(List<Recipe> results) {
+    public void setResults(List<RecipeSummary> results) {
         this.results = results;
     }
 }

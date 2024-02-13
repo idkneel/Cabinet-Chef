@@ -34,6 +34,8 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             textView.setText(user.getEmail());
         }
+
+        Button testFirebaseButton = findViewById(R.id.firebaseTestButton);
+        testFirebaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchDataAndSaveToFirebase();
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -106,25 +116,62 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         SpoonacularService service = retrofit.create(SpoonacularService.class);
-        Call<RecipesResponse> recipesCall = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", "pasta");
 
-        recipesCall.enqueue(new Callback<RecipesResponse>() {
+        String[] searchQueries = {"pasta", "salad", "chicken", "beef", "vegetarian", "soup", "dessert"};
+
+        for (String query : searchQueries) {
+            Call<RecipesResponse> call = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query);
+            call.enqueue(new Callback<RecipesResponse>() {
+                @Override
+                public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        for (RecipeSummary summary : response.body().getResults()) {
+                            fetchRecipeDetailsById(summary.getId(), service);
+                        }
+                    } else {
+                        // ??API error 2 fuck this shit
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                    // API error
+                }
+            });
+        }
+    }
+
+    private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
+        Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec");
+        recipeDetailCall.enqueue(new Callback<RecipeDetail>() {
             @Override
-            public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Recipe> recipes = response.body().getResults();
-                    saveDataToFirebase(recipes);
+            public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
+                if (response.isSuccessful()) {
+                    RecipeDetail detail = response.body();
+
+                    Recipe recipe = convertToRecipe(detail);
+                    saveDataToFirebase(Arrays.asList(recipe));
                 } else {
-                    // log error later
+                    // Handle error
                 }
             }
 
             @Override
-            public void onFailure(Call<RecipesResponse> call, Throwable t) {
-                // log error later
+            public void onFailure(Call<RecipeDetail> call, Throwable t) {
+                // Handle failure
             }
         });
     }
+
+    private Recipe convertToRecipe(RecipeDetail detail) {
+        List<String> ingredients = detail.getExtendedIngredients().stream()
+                .map(ingredient -> ingredient.getName() + ": " + ingredient.getAmount() + " " + ingredient.getUnit())
+                .collect(Collectors.toList());
+        List<String> instructions = Arrays.asList(detail.getInstructions().split("\n"));
+
+        return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), instructions);
+    }
+
     private void saveDataToFirebase(List<Recipe> recipes) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
         for (Recipe recipe : recipes) {

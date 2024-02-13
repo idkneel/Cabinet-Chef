@@ -1,63 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/layout/popup_menu_layout.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/Dark.Mode.4"
+    android:layout_gravity="center"
+    android:background="@color/Dark.Mode.1"
     android:layout_weight="1" >
+
     <!--background tint is background color
         typeface is font
         fontfamily is custom fonts
         custom textcolors are setup in colors.xml
     -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:backgroundTint="@color/Light.Mode.4"
+        android:text="@string/back"
+        android:textColor="@color/Light.Mode.Text"
+        android:textStyle="bold"
+        />
 
     <Button
-        android:id="@+id/profile"
+        android:id="@+id/ColorModePreference"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.1"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
-        android:text="@string/profile"/>
+        android:text="@string/LightMode"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        />
 
     <Button
-        android:id="@+id/Favorites"
+        android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
         android:backgroundTint="@color/Light.Mode.2"
         android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/logout"
         android:typeface="monospace"
-        android:text="@string/favorites"/>
+        />
 
     <Button
-        android:id="@+id/Pantry"
+        android:id="@+id/textSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
         android:backgroundTint="@color/Light.Mode.3"
         android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/textSize"
         android:typeface="monospace"
-        android:text="@string/pantry"/>
+        />
 
-    <Button
-        android:id="@+id/Utensils"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.4"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:text="@string/utensils"/>
-
-    <Button
-        android:id="@+id/Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.4"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:text="@string/settings"/>
-
-    <!-- Add more buttons or views as needed -->
 
 </LinearLayout>

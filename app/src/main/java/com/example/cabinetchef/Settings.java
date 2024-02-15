@@ -2,12 +2,15 @@ package com.example.cabinetchef;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Login.Login;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Settings extends AppCompatActivity {
 
@@ -20,6 +23,8 @@ public class Settings extends AppCompatActivity {
 
         Button logout_button = findViewById(R.id.logout);
         Button backButton = findViewById(R.id.backButton);
+        Button deleteButton = findViewById(R.id.deleteAccount);
+
         backButton.setOnClickListener(v -> {
             finish(); // Close the current activity and go back
         });
@@ -34,5 +39,10 @@ public class Settings extends AppCompatActivity {
             // Finishing the current activity
             finish();
         });
+
+    }
+
+    private void deleteUser(FirebaseUser firebaseUser){
+
     }
 }

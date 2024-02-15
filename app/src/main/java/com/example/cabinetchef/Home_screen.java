@@ -12,6 +12,24 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cabinetchef.Listeners.SpoonacularService;
+import com.example.cabinetchef.Recipe.Recipe;
+import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.example.cabinetchef.Recipe.RecipeSummary;
+import com.example.cabinetchef.Recipe.RecipesResponse;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 // Defines the Home_screen class that extends AppCompatActivity for basic Android activity behavior
 public class Home_screen extends AppCompatActivity {
 
@@ -60,64 +78,140 @@ public class Home_screen extends AppCompatActivity {
         showFilterPopupButton.setOnClickListener(v -> {
             showFilterPopup(); // Call method to show the filter popup
         });
+
+        initializeButtons();
     }
 
-    // Method to show the screen selection popup
-    @SuppressLint("RtlHardcoded")
-    private void showScreenSelectPopup() {
-        // Inflating the root view of the home_screen layout for use in showing the popup
-        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+    private void initializeButtons() {
+        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
+        showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
 
-        // Finding buttons within the popupView and setting their onClick listeners to launch different activities
-        Button profileButton = popupView.findViewById(R.id.profile);
-        Button favoritesButton = popupView.findViewById(R.id.Favorites);
-        Button pantryButton = popupView.findViewById(R.id.Pantry);
-        Button utensilsButton = popupView.findViewById(R.id.Utensils);
-        Button settingsButton = popupView.findViewById(R.id.Settings);
+        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
+        showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
 
-        // Set up onClick listeners for each button to start different activities and dismiss the popup
-        profileButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, ProfileScreen.class));
-            popupWindow.dismiss();
-        });
-        favoritesButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, FavoritesScreen.class));
-            popupWindow.dismiss();
-        });
-        pantryButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, Pantry.class));
-            popupWindow.dismiss();
-        });
-        utensilsButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
-            popupWindow.dismiss();
-        });
-        settingsButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, Settings.class));
-            popupWindow.dismiss();
-        });
-
-        // Setting the width and height for the popup window and displaying it on the screen
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-
-        popupWindow.setWidth(width);
-        popupWindow.setHeight(height);
-        popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+        Button fetchDataButton = findViewById(R.id.firebaseTestButton);
+        fetchDataButton.setOnClickListener(v -> fetchDataAndSaveToFirebase());
     }
 
-    // Method to show the filter popup
-    @SuppressLint("RtlHardcoded")
-    private void showFilterPopup() {
-        // Inflating the root view of the home_screen layout for use in showing the popup
-        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+        private Recipe convertToRecipe (RecipeDetail detail){
+            List<String> ingredients = detail.getExtendedIngredients().stream()
+                    .map(ingredient -> ingredient.getName() + " - " + ingredient.getAmount() + " " + ingredient.getUnit())
+                    .collect(Collectors.toList());
+            String instructions = detail.getInstructions();
 
-        // Setting the width and height for the filters window and displaying it on the screen
-        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), Arrays.asList(instructions.split("\r?\n")));
+        }
 
-        filtersWindow.setWidth(width);
-        filtersWindow.setHeight(height);
-        filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
+        private void fetchDataAndSaveToFirebase () {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.spoonacular.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            SpoonacularService service = retrofit.create(SpoonacularService.class);
+
+            String[] queries = {"pasta", "salad", "chicken", "beef"};
+            for (String query : queries) {
+                service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query).enqueue(new Callback<RecipesResponse>() {
+                    @Override
+                    public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            for (RecipeSummary summary : response.body().getResults()) {
+                                fetchRecipeDetailsById(summary.getId(), service);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RecipesResponse> call, Throwable t) {
+                        // Log failure
+                    }
+                });
+            }
+        }
+
+        private void fetchRecipeDetailsById ( int recipeId, SpoonacularService service){
+            service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec").enqueue(new Callback<RecipeDetail>() {
+                @Override
+                public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        RecipeDetail detail = response.body();
+                        Recipe recipe = convertToRecipe(detail);
+                        saveDataToFirebase(Arrays.asList(recipe));
+                    } else {
+                        // Handle error
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RecipeDetail> call, Throwable t) {
+                    // Handle failure
+                }
+            });
+        }
+
+        private void saveDataToFirebase (List < Recipe > recipes) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
+            for (Recipe recipe : recipes) {
+                databaseReference.push().setValue(recipe);
+            }
+        }
+        // Method to show the screen selection popup
+        @SuppressLint("RtlHardcoded")
+        private void showScreenSelectPopup () {
+            // Inflating the root view of the home_screen layout for use in showing the popup
+            @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+
+            // Finding buttons within the popupView and setting their onClick listeners to launch different activities
+            Button profileButton = popupView.findViewById(R.id.profile);
+            Button favoritesButton = popupView.findViewById(R.id.Favorites);
+            Button pantryButton = popupView.findViewById(R.id.Pantry);
+            Button utensilsButton = popupView.findViewById(R.id.Utensils);
+            Button settingsButton = popupView.findViewById(R.id.Settings);
+
+            // Set up onClick listeners for each button to start different activities and dismiss the popup
+            profileButton.setOnClickListener(v -> {
+                startActivity(new Intent(Home_screen.this, ProfileScreen.class));
+                popupWindow.dismiss();
+            });
+            favoritesButton.setOnClickListener(v -> {
+                startActivity(new Intent(Home_screen.this, FavoritesScreen.class));
+                popupWindow.dismiss();
+            });
+            pantryButton.setOnClickListener(v -> {
+                startActivity(new Intent(Home_screen.this, Pantry.class));
+                popupWindow.dismiss();
+            });
+            utensilsButton.setOnClickListener(v -> {
+                startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
+                popupWindow.dismiss();
+            });
+            settingsButton.setOnClickListener(v -> {
+                startActivity(new Intent(Home_screen.this, Settings.class));
+                popupWindow.dismiss();
+            });
+
+            // Setting the width and height for the popup window and displaying it on the screen
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+            popupWindow.setWidth(width);
+            popupWindow.setHeight(height);
+            popupWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+        }
+
+        // Method to show the filter popup
+        @SuppressLint("RtlHardcoded")
+        private void showFilterPopup () {
+            // Inflating the root view of the home_screen layout for use in showing the popup
+            @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+
+            // Setting the width and height for the filters window and displaying it on the screen
+            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+            filtersWindow.setWidth(width);
+            filtersWindow.setHeight(height);
+            filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
+        }
     }
-}

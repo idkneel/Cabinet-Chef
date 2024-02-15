@@ -6,7 +6,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="apiKey">cb765e381a874b6abf2f6f605c92ecec</string>
 
 
     <string name="login">Login</string>
@@ -43,4 +42,8 @@
     <string name="utensils">Utensils</string>
     <string name="settings">Settings</string>
     <string name="test_firebase">Test Firebase</string>
+    <string name="delete_account">DELETE ACCOUNT</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete_warning">This action cannot be undone.</string>
+    <string name="delete_confirmation">Are you sure you want to delete your account?</string>
 </resources>

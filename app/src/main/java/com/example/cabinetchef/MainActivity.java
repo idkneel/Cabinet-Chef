@@ -191,8 +191,13 @@ public class MainActivity extends AppCompatActivity {
         List<String> ingredients = detail.getExtendedIngredients().stream()
                 .map(ingredient -> ingredient.getName() + ": " + ingredient.getAmount() + " " + ingredient.getUnit())
                 .collect(Collectors.toList());
-        List<String> instructions = Arrays.asList(detail.getInstructions().split("\n"));
+        List<String> instructions;
+        if (detail.getInstructions() != null && !detail.getInstructions().isEmpty()) {
+            instructions = Arrays.asList(detail.getInstructions().split("\n"));
+        } else {
 
+            instructions = Collections.emptyList();
+        }
         return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), instructions);
     }
 

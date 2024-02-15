@@ -90,32 +90,32 @@ public class Home_screen extends AppCompatActivity {
 
 
         // Finding buttons within the popupView and setting their onClick listeners to launch different activities
-        Button profileButton = popupView.findViewById(R.id.profile);
-        Button favoritesButton = popupView.findViewById(R.id.Favorites);
-        Button pantryButton = popupView.findViewById(R.id.Pantry);
-        Button utensilsButton = popupView.findViewById(R.id.Utensils);
-        Button settingsButton = popupView.findViewById(R.id.Settings);
+        Button profileButton = screenSelectView.findViewById(R.id.profile);
+        Button favoritesButton = screenSelectView.findViewById(R.id.Favorites);
+        Button pantryButton = screenSelectView.findViewById(R.id.Pantry);
+        Button utensilsButton = screenSelectView.findViewById(R.id.Utensils);
+        Button settingsButton = screenSelectView.findViewById(R.id.Settings);
 
         // Set up onClick listeners for each button to start different activities and dismiss the popup
         profileButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, ProfileScreen.class));
-            popupWindow.dismiss();
+            screenSelectWindow.dismiss();
         });
         favoritesButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, FavoritesScreen.class));
-            popupWindow.dismiss();
+            screenSelectWindow.dismiss();
         });
         pantryButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, Pantry.class));
-            popupWindow.dismiss();
+            screenSelectWindow.dismiss();
         });
         utensilsButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
-            popupWindow.dismiss();
+            screenSelectWindow.dismiss();
         });
         settingsButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, Settings.class));
-            popupWindow.dismiss();
+            screenSelectWindow.dismiss();
 
         });
 

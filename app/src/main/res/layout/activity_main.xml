@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/Light.Mode.1"
+    android:padding="8dp"
     tools:context=".MainActivity">
     <!--background tint is background color
         typeface is font

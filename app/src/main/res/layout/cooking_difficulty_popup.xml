@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@color/Dark.Mode.2"
+    android:padding="8dp">
+
+
+    <Button
+        android:id="@+id/beginnerDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:padding="9dp"
+        android:text="@string/beginner"/>
+
+    <Button
+        android:id="@+id/intermediateDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:padding="9dp"
+        android:text="@string/intermediate"/>
+
+    <Button
+        android:id="@+id/advancedDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:textStyle="bold"
+        android:padding="9dp"
+        android:text="@string/advanced"/>
+
+    <Button
+        android:id="@+id/backButton"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:backgroundTint="@color/Light.Mode.4"
+        android:text="@string/back"
+        android:textColor="@color/Light.Mode.Text"/>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.cabinetchef;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +12,7 @@ import android.widget.PopupWindow;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 
 public class Home_screen extends AppCompatActivity {
@@ -25,25 +27,29 @@ public class Home_screen extends AppCompatActivity {
     private View mealTimesPopupView;
     private static final int REQUEST_MEAL_TIME = 1;
 
+    @SuppressLint("InflateParams")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Setting the content view to the home_screen layout
         setContentView(R.layout.home_screen);
+
 
         // Initialize popupWindow and popupView
         screenSelectView = LayoutInflater.from(this).inflate(R.layout.screen_select_popup, null);
         screenSelectWindow = new PopupWindow(
                 screenSelectView,
+
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                true
+                true // Focusable
         );
-        filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
+        View filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
         filtersWindow = new PopupWindow(
                 filtersPopupView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                true
+                true // Focusable
         );
         mealTimesPopupView = LayoutInflater.from(this).inflate(R.layout.meal_time_popup, null);
         mealTimesWindow = new PopupWindow(
@@ -61,55 +67,59 @@ public class Home_screen extends AppCompatActivity {
                 true
         );
 
-        // Customize popupWindow appearance and behavior
+        // Setting animation style for the filters window to use default dialog animations
         filtersWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        // Setting the background to null for the filters window
         filtersWindow.setBackgroundDrawable(null);
 
-        // Show popup when the button is clicked
+        // Finding and setting up the button to show the screen selection popup
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
+
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
 
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
+
     }
 
+    // Method to show the screen selection popup
+    @SuppressLint("RtlHardcoded")
     private void showScreenSelectPopup() {
-        // Get the root view of the current activity
-        View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+        // Inflating the root view of the home_screen layout for use in showing the popup
+        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
-        Button profileButton = screenSelectView.findViewById(R.id.profile);
-        Button favoritesButton = screenSelectView.findViewById(R.id.Favorites);
-        Button pantryButton = screenSelectView.findViewById(R.id.Pantry);
-        Button utensilsButton = screenSelectView.findViewById(R.id.Utensils);
-        Button settingsButton = screenSelectView.findViewById(R.id.Settings);
 
+        // Finding buttons within the popupView and setting their onClick listeners to launch different activities
+        Button profileButton = popupView.findViewById(R.id.profile);
+        Button favoritesButton = popupView.findViewById(R.id.Favorites);
+        Button pantryButton = popupView.findViewById(R.id.Pantry);
+        Button utensilsButton = popupView.findViewById(R.id.Utensils);
+        Button settingsButton = popupView.findViewById(R.id.Settings);
+
+        // Set up onClick listeners for each button to start different activities and dismiss the popup
         profileButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Home_screen.this, ProfileScreen.class);
-            startActivity(intent);
-            screenSelectWindow.dismiss(); // Dismiss the popup after navigating
+            startActivity(new Intent(Home_screen.this, ProfileScreen.class));
+            popupWindow.dismiss();
         });
         favoritesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Home_screen.this, FavoritesScreen.class);
-            startActivity(intent);
-            screenSelectWindow.dismiss(); // Dismiss the popup after navigating
+            startActivity(new Intent(Home_screen.this, FavoritesScreen.class));
+            popupWindow.dismiss();
         });
         pantryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Home_screen.this, Pantry.class);
-            startActivity(intent);
-            screenSelectWindow.dismiss();
+            startActivity(new Intent(Home_screen.this, Pantry.class));
+            popupWindow.dismiss();
         });
         utensilsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Home_screen.this, UtensilsScreen.class);
-            startActivity(intent);
-            screenSelectWindow.dismiss();
+            startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
+            popupWindow.dismiss();
         });
         settingsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Home_screen.this, Settings.class);
-            startActivity(intent);
-            screenSelectWindow.dismiss();
+            startActivity(new Intent(Home_screen.this, Settings.class));
+            popupWindow.dismiss();
+
         });
 
-        // Calculate the width and height of the screen
+        // Setting the width and height for the popup window and displaying it on the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -117,10 +127,14 @@ public class Home_screen extends AppCompatActivity {
         screenSelectWindow.setWidth(width);
         screenSelectWindow.setHeight(height);
         screenSelectWindow.showAtLocation(rootView, Gravity.LEFT, 0, 0);
+
     }
+
+    // Method to show the filter popup
+    @SuppressLint("RtlHardcoded")
     private void showFilterPopup() {
-        // Get the root view of the current activity
-        View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
+        // Inflating the root view of the home_screen layout for use in showing the popup
+        @SuppressLint("InflateParams") View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
         Button cookingDifficultyPopup = filtersPopupView.findViewById(R.id.Cooking_difficulty);
         Button mealTimePopup = filtersPopupView.findViewById(R.id.meal_time);
@@ -135,10 +149,10 @@ public class Home_screen extends AppCompatActivity {
         });
 
         // Calculate the width and height of the screen
+
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
-        // Show popup on the left half of the screen
         filtersWindow.setWidth(width);
         filtersWindow.setHeight(height);
         filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);

@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.1"
         android:textColor="@color/Light.Mode.Text"
+
         android:typeface="monospace"
         android:textStyle="bold"
         android:padding="9dp"
@@ -41,17 +42,33 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.2"
         android:textColor="@color/Light.Mode.Text"
+
         android:typeface="monospace"
         android:textStyle="bold"
         android:padding="9dp"
         android:text="@string/item_preferences"/>
 
     <Button
+
+        android:id="@+id/Price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Light.Mode.Text"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:text="@string/price"/>
+
+    <Button
+
         android:id="@+id/Cooking_difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.4"
         android:textColor="@color/Light.Mode.Text"
+
+        android:textStyle="bold"
+
         android:typeface="monospace"
         android:textStyle="bold"
         android:padding="9dp"

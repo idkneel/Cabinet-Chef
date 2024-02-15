@@ -22,6 +22,6 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/Light.Mode.2"
         android:text="@string/back"
-        />
+        android:textColor="@color/Light.Mode.Text"/>
 
 </LinearLayout>

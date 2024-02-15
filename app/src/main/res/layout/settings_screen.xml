@@ -20,8 +20,51 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:padding="8dp"
+        android:backgroundTint="@color/Light.Mode.4"
         android:text="@string/back"
+        android:textColor="@color/Light.Mode.Text"
+        android:textStyle="bold"
         />
+
+    <Button
+        android:id="@+id/ColorModePreference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Light.Mode.1"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace"
+        android:text="@string/LightMode"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/Light.Mode.2"
+        android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/logout"
+        android:typeface="monospace"
+        />
+
+    <Button
+        android:id="@+id/textSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/Light.Mode.3"
+        android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/textSize"
+        android:typeface="monospace"
+        />
+
 
 </LinearLayout>

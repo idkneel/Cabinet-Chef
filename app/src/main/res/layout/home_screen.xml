@@ -12,11 +12,13 @@
         fontfamily is custom fonts
         custom textcolors are setup in colors.xml
     -->
+
     <LinearLayout
+        android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
         android:padding="8dp"
         tools:ignore="UselessParent">
@@ -30,9 +32,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/Dark.Mode.4"
+
             android:textColor="@color/Dark.Mode.Text"
             android:padding="4dp"
+
             android:text="@string/menu_button"
+            android:textColor="@color/Dark.Mode.Text"
             android:textSize="25sp" />
 
         <EditText
@@ -42,6 +47,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:hint="@string/search"
+            android:textColorHint="@color/Light.Mode.Text"
             android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"
@@ -57,9 +63,12 @@
             android:textSize="25sp"
             android:padding="4dp"
             android:backgroundTint="@color/Dark.Mode.4"
+            android:text="@string/menu_button"
             android:textColor="@color/Dark.Mode.Text"
-            android:text="@string/menu_button" />
+            android:textSize="25sp" />
     </LinearLayout>
+
+
 
 
 

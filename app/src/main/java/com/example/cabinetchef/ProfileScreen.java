@@ -1,5 +1,6 @@
 package com.example.cabinetchef;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,29 +19,16 @@ public class ProfileScreen extends AppCompatActivity {
         setContentView(R.layout.profile_screen); // Set the layout for the profile screen
         // Add any additional logic for the profile screen if needed
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Close the current activity and go back
-            }
+        backButton.setOnClickListener(v -> {
+            finish(); // Close the current activity and go back
         });
         // household members button handling
         Button householdMembersButton = findViewById(R.id.household_members);
-        householdMembersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNumberSelectorPopup();
-            }
-        });
-    }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish(); // Close the current activity and go back
+        householdMembersButton.setOnClickListener(v -> showNumberSelectorPopup());
     }
 
     private void showNumberSelectorPopup() {
-        View popupView = LayoutInflater.from(this).inflate(R.layout.household_member_count_popup, null);
+        @SuppressLint("InflateParams") View popupView = LayoutInflater.from(this).inflate(R.layout.household_member_count_popup, null);
         PopupWindow numberSelectorPopup = new PopupWindow(
                 popupView,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -58,17 +46,14 @@ public class ProfileScreen extends AppCompatActivity {
         numberPicker.setValue(1); // Initial value
 
         // Set OnClickListener for the selectButton
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the selected number
-                int selectedNumber = numberPicker.getValue();
+        selectButton.setOnClickListener(v -> {
+            // Get the selected number
+            int selectedNumber = numberPicker.getValue();
 
-                // TODO: Handle the selected number (e.g., update UI)
+            // TODO: Handle the selected number (e.g., update UI)
 
-                // Dismiss the popup
-                numberSelectorPopup.dismiss();
-            }
+            // Dismiss the popup
+            numberSelectorPopup.dismiss();
         });
 
         // Show the popup

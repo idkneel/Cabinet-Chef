@@ -21,7 +21,7 @@
         android:backgroundTint="@color/Light.Mode.1"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Profile"/>
+        android:text="@string/profile"/>
 
     <Button
         android:id="@+id/Favorites"
@@ -30,7 +30,7 @@
         android:backgroundTint="@color/Light.Mode.2"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Favorites"/>
+        android:text="@string/favorites"/>
 
     <Button
         android:id="@+id/Pantry"
@@ -39,16 +39,16 @@
         android:backgroundTint="@color/Light.Mode.3"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Pantry"/>
+        android:text="@string/pantry"/>
 
     <Button
-        android:id="@+id/Utencils"
+        android:id="@+id/Utensils"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Light.Mode.4"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Utencils"/>
+        android:text="@string/utensils"/>
 
     <Button
         android:id="@+id/Settings"
@@ -57,7 +57,7 @@
         android:backgroundTint="@color/Light.Mode.4"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
-        android:text="Settings"/>
+        android:text="@string/settings"/>
 
     <!-- Add more buttons or views as needed -->
 

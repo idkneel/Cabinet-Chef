@@ -12,11 +12,14 @@ import android.widget.PopupWindow;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class Home_screen extends AppCompatActivity {
 
     private PopupWindow screenSelectWindow;
     private PopupWindow filtersWindow;
     private PopupWindow mealTimesWindow;
+    private PopupWindow cookingDifficultyWindow;
+    private View cookingDifficultyPopupView;
     private View screenSelectView;
     private View filtersPopupView;
     private View mealTimesPopupView;
@@ -50,25 +53,24 @@ public class Home_screen extends AppCompatActivity {
                 true
         );
 
+        cookingDifficultyPopupView = LayoutInflater.from(this).inflate(R.layout.cooking_difficulty_popup, null);
+        cookingDifficultyWindow = new PopupWindow(
+                cookingDifficultyPopupView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+        );
+
         // Customize popupWindow appearance and behavior
         filtersWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         filtersWindow.setBackgroundDrawable(null);
 
         // Show popup when the button is clicked
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
-        showScreenSelectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showScreenSelectPopup();
-            }
-        });
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-        showFilterPopupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterPopup();
-            }
-        });
+
+        showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
+        showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
     }
 
     private void showScreenSelectPopup() {
@@ -78,48 +80,33 @@ public class Home_screen extends AppCompatActivity {
         Button profileButton = screenSelectView.findViewById(R.id.profile);
         Button favoritesButton = screenSelectView.findViewById(R.id.Favorites);
         Button pantryButton = screenSelectView.findViewById(R.id.Pantry);
-        Button utensilsButton = screenSelectView.findViewById(R.id.Utencils);
+        Button utensilsButton = screenSelectView.findViewById(R.id.Utensils);
         Button settingsButton = screenSelectView.findViewById(R.id.Settings);
 
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_screen.this, ProfileScreen.class);
-                startActivity(intent);
-                screenSelectWindow.dismiss(); // Dismiss the popup after navigating
-            }
+        profileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_screen.this, ProfileScreen.class);
+            startActivity(intent);
+            screenSelectWindow.dismiss(); // Dismiss the popup after navigating
         });
-        favoritesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_screen.this, FavoritesScreen.class);
-                startActivity(intent);
-                screenSelectWindow.dismiss(); // Dismiss the popup after navigating
-            }
+        favoritesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_screen.this, FavoritesScreen.class);
+            startActivity(intent);
+            screenSelectWindow.dismiss(); // Dismiss the popup after navigating
         });
-        pantryButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_screen.this, Pantry.class);
-                startActivity(intent);
-                screenSelectWindow.dismiss();
-            }
+        pantryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_screen.this, Pantry.class);
+            startActivity(intent);
+            screenSelectWindow.dismiss();
         });
-        utensilsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_screen.this, UtensilsScreen.class);
-                startActivity(intent);
-                screenSelectWindow.dismiss();
-            }
+        utensilsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_screen.this, UtensilsScreen.class);
+            startActivity(intent);
+            screenSelectWindow.dismiss();
         });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_screen.this, Settings.class);
-                startActivity(intent);
-                screenSelectWindow.dismiss();
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Home_screen.this, Settings.class);
+            startActivity(intent);
+            screenSelectWindow.dismiss();
         });
 
         // Calculate the width and height of the screen
@@ -135,15 +122,17 @@ public class Home_screen extends AppCompatActivity {
         // Get the root view of the current activity
         View rootView = LayoutInflater.from(this).inflate(R.layout.home_screen, null);
 
+        Button cookingDifficultyPopup = filtersPopupView.findViewById(R.id.Cooking_difficulty);
         Button mealTimePopup = filtersPopupView.findViewById(R.id.meal_time);
-        mealTimePopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMealTimePopup();
-                filtersWindow.dismiss();
-            }
+        mealTimePopup.setOnClickListener(v -> {
+            showMealTimePopup();
+            filtersWindow.dismiss();
         });
 
+        cookingDifficultyPopup.setOnClickListener(v -> {
+            showCookingDifficultyPopup();
+            filtersWindow.dismiss();
+        });
 
         // Calculate the width and height of the screen
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
@@ -174,14 +163,18 @@ public class Home_screen extends AppCompatActivity {
         View rootView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
 
         Button mealBackButton = mealTimesPopupView.findViewById(R.id.backButton);
+        Button itemToBeUsedButton = mealTimesPopupView.findViewById(R.id.Item_preferences);
 
-        mealBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFilterPopup();
-                mealTimesWindow.dismiss();
-            }
+        mealBackButton.setOnClickListener(v -> {
+            showFilterPopup();
+            mealTimesWindow.dismiss();
         });
+//        itemToBeUsedButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //itemToBeUsedButton start actvitiy goes here
+//            }
+//        });
 
         // Show the meal time popup
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
@@ -192,6 +185,26 @@ public class Home_screen extends AppCompatActivity {
         mealTimesWindow.setHeight(height);
         mealTimesWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
     }
+
+    private void showCookingDifficultyPopup(){
+        View rootView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
+
+        Button cookingDifficultyBackButton = cookingDifficultyPopupView.findViewById(R.id.backButton);
+
+        cookingDifficultyBackButton.setOnClickListener(v -> {
+            showFilterPopup();
+            cookingDifficultyWindow.dismiss();
+        });
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        // Show popup on the left half of the screen
+        cookingDifficultyWindow.setWidth(width);
+        cookingDifficultyWindow.setHeight(height);
+        cookingDifficultyWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
+    }
+
 
 
 

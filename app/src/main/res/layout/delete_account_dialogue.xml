@@ -74,12 +74,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/warningBox"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"
-            app:layout_constraintEnd_toStartOf="@id/btnReset"/>
+            app:layout_constraintEnd_toStartOf="@id/btnConfirm"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/btnReset"
+            android:id="@+id/btnConfirm"
             android:text="@string/confirm"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="8dp"

@@ -79,83 +79,12 @@ public class Home_screen extends AppCompatActivity {
             showFilterPopup(); // Call method to show the filter popup
         });
 
-        initializeButtons();
-    }
 
-    private void initializeButtons() {
-        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
 
-        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
-
-        Button fetchDataButton = findViewById(R.id.firebaseTestButton);
-        fetchDataButton.setOnClickListener(v -> fetchDataAndSaveToFirebase());
     }
 
-        private Recipe convertToRecipe (RecipeDetail detail){
-            List<String> ingredients = detail.getExtendedIngredients().stream()
-                    .map(ingredient -> ingredient.getName() + " - " + ingredient.getAmount() + " " + ingredient.getUnit())
-                    .collect(Collectors.toList());
-            String instructions = detail.getInstructions();
-
-            return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), Arrays.asList(instructions.split("\r?\n")));
-        }
-
-        private void fetchDataAndSaveToFirebase () {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.spoonacular.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            SpoonacularService service = retrofit.create(SpoonacularService.class);
-
-            String[] queries = {"pasta", "salad", "chicken", "beef"};
-            for (String query : queries) {
-                service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query).enqueue(new Callback<RecipesResponse>() {
-                    @Override
-                    public void onResponse(Call<RecipesResponse> call, Response<RecipesResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            for (RecipeSummary summary : response.body().getResults()) {
-                                fetchRecipeDetailsById(summary.getId(), service);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<RecipesResponse> call, Throwable t) {
-                        // Log failure
-                    }
-                });
-            }
-        }
-
-        private void fetchRecipeDetailsById ( int recipeId, SpoonacularService service){
-            service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec").enqueue(new Callback<RecipeDetail>() {
-                @Override
-                public void onResponse(Call<RecipeDetail> call, Response<RecipeDetail> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        RecipeDetail detail = response.body();
-                        Recipe recipe = convertToRecipe(detail);
-                        saveDataToFirebase(Arrays.asList(recipe));
-                    } else {
-                        // Handle error
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RecipeDetail> call, Throwable t) {
-                    // Handle failure
-                }
-            });
-        }
-
-        private void saveDataToFirebase (List < Recipe > recipes) {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
-            for (Recipe recipe : recipes) {
-                databaseReference.push().setValue(recipe);
-            }
-        }
         // Method to show the screen selection popup
         @SuppressLint("RtlHardcoded")
         private void showScreenSelectPopup () {

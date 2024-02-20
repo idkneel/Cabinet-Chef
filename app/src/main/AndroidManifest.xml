@@ -71,6 +71,11 @@
                 android:exported="true">
             </activity>
 
+            <activity
+                android:name=".IngredientsList"
+                android:exported="true">
+            </activity>
+
         </application>
 
     </manifest>

@@ -34,6 +34,13 @@
     <string name="back">Back</string>
     <string name="select">Select</string>
     <string name="to_home_screen">Home Screen</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="dinner">Dinner</string>
+    <string name="lunch">Lunch</string>
+    <string name="other_buttons">Other</string>
+    <string name="beginner">Beginner</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
     <string name="LightMode">Light Mode</string>
     <string name="textSize">Text Size</string>
     <string name="profile">Profile</string>

@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cabinetchef.Recipe.RecipeDetail;
 
 
 public class Home_screen extends AppCompatActivity {
@@ -39,12 +40,11 @@ public class Home_screen extends AppCompatActivity {
         screenSelectView = LayoutInflater.from(this).inflate(R.layout.screen_select_popup, null);
         screenSelectWindow = new PopupWindow(
                 screenSelectView,
-
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true // Focusable
         );
-        View filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
+        filtersPopupView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);
         filtersWindow = new PopupWindow(
                 filtersPopupView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -138,6 +138,8 @@ public class Home_screen extends AppCompatActivity {
 
         Button cookingDifficultyPopup = filtersPopupView.findViewById(R.id.Cooking_difficulty);
         Button mealTimePopup = filtersPopupView.findViewById(R.id.meal_time);
+        Button ingredientsButton = filtersPopupView.findViewById(R.id.Item_preferences);
+
         mealTimePopup.setOnClickListener(v -> {
             showMealTimePopup();
             filtersWindow.dismiss();
@@ -148,6 +150,10 @@ public class Home_screen extends AppCompatActivity {
             filtersWindow.dismiss();
         });
 
+        ingredientsButton.setOnClickListener(v -> {
+            startActivity(new Intent(Home_screen.this, IngredientsList.class));
+            filtersWindow.dismiss();
+        });
         // Calculate the width and height of the screen
 
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.5);
@@ -186,7 +192,7 @@ public class Home_screen extends AppCompatActivity {
 //        itemToBeUsedButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                //itemToBeUsedButton start actvitiy goes here
+//                //itemToBeUsedButton start activitiy goes here
 //            }
 //        });
 

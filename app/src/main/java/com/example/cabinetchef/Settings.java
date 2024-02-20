@@ -82,16 +82,20 @@
             });
         }
 
+        // Method to handle user account deletion
         private void userDelete(AlertDialog dialog, FirebaseUser user) {
+            // Initiates the deletion process for the current user
             user.delete()
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    .addOnCompleteListener(new OnCompleteListener<Void>() { // Attaches a listener that will respond once the delete operation is complete
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "User account deleted.");
+                        public void onComplete(@NonNull Task<Void> task) { // This method is called when the delete operation completes
+                            if (task.isSuccessful()) { // Checks if the delete operation was successful
+                                Log.d(TAG, "User account deleted."); // Logs a message indicating the user was successfully deleted
+                                // Redirects the user to the Login activity after successful deletion
                                 startActivity(new Intent(Settings.this, Login.class));
-                                dialog.dismiss();
+                                dialog.dismiss(); // Dismisses the alert dialog if it was showing
                             } else {
+                                // Shows a toast message to the user indicating the delete operation failed
                                 Toast.makeText(Settings.this, "Delete Failed.", Toast.LENGTH_SHORT).show();
                             }
                         }

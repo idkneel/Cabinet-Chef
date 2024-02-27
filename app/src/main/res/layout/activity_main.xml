@@ -26,11 +26,14 @@
         android:id="@+id/home_screen_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/to_home_screen"
+        android:text="@string/lets_get_cooking"
+        android:textColor="@color/Dark.Mode.Text"
+        android:typeface="monospace"
+        android:padding="8dp"
         android:layout_below="@+id/user_details"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/Dark.Mode.1" />
+        android:background="@drawable/dark_mode_button_outlines"/>
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
@@ -39,7 +42,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="9dp"
-        android:backgroundTint="@color/Dark.Mode.1"
+        android:background="@drawable/dark_mode_button_outlines"
+        android:textColor="@color/Dark.Mode.Text"
         android:padding="8dp"
         android:text="@string/logout"
         android:typeface="monospace" />

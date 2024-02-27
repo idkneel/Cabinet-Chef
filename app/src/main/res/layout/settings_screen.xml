@@ -18,33 +18,34 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:padding="8dp"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:background="@drawable/lightmode_button_outlines"
         android:text="@string/back"
         android:textColor="@color/Light.Mode.Text"
         android:textStyle="bold" />
+
+
 
     <Button
         android:id="@+id/ColorModePreference"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.1"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/LightMode"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:padding="8dp" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:padding="8dp"
         android:text="@string/logout"
@@ -54,9 +55,9 @@
         android:id="@+id/textSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.3"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:padding="8dp"
         android:text="@string/textSize"
@@ -66,14 +67,12 @@
         android:id="@+id/deleteAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_marginTop="420dp"
         android:padding="8dp"
         android:text="@string/delete_account"
         android:textStyle="bold"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
-        android:backgroundTint="@color/Light.Mode.4"/>
-
+        android:background="@drawable/lightmode_button_outlines"/>
 
 </LinearLayout>

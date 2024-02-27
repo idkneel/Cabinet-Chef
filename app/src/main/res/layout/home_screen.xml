@@ -31,11 +31,8 @@
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/Dark.Mode.4"
-            android:textColor="@color/Dark.Mode.Text"
-            android:padding="4dp"
-            android:text="@string/menu_button"
-            android:textSize="25sp" />
+            android:background="@drawable/screen_select_button_design"
+            android:padding="4dp"/>
 
         <EditText
             android:layout_width="0dp"
@@ -57,11 +54,8 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:padding="4dp"
-            android:backgroundTint="@color/Dark.Mode.4"
-            android:text="@string/menu_button"
-            android:textColor="@color/Dark.Mode.Text"
-            android:textSize="25sp" />
+            android:background="@drawable/filter_select_button_design"
+            android:padding="4dp" />
     </LinearLayout>
 
 

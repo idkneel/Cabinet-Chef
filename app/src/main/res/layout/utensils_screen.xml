@@ -20,7 +20,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:text="@string/back"
         />

@@ -18,17 +18,19 @@
         android:id="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.1"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
+        android:layout_marginTop="2dp"
         android:text="@string/profile"/>
 
     <Button
         android:id="@+id/Favorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
         android:text="@string/favorites"/>
 
@@ -36,8 +38,9 @@
         android:id="@+id/Pantry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.3"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
         android:text="@string/pantry"/>
 
@@ -45,8 +48,9 @@
         android:id="@+id/Utensils"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
         android:text="@string/utensils"/>
 
@@ -54,8 +58,9 @@
         android:id="@+id/Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
         android:text="@string/settings"/>
 

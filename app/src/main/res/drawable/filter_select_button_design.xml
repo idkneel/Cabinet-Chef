@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shape drawable for button background -->
+    <item android:drawable="@drawable/dark_mode_button_outlines" />
+    <!-- Vector drawable for button icon -->
+    <item android:drawable="@drawable/baseline_filter_list_aligned_right_24"
+        android:gravity="center" />
+</layer-list>

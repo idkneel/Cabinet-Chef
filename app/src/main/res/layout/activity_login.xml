@@ -57,8 +57,8 @@
         android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.1"
-        android:textColor="@color/Light.Mode.Text"/>
+        android:background="@drawable/dark_mode_button_outlines"
+        android:textColor="@color/Dark.Mode.Text"/>
 
     <TextView
         android:layout_width="wrap_content"

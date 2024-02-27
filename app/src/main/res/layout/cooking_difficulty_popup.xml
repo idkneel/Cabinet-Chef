@@ -13,8 +13,9 @@
         android:id="@+id/beginnerDifficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.3"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
         android:textStyle="bold"
         android:padding="9dp"
@@ -24,9 +25,10 @@
         android:id="@+id/intermediateDifficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.3"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
+        android:layout_marginTop="2dp"
         android:textStyle="bold"
         android:padding="9dp"
         android:text="@string/intermediate"/>
@@ -35,12 +37,13 @@
         android:id="@+id/advancedDifficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.3"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:textStyle="bold"
+        android:background="@drawable/lightmode_button_outlines"
         android:padding="9dp"
-        android:text="@string/advanced"/>
+        android:layout_marginTop="2dp"
+        android:text="@string/advanced"
+        android:textColor="@color/Light.Mode.Text"
+        android:textStyle="bold"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/backButton"
@@ -48,8 +51,9 @@
         android:typeface="monospace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_gravity="bottom|start"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:background="@drawable/lightmode_button_outlines"
         android:text="@string/back"
         android:textColor="@color/Light.Mode.Text"/>
 

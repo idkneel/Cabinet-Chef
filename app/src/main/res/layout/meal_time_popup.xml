@@ -23,6 +23,7 @@
         android:textSize="30sp"
         android:textColor="@color/Dark.Mode.Text"
         android:typeface="monospace"
+        android:layout_marginTop="2dp"
         android:text="@string/meal_time"/>
 
     <Button
@@ -30,10 +31,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/breakfastButton"
         android:text="@string/breakfast"
-        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
         />
 
     <Button
@@ -41,10 +43,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/lunchButton"
         android:text="@string/lunch"
-        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
         />
 
     <Button
@@ -52,10 +55,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/dinnerButton"
         android:text="@string/dinner"
-        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
         />
 
     <Button
@@ -63,10 +67,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/otherMealsButton"
         android:text="@string/other_buttons"
-        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:textStyle="bold"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
         />
 
     <Button
@@ -75,7 +80,8 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:text="@string/back"
         />

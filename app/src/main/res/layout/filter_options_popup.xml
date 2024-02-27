@@ -28,24 +28,24 @@
         android:id="@+id/meal_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.1"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
-
         android:typeface="monospace"
+        android:layout_marginTop="2dp"
         android:textStyle="bold"
-        android:padding="9dp"
+        android:padding="16dp"
         android:text="@string/meal_time"/>
 
     <Button
         android:id="@+id/Item_preferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.2"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
-
         android:typeface="monospace"
+        android:layout_marginTop="2dp"
         android:textStyle="bold"
-        android:padding="9dp"
+        android:padding="16dp"
         android:text="@string/item_preferences"/>
 
 
@@ -54,11 +54,12 @@
         android:id="@+id/Cooking_difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/Light.Mode.4"
+        android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:textStyle="bold"
+        android:layout_marginTop="2dp"
         android:typeface="monospace"
-        android:padding="9dp"
+        android:padding="16dp"
         android:text="@string/cooking_difficulty"/>
 
 

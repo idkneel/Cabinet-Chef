@@ -20,6 +20,7 @@
         android:layout_below="@id/numberPicker"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/Dark.Mode.1"
+        android:textColor="@color/Dark.Mode.Text"
+        android:background="@drawable/dark_mode_button_outlines"
         android:text="@string/select"/>
 </RelativeLayout>

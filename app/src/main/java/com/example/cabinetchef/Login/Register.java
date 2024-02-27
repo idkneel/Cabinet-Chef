@@ -9,16 +9,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.ActionCodeSettings;
@@ -94,38 +97,51 @@ public class Register extends AppCompatActivity {
             // Attempt to create a user with email and password
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
+
                         // Hide the progress bar after attempt
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-
-                            //start verification
-                            ActionCodeSettings actionCodeSettings =
-                                    ActionCodeSettings.newBuilder()
-                                            // URL you want to redirect back to. The domain (www.example.com) for this
-                                            // URL must be whitelisted in the Firebase Console.
-                                            .setUrl("https://www.example.com/finishSignUp?cartId=1234")
-                                            // This must be true
-                                            .setHandleCodeInApp(true)
-                                            .setIOSBundleId("com.example.ios")
-                                            .setAndroidPackageName(
-                                                    "com.example.android",
-                                                    true, /* installIfNotAvailable */
-                                                    "12"    /* minimumVersion */)
-                                            .build();
-
-                            mAuth.sendSignInLinkToEmail(email, actionCodeSettings)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Log.d(TAG, "Email sent");
-                                }
-                            });
-                            //end verification
+//
+//                            //start verification
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+//                            EditText emailBox = findViewById(R.id.emailBox);
+//                            String userEmail = emailBox.getText().toString();
+//                            AlertDialog dialog = builder.create();
+//
+//                            ActionCodeSettings actionCodeSettings =
+//                                    ActionCodeSettings.newBuilder()
+//                                            // URL you want to redirect back to. The domain (www.example.com) for this
+//                                            // URL must be whitelisted in the Firebase Console.
+//                                            .setUrl("https://www.example.com/finishSignUp?cartId=1234")
+//                                            // This must be true
+//                                            .setHandleCodeInApp(true)
+//                                            .setIOSBundleId("com.example.ios")
+//                                            .setAndroidPackageName(
+//                                                    "com.example.android",
+//                                                    true, /* installIfNotAvailable */
+//                                                    "12"    /* minimumVersion */)
+//                                            .build();
+//
+//                            mAuth.sendSignInLinkToEmail(userEmail,actionCodeSettings).addOnCompleteListener(task1 -> {
+//                                // Check if the request to send a reset email was successful
+//                                if (task.isSuccessful()){
+//                                    // Notify the user to check their email
+//                                    Toast.makeText(Register.this, "Check your email", Toast.LENGTH_SHORT).show();
+//                                    // Dismiss the dialog upon successful email submission
+//                                    dialog.dismiss();
+//                                }else {
+//                                    // Notify the user if there was an error sending the reset email
+//                                    Toast.makeText(Register.this, "Unable to send email", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//
+//                            //end verification
 
                             // Display success message and redirect to MainActivity
                             Toast.makeText(Register.this, "Account created.",
                                     Toast.LENGTH_SHORT).show();
+                            // Where you designate where to go after the account has been created
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();

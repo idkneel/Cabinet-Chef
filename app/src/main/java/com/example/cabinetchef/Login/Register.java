@@ -102,41 +102,6 @@ public class Register extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-//
-//                            //start verification
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-//                            EditText emailBox = findViewById(R.id.emailBox);
-//                            String userEmail = emailBox.getText().toString();
-//                            AlertDialog dialog = builder.create();
-//
-//                            ActionCodeSettings actionCodeSettings =
-//                                    ActionCodeSettings.newBuilder()
-//                                            // URL you want to redirect back to. The domain (www.example.com) for this
-//                                            // URL must be whitelisted in the Firebase Console.
-//                                            .setUrl("https://www.example.com/finishSignUp?cartId=1234")
-//                                            // This must be true
-//                                            .setHandleCodeInApp(true)
-//                                            .setIOSBundleId("com.example.ios")
-//                                            .setAndroidPackageName(
-//                                                    "com.example.android",
-//                                                    true, /* installIfNotAvailable */
-//                                                    "12"    /* minimumVersion */)
-//                                            .build();
-//
-//                            mAuth.sendSignInLinkToEmail(userEmail,actionCodeSettings).addOnCompleteListener(task1 -> {
-//                                // Check if the request to send a reset email was successful
-//                                if (task.isSuccessful()){
-//                                    // Notify the user to check their email
-//                                    Toast.makeText(Register.this, "Check your email", Toast.LENGTH_SHORT).show();
-//                                    // Dismiss the dialog upon successful email submission
-//                                    dialog.dismiss();
-//                                }else {
-//                                    // Notify the user if there was an error sending the reset email
-//                                    Toast.makeText(Register.this, "Unable to send email", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//
-//                            //end verification
 
                             // Display success message and redirect to MainActivity
                             Toast.makeText(Register.this, "Account created.",

@@ -33,6 +33,7 @@
             android:layout_marginEnd="8dp"
             android:textColor="@color/Dark.Mode.Text"
             android:hint="@string/search"
+            android:textColorHint="@color/Dark.Mode.Text"
             android:paddingBottom="8dp"
             android:inputType="text"
             android:backgroundTint="@color/Light.Mode.2"

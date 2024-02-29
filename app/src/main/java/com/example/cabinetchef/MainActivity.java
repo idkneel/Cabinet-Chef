@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -80,7 +81,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Button testFirebaseButton = findViewById(R.id.firebaseTestButton);
-        testFirebaseButton.setOnClickListener(view -> fetchDataAndSaveToFirebase());
+        testFirebaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchDataAndSaveToFirebase();
+            }
+        });
 
         // Setting an onClickListener for the logout button
         logout_button.setOnClickListener(view -> {
@@ -103,7 +109,12 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         Button addButton = findViewById(R.id.firebaseTestButton);
-        addButton.setOnClickListener(view -> fetchDataAndSaveToFirebase());
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchDataAndSaveToFirebase();
+            }
+        });
 
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
@@ -132,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         String[] searchQueries = {"pasta", "salad", "chicken", "beef", "vegetarian", "soup", "dessert"};
 
         for (String query : searchQueries) {
-            Call<RecipesResponse> call = service.getRecipes("cb765e381a874b6abf2f6f605c92ecec", query);
+            Call<RecipesResponse> call = service.getRecipes(String.valueOf("cb765e381a874b6abf2f6f605c92ecec"), query);
             call.enqueue(new Callback<RecipesResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<RecipesResponse> call, @NonNull Response<RecipesResponse> response) {
@@ -154,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
-        Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, "cb765e381a874b6abf2f6f605c92ecec");
+        Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, String.valueOf("cb765e381a874b6abf2f6f605c92ecec"));
         recipeDetailCall.enqueue(new Callback<RecipeDetail>() {
             @Override
             public void onResponse(@NonNull Call<RecipeDetail> call, @NonNull Response<RecipeDetail> response) {
@@ -180,8 +191,13 @@ public class MainActivity extends AppCompatActivity {
         List<String> ingredients = detail.getExtendedIngredients().stream()
                 .map(ingredient -> ingredient.getName() + ": " + ingredient.getAmount() + " " + ingredient.getUnit())
                 .collect(Collectors.toList());
-        List<String> instructions = Arrays.asList(detail.getInstructions().split("\n"));
+        List<String> instructions;
+        if (detail.getInstructions() != null && !detail.getInstructions().isEmpty()) {
+            instructions = Arrays.asList(detail.getInstructions().split("\n"));
+        } else {
 
+            instructions = Collections.emptyList();
+        }
         return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), instructions);
     }
 

@@ -1,20 +1,30 @@
 package com.example.cabinetchef.Login;
 
 // Import statements for Android and Firebase components
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -87,12 +97,16 @@ public class Register extends AppCompatActivity {
             // Attempt to create a user with email and password
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
+
                         // Hide the progress bar after attempt
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+
                             // Display success message and redirect to MainActivity
                             Toast.makeText(Register.this, "Account created.",
                                     Toast.LENGTH_SHORT).show();
+                            // Where you designate where to go after the account has been created
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();

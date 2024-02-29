@@ -23,8 +23,7 @@
         android:backgroundTint="@color/Light.Mode.4"
         android:text="@string/back"
         android:textColor="@color/Light.Mode.Text"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ColorModePreference"
@@ -36,8 +35,7 @@
         android:text="@string/LightMode"
         android:textStyle="bold"
         android:layout_marginTop="8dp"
-        android:padding="8dp"
-        />
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/logout"
@@ -49,8 +47,7 @@
         android:textColor="@color/Light.Mode.Text"
         android:padding="8dp"
         android:text="@string/logout"
-        android:typeface="monospace"
-        />
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/textSize"
@@ -62,8 +59,20 @@
         android:textColor="@color/Light.Mode.Text"
         android:padding="8dp"
         android:text="@string/textSize"
+        android:typeface="monospace" />
+
+    <Button
+        android:id="@+id/deleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="420dp"
+        android:padding="8dp"
+        android:text="@string/delete_account"
+        android:textStyle="bold"
+        android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
-        />
+        android:backgroundTint="@color/Light.Mode.4"/>
 
 
 </LinearLayout>

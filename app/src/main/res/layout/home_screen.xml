@@ -43,6 +43,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:hint="@string/search"
+            android:textColorHint="@color/Light.Mode.Text"
             android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"

@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="20dp"
     android:padding="20dp"
-    android:id="@+id/dialogForgot"
+    android:id="@+id/dialogDelete"
     android:background="@color/Dark.Mode.1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,46 +16,48 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/forgotTitle"
+            android:id="@+id/deleteTitle"
             android:padding="20dp"
-            android:text="@string/forgot_password"
+            android:text="@string/delete_account"
             android:textSize="17sp"
             android:background="@drawable/lock_round"
             android:textColor="@color/Light.Mode.Text"
             android:drawablePadding="8dp"
-            app:drawableLeftCompat="@drawable/baseline_lock_reset_24"
+            app:drawableLeftCompat="@drawable/baseline_delete_outline_24"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/desc"
-            android:text="@string/please_enter_your_email_address"
+            android:text="@string/delete_confirmation"
+            android:gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="8dp"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textColor="@color/Dark.Mode.Text"
-            app:layout_constraintTop_toBottomOf="@id/forgotTitle"
-            app:layout_constraintBottom_toTopOf="@id/emailBox" />
+            app:layout_constraintTop_toBottomOf="@id/deleteTitle" />
 
-        <EditText
-            android:autofillHints="emailAddress"
-            android:inputType="textEmailAddress"
+        <TextView
             android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:id="@+id/emailBox"
+            android:layout_height="100dp"
+            android:id="@+id/warningBox"
             android:textColor="@color/Dark.Mode.Text"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textAllCaps="true"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/delete_warning"
+            android:gravity="center"
+            android:textStyle="bold"
             android:layout_marginBottom="30dp"
-            android:hint="@string/email"
             android:textColorHint="@color/Dark.Mode.Text"
             android:maxLines="1"
             android:backgroundTint="@color/Light.Mode.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/forgotTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/deleteTitle"/>
 
         <TextView
             android:layout_width="0dp"
@@ -65,26 +66,28 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="10dp"
             android:text="@string/cancel"
+            android:gravity="center"
             android:textColor="@color/Dark.Mode.Text"
-            android:textSize="14sp"
+            android:textSize="18sp"
             app:cornerRadius="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emailBox"
+            app:layout_constraintTop_toBottomOf="@id/warningBox"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"
-            app:layout_constraintEnd_toStartOf="@id/btnReset"/>
+            app:layout_constraintEnd_toStartOf="@id/btnConfirm"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/btnReset"
-            android:text="@string/reset"
+            android:id="@+id/btnConfirm"
+            android:text="@string/confirm"
+            android:gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textColor="@color/Dark.Mode.Text"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"

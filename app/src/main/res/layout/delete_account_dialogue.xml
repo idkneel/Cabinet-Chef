@@ -44,7 +44,7 @@
             android:id="@+id/warningBox"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:textColor="@color/Dark.Mode.Text"
+            android:textColor="@android:color/holo_red_light"
             android:textSize="18sp"
             android:textAllCaps="true"
             android:layout_marginTop="40dp"

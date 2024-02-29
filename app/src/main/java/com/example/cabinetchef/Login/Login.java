@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Login  extends AppCompatActivity {
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonLogin;
+    CheckBox hidePassword;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView, forgotPassword;
@@ -67,6 +72,7 @@ public class Login  extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
         forgotPassword = findViewById(R.id.forgot_password);
+        hidePassword = findViewById(R.id.hide_password);
 
         // Set a click listener for the "Register Now" TextView
         textView.setOnClickListener(view -> {
@@ -170,6 +176,17 @@ public class Login  extends AppCompatActivity {
             }
             // Display the dialog to the user
             dialog.show();
+        });
+
+        hidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
         });
     }
 }

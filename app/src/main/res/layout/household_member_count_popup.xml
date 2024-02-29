@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="@color/Light.Mode.1">
+
+    android:background="@drawable/lightmode_popup_background">
 
     <NumberPicker
         android:id="@+id/numberPicker"

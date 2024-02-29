@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/dialogDelete"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp"
-    android:id="@+id/dialogDelete"
-    android:background="@color/Dark.Mode.1">
+    android:background="@drawable/dark_mode_popup_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialogBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dialogBox"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/deleteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/deleteTitle"
             android:padding="20dp"
             android:text="@string/delete_account"
             android:textSize="17sp"
@@ -27,9 +28,9 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/desc"
             android:text="@string/delete_confirmation"
             android:gravity="center"
             android:layout_marginStart="20dp"
@@ -40,13 +41,12 @@
             app:layout_constraintTop_toBottomOf="@id/deleteTitle" />
 
         <TextView
-            android:layout_width="300dp"
-            android:layout_height="100dp"
             android:id="@+id/warningBox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:textColor="@color/Dark.Mode.Text"
             android:textSize="18sp"
             android:textAllCaps="true"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:text="@string/delete_warning"
             android:gravity="center"
@@ -60,9 +60,9 @@
             app:layout_constraintTop_toBottomOf="@id/deleteTitle"/>
 
         <TextView
+            android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/btnCancel"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="10dp"
             android:text="@string/cancel"
@@ -78,9 +78,9 @@
             app:layout_constraintEnd_toStartOf="@id/btnConfirm"/>
 
         <TextView
+            android:id="@+id/btnConfirm"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/btnConfirm"
             android:text="@string/confirm"
             android:gravity="center"
             android:layout_marginStart="10dp"

@@ -48,34 +48,45 @@
                 finish();
             });
 
+            // Locate the deleteAccount button in the layout and set a click listener on it
             deleteAccount = findViewById(R.id.deleteAccount);
             deleteAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // When the deleteAccount button is clicked, build a new AlertDialog
                     AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                    // Inflate the custom layout for the delete account dialog
                     View dialogView = getLayoutInflater().inflate(R.layout.delete_account_dialogue, null);
 
+                    // Set the custom layout as the dialog view
                     builder.setView(dialogView);
+                    // Create the AlertDialog from the builder
                     AlertDialog dialog = builder.create();
 
+                    // Get the current FirebaseUser
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    dialogView.findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
 
+                    // Find the confirm button in the dialog and set a click listener on it
+                    dialogView.findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
-                                userDelete(dialog, user);
-                            }
-
+                            // When the confirm button is clicked, call the userDelete method
+                            // with the current dialog and user as parameters
+                            userDelete(dialog, user);
+                        }
                     });
 
+                    // Find the cancel button in the dialog and set a click listener on it
+                    // Use a lambda expression for a more concise syntax
                     dialogView.findViewById(R.id.btnCancel).setOnClickListener(v12 -> dialog.dismiss());
 
-                    // Ensure the dialog window is not null, then set its background to transparent
+                    // Check if the dialog window is not null to avoid NullPointerException
                     if (dialog.getWindow() != null) {
+                        // Set the dialog window background to transparent
+                        // Useful for custom dialog designs or backgrounds
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
                     }
-                    // Display the dialog to the user
+                    // Finally, display the dialog to the user
                     dialog.show();
                 }
             });

@@ -43,6 +43,7 @@ public class ProfileScreen extends AppCompatActivity {
         // Set numberPicker properties
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(20);
+
         numberPicker.setValue(1); // Initial value
 
         // Set OnClickListener for the selectButton

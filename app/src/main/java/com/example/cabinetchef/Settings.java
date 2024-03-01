@@ -23,7 +23,6 @@
 
     public class Settings extends AppCompatActivity {
 
-        FirebaseAuth authProfile;
         TextView deleteAccount;
 
         @Override

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Recipe {
     private String title;
-    private List<String> ingredients;
+    private List<RecipeDetail.Ingredient> ingredients;
     private int readyInMinutes; 
     private String image;
     private List<String> instructions;
@@ -13,7 +13,7 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String title, List<String> ingredients, int readyInMinutes, String image, List<String> instructions) {
+    public Recipe(String title, List<RecipeDetail.Ingredient> ingredients, int readyInMinutes, String image, List<String> instructions) {
         this.title = title;
         this.ingredients = ingredients;
         this.readyInMinutes = readyInMinutes;
@@ -30,11 +30,11 @@ public class Recipe {
         this.title = title;
     }
 
-    public List<String> getIngredients() {
+    public List<RecipeDetail.Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<RecipeDetail.Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -62,11 +62,13 @@ public class Recipe {
         this.instructions = instructions;
     }
 
+
+
     @Override
     public String toString() {
         return "Recipe{" +
                 "title='" + title + '\'' +
-                ", ingredients=" + ingredients +
+                ", ingredients=" + ingredients.toString() +
                 ", readyInMinutes=" + readyInMinutes +
                 ", image='" + image + '\'' +
                 ", instructions=" + instructions +

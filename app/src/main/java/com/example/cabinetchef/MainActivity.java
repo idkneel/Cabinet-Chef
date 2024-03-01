@@ -90,14 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button fixDatabaseButton = findViewById(R.id.fixDatabase);
-        fixDatabaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fixDatabase();
 
-            }
-        });
 
         // Setting an onClickListener for the logout button
         logout_button.setOnClickListener(view -> {
@@ -130,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot recipeSnapshot) {
+
                     Recipe recipe = recipeSnapshot.getValue(Recipe.class);
                     //use or display recipes - later
-                }
+
             }
 
             @Override
@@ -199,9 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Recipe convertToRecipe(RecipeDetail detail) {
-        List<String> ingredients = detail.getExtendedIngredients().stream()
-                .map(ingredient -> ingredient.getName() + ": " + ingredient.getAmount() + " " + ingredient.getUnit())
-                .collect(Collectors.toList());
+        List<RecipeDetail.Ingredient> ingredients = detail.getExtendedIngredients();
         List<String> instructions;
         if (detail.getInstructions() != null && !detail.getInstructions().isEmpty()) {
             instructions = Arrays.asList(detail.getInstructions().split("\n"));
@@ -219,38 +210,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void fixDatabase() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("recipes/-NqnUvE_sYOuJ3WHf6ML/ingredients");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ingredientSnapshot : dataSnapshot.getChildren()) {
-                    String ingredientString = ingredientSnapshot.getValue(String.class);
-                    if (ingredientString != null) {
-                        String[] parts = ingredientString.split(":");
-                        if (parts.length == 2) {
-                            String name = parts[0].trim();
-                            String[] quantityParts = parts[1].trim().split(" ", 2);
-                            String amount = quantityParts[0].trim();
-                            String unit = quantityParts.length > 1 ? quantityParts[1].trim() : "";
 
-                            Map<String, Object> ingredientMap = new HashMap<>();
-                            ingredientMap.put("name", name);
-                            ingredientMap.put("amount", amount);
-                            ingredientMap.put("unit", unit);
-
-                            ingredientSnapshot.getRef().updateChildren(ingredientMap);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("DatabaseError: " + databaseError.getMessage());
-            }
-        });
-    }
 
 
 

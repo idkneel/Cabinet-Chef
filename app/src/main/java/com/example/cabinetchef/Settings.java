@@ -6,6 +6,7 @@
     import android.graphics.drawable.ColorDrawable;
     import android.os.Bundle;
     import android.util.Log;
+    import android.view.LayoutInflater;
     import android.view.View;
     import android.widget.Button;
     import android.widget.TextView;
@@ -25,6 +26,7 @@
 
         FirebaseAuth authProfile;
         TextView deleteAccount;
+        AlertDialog confirmDialog;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +66,33 @@
 
                         @Override
                         public void onClick(View v) {
+                            if(confirmDialog == null){
+                                AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(Settings.this);
+                                View confirmPopup = getLayoutInflater().inflate(R.layout.are_you_sure_popup, null);
 
-                                userDelete(dialog, user);
+                                confirmBuilder.setView(confirmPopup);
+                                confirmDialog = builder.create();
+
+                                confirmPopup.findViewById(R.id.confirmYes).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        assert user != null;
+                                        userDelete(dialog, user);
+                                    }
+                                });
+                                confirmPopup.findViewById(R.id.confirmNo).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        confirmDialog.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.dismiss());
+                                    }
+                                });
+                                if (confirmDialog.getWindow() != null) {
+                                    confirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                                }
+                            }
+
+                            confirmDialog.show();
                             }
 
                     });
@@ -76,6 +103,7 @@
                     if (dialog.getWindow() != null) {
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
                     }
+
                     // Display the dialog to the user
                     dialog.show();
                 }

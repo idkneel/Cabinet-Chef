@@ -54,4 +54,7 @@
     <string name="delete_warning">This action cannot be undone.</string>
     <string name="delete_confirmation">Are you sure you want to delete your account?</string>
     <string name="lets_get_cooking">Lets Get Cooking</string>
+    <string name="are_you_sure">Are You Sure?</string>
+    <string name="no">No</string>
+    <string name="yes">yes</string>
 </resources>

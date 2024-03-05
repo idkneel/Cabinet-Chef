@@ -6,25 +6,21 @@
     import android.graphics.drawable.ColorDrawable;
     import android.os.Bundle;
     import android.util.Log;
-    import android.view.LayoutInflater;
     import android.view.View;
     import android.widget.Button;
     import android.widget.TextView;
     import android.widget.Toast;
 
-    import androidx.annotation.NonNull;
     import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
 
     import com.example.cabinetchef.Login.Login;
-    import com.google.android.gms.tasks.OnCompleteListener;
-    import com.google.android.gms.tasks.Task;
     import com.google.firebase.auth.FirebaseAuth;
     import com.google.firebase.auth.FirebaseUser;
 
     public class Settings extends AppCompatActivity {
 
-        FirebaseAuth authProfile;
+
         TextView deleteAccount;
         AlertDialog confirmDialog;
 
@@ -73,7 +69,7 @@
                             assert user != null;
                             userDelete(dialog, user);
                         });
-                        confirmPopup.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.dismiss()));
+                        confirmPopup.findViewById(R.id.confirmNo).setOnClickListener(v112 -> confirmDialog.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.dismiss()));
                         if (confirmDialog.getWindow() != null) {
                             confirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
                         }

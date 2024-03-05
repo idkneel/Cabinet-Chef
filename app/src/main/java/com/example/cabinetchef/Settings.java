@@ -38,13 +38,29 @@
 
             // Setting an onClickListener for the logout button
             logout_button.setOnClickListener(view -> {
-                // Signing out the user
-                FirebaseAuth.getInstance().signOut();
-                // Redirecting to the Login activity
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                // Finishing the current activity
-                finish();
+                AlertDialog.Builder logoutBuilder = new AlertDialog.Builder(Settings.this);
+                View logoutDialogView = getLayoutInflater().inflate(R.layout.are_you_sure_popup, null);
+
+                logoutBuilder.setView(logoutDialogView);
+                AlertDialog logoutDialog = logoutBuilder.create();
+
+                logoutDialogView.findViewById(R.id.confirmYes).setOnClickListener(v -> {
+                    // Signing out the user
+                    FirebaseAuth.getInstance().signOut();
+                    // Redirecting to the Login activity
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    // Finishing the current activity
+                    finish();
+                });
+
+                logoutDialogView.findViewById(R.id.confirmNo).setOnClickListener(v -> logoutDialog.findViewById(R.id.confirmNo).setOnClickListener(v2 -> logoutDialog.dismiss()));
+                if (logoutDialog.getWindow() != null) {
+                    logoutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                    logoutDialog.dismiss();
+                }
+
+                logoutDialog.show();
             });
 
             deleteAccount = findViewById(R.id.deleteAccount);

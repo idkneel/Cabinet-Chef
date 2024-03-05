@@ -52,80 +52,62 @@
             });
 
             deleteAccount = findViewById(R.id.deleteAccount);
-            deleteAccount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
-                    View dialogView = getLayoutInflater().inflate(R.layout.delete_account_dialogue, null);
+            deleteAccount.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                View dialogView = getLayoutInflater().inflate(R.layout.delete_account_dialogue, null);
 
-                    builder.setView(dialogView);
-                    AlertDialog dialog = builder.create();
+                builder.setView(dialogView);
+                AlertDialog dialog = builder.create();
 
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    dialogView.findViewById(R.id.btnConfirm).setOnClickListener(new View.OnClickListener() {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                dialogView.findViewById(R.id.btnConfirm).setOnClickListener(v1 -> {
+                    if(confirmDialog == null){
+                        AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(Settings.this);
+                        View confirmPopup = getLayoutInflater().inflate(R.layout.are_you_sure_popup, null);
 
-                        @Override
-                        public void onClick(View v) {
-                            if(confirmDialog == null){
-                                AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(Settings.this);
-                                View confirmPopup = getLayoutInflater().inflate(R.layout.are_you_sure_popup, null);
+                        confirmBuilder.setView(confirmPopup);
+                        confirmDialog = confirmBuilder.create();
 
-                                confirmBuilder.setView(confirmPopup);
-                                confirmDialog = builder.create();
+                        confirmPopup.findViewById(R.id.confirmYes).setOnClickListener(v11 -> {
 
-                                confirmPopup.findViewById(R.id.confirmYes).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        assert user != null;
-                                        userDelete(dialog, user);
-                                    }
-                                });
-                                confirmPopup.findViewById(R.id.confirmNo).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        confirmDialog.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.dismiss());
-                                    }
-                                });
-                                if (confirmDialog.getWindow() != null) {
-                                    confirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-                                }
-                            }
-
-                            confirmDialog.show();
-                            }
-
-                    });
-
-                    dialogView.findViewById(R.id.btnCancel).setOnClickListener(v12 -> dialog.dismiss());
-
-                    // Ensure the dialog window is not null, then set its background to transparent
-                    if (dialog.getWindow() != null) {
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                            assert user != null;
+                            userDelete(dialog, user);
+                        });
+                        confirmPopup.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.findViewById(R.id.confirmNo).setOnClickListener(v12 -> confirmDialog.dismiss()));
+                        if (confirmDialog.getWindow() != null) {
+                            confirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                        }
                     }
 
-                    // Display the dialog to the user
-                    dialog.show();
+                    confirmDialog.show();
+                    });
+
+                dialogView.findViewById(R.id.btnCancel).setOnClickListener(v13 -> dialog.dismiss());
+
+                // Ensure the dialog window is not null, then set its background to transparent
+                if (dialog.getWindow() != null) {
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
                 }
+
+                // Display the dialog to the user
+                dialog.show();
             });
         }
 
         // Method to handle user account deletion
         private void userDelete(AlertDialog dialog, FirebaseUser user) {
             // Initiates the deletion process for the current user
+            // Attaches a listener that will respond once the delete operation is complete
             user.delete()
-                    .addOnCompleteListener(new OnCompleteListener<Void>() { // Attaches a listener that will respond once the delete operation is complete
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) { // This method is called when the delete operation completes
-                            if (task.isSuccessful()) { // Checks if the delete operation was successful
-                                Log.d(TAG, "User account deleted."); // Logs a message indicating the user was successfully deleted
-                                // Redirects the user to the Login activity after successful deletion
-                                startActivity(new Intent(Settings.this, Login.class));
-                                dialog.dismiss(); // Dismisses the alert dialog if it was showing
-                            } else {
-                                // Shows a toast message to the user indicating the delete operation failed
-                                Toast.makeText(Settings.this, "Delete Failed.", Toast.LENGTH_SHORT).show();
-                            }
+                    .addOnCompleteListener(task -> { // This method is called when the delete operation completes
+                        if (task.isSuccessful()) { // Checks if the delete operation was successful
+                            Log.d(TAG, "User account deleted."); // Logs a message indicating the user was successfully deleted
+                            // Redirects the user to the Login activity after successful deletion
+                            startActivity(new Intent(Settings.this, Login.class));
+                            dialog.dismiss(); // Dismisses the alert dialog if it was showing
+                        } else {
+                            // Shows a toast message to the user indicating the delete operation failed
+                            Toast.makeText(Settings.this, "Delete Failed.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

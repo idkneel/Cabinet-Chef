@@ -35,6 +35,13 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/dark_mode_button_outlines"/>
     <Button
+        android:id="@+id/fixDatabase"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:text="Fix" />
+    <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

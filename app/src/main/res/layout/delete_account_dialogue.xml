@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
     android:background="@drawable/dark_mode_popup_background">
 
     <TextView
@@ -46,8 +47,8 @@
             android:id="@+id/warningBox"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="20sp"
+            android:textColor="@color/Dark.Mode.Text"
+            android:textSize="18sp"
             android:textAllCaps="true"
             android:layout_marginTop="40dp"
             android:text="@string/delete_warning"
@@ -98,6 +99,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"
             app:layout_constraintStart_toEndOf="@id/btnCancel" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

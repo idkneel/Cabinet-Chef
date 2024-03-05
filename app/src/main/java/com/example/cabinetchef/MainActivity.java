@@ -30,7 +30,9 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import retrofit2.Call;
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         // Setting an onClickListener for the logout button
         logout_button.setOnClickListener(view -> {
             // Signing out the user
@@ -119,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot recipeSnapshot) {
+
                     Recipe recipe = recipeSnapshot.getValue(Recipe.class);
                     //use or display recipes - later
-                }
+
             }
 
             @Override
@@ -188,9 +192,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Recipe convertToRecipe(RecipeDetail detail) {
-        List<String> ingredients = detail.getExtendedIngredients().stream()
-                .map(ingredient -> ingredient.getName() + ": " + ingredient.getAmount() + " " + ingredient.getUnit())
-                .collect(Collectors.toList());
+        List<RecipeDetail.Ingredient> ingredients = detail.getExtendedIngredients();
         List<String> instructions;
         if (detail.getInstructions() != null && !detail.getInstructions().isEmpty()) {
             instructions = Arrays.asList(detail.getInstructions().split("\n"));
@@ -207,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
             databaseReference.push().setValue(recipe);
         }
     }
+
+
 
 
 

@@ -22,11 +22,18 @@ import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 // Register activity class definition
 public class Register extends AppCompatActivity {
@@ -37,6 +44,8 @@ public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+    FirebaseFirestore fStore;
+    String userID;
 
     // Method called when activity is starting
     @Override
@@ -60,6 +69,8 @@ public class Register extends AppCompatActivity {
 
         // Initializing FirebaseAuth instance and UI components
         mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonReg = findViewById(R.id.button_register);
@@ -101,11 +112,33 @@ public class Register extends AppCompatActivity {
                         // Hide the progress bar after attempt
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser authUser = mAuth.getCurrentUser();
 
                             // Display success message and redirect to MainActivity
                             Toast.makeText(Register.this, "Account created.",
                                     Toast.LENGTH_SHORT).show();
+
+                            userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String,Object> user = new HashMap<>();
+
+                            String uEmail = Objects.requireNonNull(editTextEmail.getText()).toString();
+                            String uPassword = Objects.requireNonNull(editTextPassword.getText()).toString();
+
+                            user.put("email", uEmail);
+                            user.put("password", uPassword);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG,"On Success: user profile is created for " + userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: "+ e.toString());
+                                }
+                            });
+
                             // Where you designate where to go after the account has been created
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);

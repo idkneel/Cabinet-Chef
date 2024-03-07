@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cabinetchef.Enums.UserSettings;
 import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,7 +47,7 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
     FirebaseFirestore fStore;
-    String userID;
+    UserSettings uSettings;
 
     // Method called when activity is starting
     @Override
@@ -67,6 +69,7 @@ public class Register extends AppCompatActivity {
         // Setting the content view to the register activity layout
         setContentView(R.layout.activity_register);
 
+        uSettings = new UserSettings();
         // Initializing FirebaseAuth instance and UI components
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -118,19 +121,24 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "Account created.",
                                     Toast.LENGTH_SHORT).show();
 
-                            userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            uSettings.userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();//
+                            DocumentReference documentReference = fStore.collection("users").document(uSettings.userID);
                             Map<String,Object> user = new HashMap<>();
 
-                            String uEmail = Objects.requireNonNull(editTextEmail.getText()).toString();
-                            String uPassword = Objects.requireNonNull(editTextPassword.getText()).toString();
+                            uSettings.uEmail = Objects.requireNonNull(editTextEmail.getText()).toString();
+                            uSettings.uPassword = Objects.requireNonNull(editTextPassword.getText()).toString();
+                            // Set the user's household size to 1 by default
 
-                            user.put("email", uEmail);
-                            user.put("password", uPassword);
+                            user.put("Email", uSettings.uEmail);
+                            user.put("Password", uSettings.uPassword);
+                            user.put("Household members", uSettings.uHousehold);
+                            user.put("Light Mode", uSettings.uTint);
+                            user.put("Cooking difficulty", uSettings.uDifficulty);
+                            user.put("User ID", uSettings.userID);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Log.d(TAG,"On Success: user profile is created for " + userID);
+                                    Log.d(TAG,"On Success: user profile is created for " + uSettings.userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

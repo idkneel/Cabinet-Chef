@@ -34,7 +34,7 @@
         android:background="@drawable/lightmode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
-        android:text="@string/LightMode"
+        android:text="@string/toggle_color_theme"
         android:textStyle="bold"
         android:layout_marginTop="2dp"
         android:padding="8dp" />

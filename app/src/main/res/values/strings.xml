@@ -57,4 +57,5 @@
     <string name="are_you_sure">Are You Sure?</string>
     <string name="no">No</string>
     <string name="yes">yes</string>
+    <string name="toggle_color_theme">Toggle Color Theme</string>
 </resources>

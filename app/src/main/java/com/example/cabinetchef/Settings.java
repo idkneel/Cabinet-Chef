@@ -20,9 +20,10 @@
 
     public class Settings extends AppCompatActivity {
 
-
+        private boolean isDarkModeEnabled = false; //Default is light mode
         TextView deleteAccount;
         AlertDialog confirmDialog;
+        Button themeToggleButton;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,31 @@
                 // Display the dialog to the user
                 dialog.show();
             });
+
+            themeToggleButton = findViewById(R.id.ColorModePreference);
+            themeToggleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleTheme();
+                }
+            });
+
+        }
+
+        private void toggleTheme(){
+            isDarkModeEnabled = !isDarkModeEnabled;
+
+            if (isDarkModeEnabled){
+                setTheme(R.style.DarkTheme);
+
+            }else {
+                // Apply light mode
+                setTheme(R.style.LightTheme);
+                // Update button icon
+            }
+
+            // Recreate the activity to apply the new theme
+            recreate();
         }
 
         // Method to handle user account deletion

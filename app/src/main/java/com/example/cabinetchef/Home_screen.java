@@ -3,23 +3,41 @@ package com.example.cabinetchef;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.bumptech.glide.Glide;
+import java.util.Random;
 
 
 public class Home_screen extends AppCompatActivity {
 
     private PopupWindow screenSelectWindow;
+    private DatabaseReference databaseReference;
     private PopupWindow filtersWindow;
+    private ImageView recipeImage;
+    private TextView recipeTitle;
     private PopupWindow mealTimesWindow;
     private PopupWindow cookingDifficultyWindow;
     private View cookingDifficultyPopupView;
@@ -35,7 +53,10 @@ public class Home_screen extends AppCompatActivity {
         // Setting the content view to the home_screen layout
         setContentView(R.layout.home_screen);
 
+        recipeImage = findViewById(R.id.recipeImage);
+        recipeTitle = findViewById(R.id.recipeTitle);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("recipes");
         // Initialize popupWindow and popupView
         screenSelectView = LayoutInflater.from(this).inflate(R.layout.screen_select_popup, null);
         screenSelectWindow = new PopupWindow(
@@ -79,7 +100,7 @@ public class Home_screen extends AppCompatActivity {
 
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
-
+        displayRandomRecipe();
     }
 
     // Method to show the screen selection popup
@@ -173,9 +194,9 @@ public class Home_screen extends AppCompatActivity {
             // Update RecyclerView adapter accordingly
 
             //when recycler view gets set up for meal times, input following 3 lines
-                // Inside onActivityResult method
-                // Assuming you have a RecyclerView and its adapter
-                //adapter.filterDataByMealTime(selectedMealTime);
+            // Inside onActivityResult method
+            // Assuming you have a RecyclerView and its adapter
+            //adapter.filterDataByMealTime(selectedMealTime);
         }
     }
 
@@ -224,6 +245,104 @@ public class Home_screen extends AppCompatActivity {
         cookingDifficultyWindow.setHeight(height);
         cookingDifficultyWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
     }
+
+
+    private void displayRandomRecipe() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Recipe> recipes = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Recipe recipe = snapshot.getValue(Recipe.class);
+                    recipes.add(recipe);
+                }
+
+                if (!recipes.isEmpty()) {
+                    Random random = new Random();
+                    Recipe randomRecipe = recipes.get(random.nextInt(recipes.size()));
+                    displayRecipe(randomRecipe);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("HomeScreen", "Failed to read recipe", error.toException());
+            }
+        });
+    }
+
+    private void displayRecipe(Recipe recipe) {
+        if (recipe != null) {
+            Glide.with(this).load(recipe.getImage()).into(recipeImage);
+            recipeTitle.setText(recipe.getTitle());
+        }
+    }
+
+
+    //DONT REMOVE IT PLEASE IT IS VERY IMPORTANT BECAUSE BECAUSE------------------------------------------------------------------------------------------------------------!!!
+
+    /*private void validateIngredientsDataType(DatabaseReference databaseReference) {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+                    DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
+                    for (DataSnapshot ingredientSnapshot : ingredientsSnapshot.getChildren()) {
+                        boolean nameIsString = ingredientSnapshot.child("name").getValue() instanceof String;
+                        boolean amountIsString = ingredientSnapshot.child("amount").getValue() instanceof String;
+                        boolean unitIsString = ingredientSnapshot.child("unit").getValue() instanceof String;
+
+                        if (!nameIsString || !amountIsString || !unitIsString) {
+                            Log.d("ValidateIngredients", "No: Ingredient data types are not all strings.");
+                            return;
+                        }
+                    }
+                }
+                Log.d("ValidateIngredients", "Yes: All ingredient fields are strings.");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("ValidateIngredients", "Database error: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    private void identifyNonStringIngredientData(DatabaseReference databaseReference) {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+                    String recipeId = recipeSnapshot.getKey();
+                    boolean hasNonStringField = false;
+
+                    for (DataSnapshot ingredientSnapshot : recipeSnapshot.child("ingredients").getChildren()) {
+                        Object name = ingredientSnapshot.child("name").getValue();
+                        Object amount = ingredientSnapshot.child("amount").getValue();
+                        Object unit = ingredientSnapshot.child("unit").getValue();
+
+                        // Check if any field is not a String
+                        if (!(name instanceof String) || !(amount instanceof String) || !(unit instanceof String)) {
+                            hasNonStringField = true;
+                            break;
+                        }
+                    }
+
+                    if (hasNonStringField) {
+                        Log.d("NonStringIngredientData", "Recipe ID with non-string ingredient fields: " + recipeId);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("NonStringIngredientData", "Database error", databaseError.toException());
+            }
+        });
+    }*/
+
+
+
 
 
 

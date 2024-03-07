@@ -20,6 +20,8 @@
     <string name="please_enter_your_email_address">Please enter your email address:</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
+    <string name="recipe_image">Recipe image</string>
+
 
     <string name="filters">FILTERS</string>
     <string name="meal_time">Meal Time</string>

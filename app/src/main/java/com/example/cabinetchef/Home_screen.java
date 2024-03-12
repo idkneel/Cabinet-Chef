@@ -189,20 +189,6 @@ public class Home_screen extends AppCompatActivity {
         filtersWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_MEAL_TIME && resultCode == RESULT_OK && data != null) {
-            String selectedMealTime = data.getStringExtra("mealTime");
-            // Use the selected meal time to filter RecyclerView data
-            // Update RecyclerView adapter accordingly
-
-            //when recycler view gets set up for meal times, input following 3 lines
-            // Inside onActivityResult method
-            // Assuming you have a RecyclerView and its adapter
-            //adapter.filterDataByMealTime(selectedMealTime);
-        }
-    }
 
     private void showMealTimePopup() {
         View rootView = LayoutInflater.from(this).inflate(R.layout.filter_options_popup, null);

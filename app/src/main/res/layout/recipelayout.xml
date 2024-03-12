@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dark_mode_popup_background"
     android:padding="16dp">
 
     <LinearLayout
@@ -20,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:paddingTop="8dp" />
+            android:paddingTop="8dp"
+            android:textColor="@color/Light.Mode.Text"/>
 
         <!-- Add more views like TextViews for time to cook, ingredients, and instructions -->
 

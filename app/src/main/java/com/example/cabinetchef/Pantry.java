@@ -14,7 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Pantry extends AppCompatActivity {
 
@@ -42,16 +45,18 @@ public class Pantry extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<String> allIngredientNames = new ArrayList<>();
+                        Set<String> ingredientSet = new HashSet<>();
                         for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
                             DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
                             for (DataSnapshot ingredientSnapshot : ingredientsSnapshot.getChildren()) {
                                 String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
                                 if (ingredientName != null) {
-                                    allIngredientNames.add(ingredientName);
+                                    ingredientSet.add(ingredientName.toLowerCase());
                                 }
                             }
                         }
+                        List<String> allIngredientNames = new ArrayList<>(ingredientSet);
+                        Collections.sort(allIngredientNames);
                         adapter.setIngredients(allIngredientNames);
                     }
 
@@ -61,6 +66,7 @@ public class Pantry extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 

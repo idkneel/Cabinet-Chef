@@ -19,15 +19,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+
 import java.util.Random;
 
 
@@ -275,8 +279,34 @@ public class Home_screen extends AppCompatActivity {
         if (recipe != null) {
             Glide.with(this).load(recipe.getImage()).into(recipeImage);
             recipeTitle.setText(recipe.getTitle());
+
+            View.OnClickListener recipeClickListener = v -> {
+                Intent intent = new Intent(Home_screen.this, RecipeDetailActivity.class);
+                intent.putExtra("RECIPE_IMAGE", recipe.getImage());
+                intent.putExtra("RECIPE_TITLE", recipe.getTitle());
+                intent.putExtra("RECIPE_TIME", recipe.getReadyInMinutes());
+
+                Gson gson = new Gson();
+                String instructionsJson = gson.toJson(recipe.getInstructions());
+
+                Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
+                String ingredientsJson = gson.toJson(recipe.getIngredients(), ingredientListType);
+
+                intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);
+                intent.putExtra("RECIPE_INGREDIENTS_JSON", ingredientsJson);
+
+                startActivity(intent);
+            };
+
+            recipeImage.setOnClickListener(recipeClickListener);
+            recipeTitle.setOnClickListener(recipeClickListener);
         }
     }
+
+
+
+
+
 
 
     //DONT REMOVE IT PLEASE IT IS VERY IMPORTANT BECAUSE BECAUSE------------------------------------------------------------------------------------------------------------!!!

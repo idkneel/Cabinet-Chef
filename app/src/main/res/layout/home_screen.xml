@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
+    android:theme="@style/DarkTheme"
     android:background="@color/Light.Mode.1">
 
     <!--background tint is background color

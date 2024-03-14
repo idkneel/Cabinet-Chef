@@ -131,10 +131,11 @@ public class Register extends AppCompatActivity {
 
                             user.put("Email", uSettings.uEmail);
                             user.put("Password", uSettings.uPassword);
-                            user.put("Household members", uSettings.uHousehold);
-                            user.put("Light Mode", uSettings.uTint);
-                            user.put("Cooking difficulty", uSettings.uDifficulty);
+                            user.put("Household members", "1");
+                            user.put("Light Mode", "true");
+                            user.put("Cooking difficulty", "0");
                             user.put("User ID", uSettings.userID);
+
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {

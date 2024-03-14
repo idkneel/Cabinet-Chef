@@ -47,47 +47,71 @@
 
 
         <TextView
+            android:id="@+id/recipeIngredientsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:text="@string/ingredients"
             android:textColor="@color/Dark.Mode.Text"
             android:textSize="24sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:onClick="toggleIngredientsDropdown" />
 
-        <TextView
-            android:id="@+id/recipeIngredientsDialog"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/recipeIngredientsContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/Dark.Mode.Text" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:paddingTop="8dp">
 
+            <!-- Content of the dropdown (Ingredients) -->
+            <TextView
+                android:id="@+id/recipeIngredientsDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/Dark.Mode.Text" />
 
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/recipeInstructionsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:paddingTop="8dp"
             android:textStyle="italic"
             android:textColor="@color/Dark.Mode.Text"
-            android:text="@string/instructions"/>
+            android:text="@string/instructions"
+            android:onClick="toggleInstructionsDropdown"/>
 
-        <TextView
-            android:id="@+id/recipeInstructionsDialog"
+        <LinearLayout
+            android:id="@+id/recipeInstructionsContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:textColor="@color/Dark.Mode.Text" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:paddingTop="8dp">
+
+            <!-- Content of the dropdown (Instructions) -->
+            <TextView
+                android:id="@+id/recipeInstructionsDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/Dark.Mode.Text" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/finishCooking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="@string/done_cooking"
+            android:text="@string/lets_get_cooking"
             android:textSize="24sp"
             android:textStyle="bold"
             android:typeface="monospace"

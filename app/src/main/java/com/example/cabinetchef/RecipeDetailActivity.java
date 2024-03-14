@@ -2,8 +2,10 @@ package com.example.cabinetchef;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -89,5 +90,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return processedInstructions.toString().trim(); // Trim any leading or trailing whitespaces
     }
 
+    public void toggleIngredientsDropdown(View view) {
+        LinearLayout ingredientsContent = findViewById(R.id.recipeIngredientsContent);
+        if (ingredientsContent.getVisibility() == View.VISIBLE) {
+            ingredientsContent.setVisibility(View.GONE);
+        } else {
+            ingredientsContent.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void toggleInstructionsDropdown(View view) {
+        LinearLayout instructionsContent = findViewById(R.id.recipeInstructionsContent);
+        if (instructionsContent.getVisibility() == View.VISIBLE) {
+            instructionsContent.setVisibility(View.GONE);
+        } else {
+            instructionsContent.setVisibility(View.VISIBLE);
+        }
+    }
 
 }

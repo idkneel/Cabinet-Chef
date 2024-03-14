@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dark_mode_popup_background"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="38dp"
+        tools:ignore="ScrollViewSize">
+
+        <ImageView
+            android:id="@+id/recipeImageDialog"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/recipeTitleDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="48sp"
+            android:paddingTop="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/Dark.Mode.Text"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="8dp"
+            android:textStyle="italic"
+            android:textColor="@color/Dark.Mode.Text"
+            android:text="@string/time_to_cook"/>
+
+        <TextView
+            android:id="@+id/recipeTimeDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/Dark.Mode.Text"/>
+
+
+        <TextView
+            android:id="@+id/recipeIngredientsHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="@string/ingredients"
+            android:textColor="@color/Dark.Mode.Text"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            android:onClick="toggleIngredientsDropdown" />
+
+        <LinearLayout
+            android:id="@+id/recipeIngredientsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:paddingTop="8dp">
+
+            <!-- Content of the dropdown (Ingredients) -->
+            <TextView
+                android:id="@+id/recipeIngredientsDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/Dark.Mode.Text" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recipeInstructionsHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="8dp"
+            android:textStyle="italic"
+            android:textColor="@color/Dark.Mode.Text"
+            android:text="@string/instructions"
+            android:onClick="toggleInstructionsDropdown"/>
+
+        <LinearLayout
+            android:id="@+id/recipeInstructionsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:paddingTop="8dp">
+
+            <!-- Content of the dropdown (Instructions) -->
+            <TextView
+                android:id="@+id/recipeInstructionsDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/Dark.Mode.Text" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/finishCooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="@string/lets_get_cooking"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:textColor="@color/Dark.Mode.Text"
+            android:background="@drawable/lightmode_button_outlines"/>
+
+    </LinearLayout>
+
+
+</ScrollView>

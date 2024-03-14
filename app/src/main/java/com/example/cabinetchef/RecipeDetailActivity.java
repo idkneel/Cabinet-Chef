@@ -79,7 +79,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         List<String> instructionsList = gson.fromJson(instructionsJson, instructionsType);
 
         // Define characters to be removed
-        String charactersToRemove = "</?li>|</?ol>"; // Include <ol> in the characters to remove
+        String charactersToRemove = "</?li>|</?ol>";
 
         // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();

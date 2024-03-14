@@ -8,6 +8,7 @@ public class RecipeDetail {
     private int readyInMinutes;
     private String image;
     private List<Ingredient> extendedIngredients;
+    private List<String> simpleIngredients;
     private String instructions;
 
     public RecipeDetail() {}
@@ -40,6 +41,13 @@ public class RecipeDetail {
     public List<Ingredient> getExtendedIngredients() { return extendedIngredients; }
 
     public void setExtendedIngredients(List<Ingredient> extendedIngredients) { this.extendedIngredients = extendedIngredients; }
+    public List<String> getSimpleIngredients() {
+        return simpleIngredients;
+    }
+
+    public void setSimpleIngredients(List<String> simpleIngredients) {
+        this.simpleIngredients = simpleIngredients;
+    }
 
     public String getInstructions() { return instructions; }
 

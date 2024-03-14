@@ -24,4 +24,10 @@
         android:text="@string/back"
         android:textColor="@color/Light.Mode.Text"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingredientsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
 </LinearLayout>

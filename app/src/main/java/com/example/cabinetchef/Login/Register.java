@@ -6,9 +6,13 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +52,7 @@ public class Register extends AppCompatActivity {
     TextView textView;
     FirebaseFirestore fStore;
     UserSettings uSettings;
+    CheckBox hidePassword;
 
     // Method called when activity is starting
     @Override
@@ -79,6 +84,7 @@ public class Register extends AppCompatActivity {
         buttonReg = findViewById(R.id.button_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
+        hidePassword = findViewById(R.id.hide_password);
 
         // Set an onClickListener for the textView to redirect to the Login activity
         textView.setOnClickListener(view -> {
@@ -162,6 +168,23 @@ public class Register extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
+        });
+
+        // Set a listener on the hidePassword checkbox to listen for check changes
+        hidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // This method is called whenever the checked state of the hidePassword CompoundButton changes
+                if (isChecked) {
+                    // If the hidePassword button is checked, change the editTextPassword's transformation method
+                    // to HideReturnsTransformationMethod to show the password
+                    editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    // If the hidePassword button is not checked, change the editTextPassword's transformation method
+                    // back to PasswordTransformationMethod to hide the password
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
         });
     }
 }

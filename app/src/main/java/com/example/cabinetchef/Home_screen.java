@@ -275,7 +275,7 @@ public class Home_screen extends AppCompatActivity {
             recipeTitle.setText(recipe.getTitle());
 
             View.OnClickListener recipeClickListener = v -> {
-                Intent intent = new Intent(Home_screen.this, RecipeDetailActivity.class);
+                Intent intent = new Intent(Home_screen.this, CookingScreen.class);
                 intent.putExtra("RECIPE_IMAGE", recipe.getImage());
                 intent.putExtra("RECIPE_TITLE", recipe.getTitle());
                 intent.putExtra("RECIPE_TIME", recipe.getReadyInMinutes());

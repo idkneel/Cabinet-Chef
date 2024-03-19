@@ -107,16 +107,16 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/startCooking"
+            android:id="@+id/finishCooking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="@string/lets_get_cooking"
+            android:background="@drawable/lightmode_button_outlines"
+            android:text="@string/finish_cooking"
+            android:textColor="@color/Dark.Mode.Text"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:typeface="monospace"
-            android:textColor="@color/Dark.Mode.Text"
-            android:background="@drawable/lightmode_button_outlines"/>
+            android:typeface="monospace" />
 
     </LinearLayout>
 

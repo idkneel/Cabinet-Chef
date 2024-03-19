@@ -11,7 +11,18 @@
         typeface is font
         fontfamily is custom fonts
         custom textcolors are setup in colors.xml
-    -->
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/app_logo"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:contentDescription="@string/app_name"
+        android:layout_above="@+id/user_details"/>
+
+-->
     <TextView
         android:id="@+id/user_details"
         android:layout_width="wrap_content"
@@ -34,13 +45,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/dark_mode_button_outlines"/>
-    <Button
-        android:id="@+id/fixDatabase"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="20dp"
-        android:text="Fix" />
+
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
@@ -55,12 +60,5 @@
         android:text="@string/logout"
         android:typeface="monospace" />
 
-
-    <Button
-        android:id="@+id/firebaseTestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/test_firebase" />
 
 </RelativeLayout>

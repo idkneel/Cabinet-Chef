@@ -14,7 +14,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Recipe.Recipe;
@@ -48,7 +47,7 @@ public class Home_screen extends AppCompatActivity {
     private View screenSelectView;
     private View filtersPopupView;
     private View mealTimesPopupView;
-    private static final int REQUEST_MEAL_TIME = 1;
+
 
     @SuppressLint("InflateParams")
     @Override

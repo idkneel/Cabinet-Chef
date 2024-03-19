@@ -30,7 +30,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         TextView recipeTimeView = findViewById(R.id.recipeTimeDialog);
         TextView recipeIngredientsView = findViewById(R.id.recipeIngredientsDialog);
         TextView recipeInstructionsView = findViewById(R.id.recipeInstructionsDialog);
-        Button finishCookingButton = findViewById(R.id.finishCooking);
+        Button startCookingButton = findViewById(R.id.startCooking);
 
         String recipeImage = getIntent().getStringExtra("RECIPE_IMAGE");
         String recipeTitle = getIntent().getStringExtra("RECIPE_TITLE");
@@ -62,8 +62,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         recipeInstructionsView.setText(processInstructions(instructionsJson));
 
-        finishCookingButton.setOnClickListener(v -> {
-            startActivity(new Intent(RecipeDetailActivity.this, Home_screen.class));
+        startCookingButton.setOnClickListener(v -> {
+            startActivity(new Intent(RecipeDetailActivity.this, CookingScreen.class));
 
             //add code to save recipe to recents
             //make favorites page and ask user if they wish to favorite recipe

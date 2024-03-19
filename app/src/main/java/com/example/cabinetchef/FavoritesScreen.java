@@ -15,6 +15,5 @@ public class FavoritesScreen extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             finish(); // Close the current activity and go back
         });
-
     }
 }

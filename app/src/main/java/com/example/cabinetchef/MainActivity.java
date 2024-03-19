@@ -82,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(user.getEmail());
         }
 
-        Button testFirebaseButton = findViewById(R.id.firebaseTestButton);
-        testFirebaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchDataAndSaveToFirebase();
-            }
-        });
-
 
 
         // Setting an onClickListener for the logout button
@@ -112,13 +104,12 @@ public class MainActivity extends AppCompatActivity {
         });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        Button addButton = findViewById(R.id.firebaseTestButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fetchDataAndSaveToFirebase();
-            }
-        });
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fetchDataAndSaveToFirebase();
+//            }
+//        });
 
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {

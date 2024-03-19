@@ -3,17 +3,21 @@ package com.example.cabinetchef;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Recipe.Recipe;
@@ -48,6 +52,8 @@ public class Home_screen extends AppCompatActivity {
     private View filtersPopupView;
     private View mealTimesPopupView;
 
+    private EditText searchEditText;
+    private static final int REQUEST_MEAL_TIME = 1;
 
     @SuppressLint("InflateParams")
     @Override
@@ -104,6 +110,9 @@ public class Home_screen extends AppCompatActivity {
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
         displayRandomRecipe();
+
+        searchEditText = findViewById(R.id.searchEditText);
+        setupSearchListener();
     }
 
     // Method to show the screen selection popup
@@ -287,6 +296,47 @@ public class Home_screen extends AppCompatActivity {
             recipeTitle.setOnClickListener(recipeClickListener);
         }
     }
+
+    private void setupSearchListener() {
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                searchRecipes(editable.toString());
+            }
+        });
+    }
+
+    private void searchRecipes(String query) {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Recipe> filteredRecipes = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Recipe recipe = snapshot.getValue(Recipe.class);
+                    if (recipe != null && recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                        filteredRecipes.add(recipe);
+                    }
+                }
+
+                if (!filteredRecipes.isEmpty()) {
+                    // Display the first recipe from the filtered list for demonstration purposes
+                    displayRecipe(filteredRecipes.get(0));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("HomeScreen", "Failed to read recipe", databaseError.toException());
+            }
+        });
+    }
+
 
 
 

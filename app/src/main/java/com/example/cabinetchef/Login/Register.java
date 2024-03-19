@@ -148,10 +148,29 @@ public class Register extends AppCompatActivity {
                                 }
                             });
 
+                            DocumentReference documentReference2 = fStore.collection("favorite recipes").document(uSettings.userID);
+                            Map<String,Object> user2 = new HashMap<>();
+                            // Set the user's household size to 1 by default
+
+                            user2.put("User ID", uSettings.userID);
+
+                            documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG,"On Success: user favorites profile is created for " + uSettings.userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: "+ e.toString());
+                                }
+                            });
+
                             // Where you designate where to go after the account has been created
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();
+
                         } else if (password.length() < 6) {
                             // Check if the password is too short and display a message
                             Toast.makeText(Register.this, "Password is too short",

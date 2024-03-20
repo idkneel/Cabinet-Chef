@@ -1,4 +1,5 @@
 package com.example.cabinetchef;
+import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.common.reflect.TypeToken;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,10 +38,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
+import java.util.Map;
 import java.util.Random;
 
 
@@ -51,7 +64,7 @@ public class Home_screen extends AppCompatActivity {
     private View screenSelectView;
     private View filtersPopupView;
     private View mealTimesPopupView;
-
+    FirebaseFirestore fStore;
     private EditText searchEditText;
     private static final int REQUEST_MEAL_TIME = 1;
 
@@ -283,7 +296,8 @@ public class Home_screen extends AppCompatActivity {
                 Gson gson = new Gson();
                 String instructionsJson = gson.toJson(recipe.getInstructions());
 
-                Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
+                Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>() {
+                }.getType();
                 String ingredientsJson = gson.toJson(recipe.getIngredients(), ingredientListType);
 
                 intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);

@@ -110,10 +110,15 @@ public class CookingScreen extends AppCompatActivity {
 
         // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();
-        for (String instruction : instructionsList) {
-            String cleanInstruction = instruction.replaceAll(charactersToRemove, "");
-            processedInstructions.append(cleanInstruction).append("\n");
+        if (instructionsList != null) {
+            for (String instruction : instructionsList) {
+                String cleanInstruction = instruction.replaceAll(charactersToRemove, "");
+                processedInstructions.append(cleanInstruction).append("\n");
+            }
+        } else {
+            Log.e(TAG, "Instructions list is null.");
         }
+
         return processedInstructions.toString().trim(); // Trim any leading or trailing whitespaces
     }
 
@@ -140,7 +145,7 @@ public class CookingScreen extends AppCompatActivity {
         // Create a map to hold the update, in this case, the new "Household members" value
         Map<String, Object> userDetail = new HashMap<>();
 
-        Intent intent = new Intent(CookingScreen.this, RecipeDetailActivity.class);
+
 
         Gson gson = new Gson();
         String instructionsJson = gson.toJson(recipe.getInstructions());
@@ -151,8 +156,6 @@ public class CookingScreen extends AppCompatActivity {
         String instructionsJson2 = getIntent().getStringExtra("RECIPE_INSTRUCTIONS_JSON");
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
-
-        startActivity(intent);
 
         userDetail.put("Recipe Name", recipeTitle);
         userDetail.put("Recipe image", recipeImage);

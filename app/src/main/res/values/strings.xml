@@ -58,4 +58,10 @@
     <string name="time_to_cook">Time to Cook</string>
     <string name="instructions">Instructions (READ ALL BEFORE STARTING)</string>
     <string name="done_cooking">Done Cooking</string>
+    <string name="are_you_sure">Are You Sure?</string>
+    <string name="no">No</string>
+    <string name="yes">yes</string>
+    <string name="toggle_color_theme">Toggle Color Theme</string>
+    <string name="recipe_image">recipeImage\n</string>
+    <string name="finish_cooking">Finish Cooking</string>
 </resources>

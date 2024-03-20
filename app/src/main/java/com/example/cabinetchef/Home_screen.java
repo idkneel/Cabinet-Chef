@@ -1,6 +1,7 @@
 package com.example.cabinetchef;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,11 +31,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.Random;
+import java.util.Set;
 
 
 public class Home_screen extends AppCompatActivity {
@@ -50,7 +53,7 @@ public class Home_screen extends AppCompatActivity {
     private View screenSelectView;
     private View filtersPopupView;
     private View mealTimesPopupView;
-
+    private TextView allergenWarning;
     private EditText searchEditText;
     private static final int REQUEST_MEAL_TIME = 1;
 
@@ -63,6 +66,7 @@ public class Home_screen extends AppCompatActivity {
 
         recipeImage = findViewById(R.id.recipeImage);
         recipeTitle = findViewById(R.id.recipeTitle);
+        allergenWarning = findViewById(R.id.allergenWarning);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("recipes");
         // Initialize popupWindow and popupView
@@ -105,6 +109,7 @@ public class Home_screen extends AppCompatActivity {
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
 
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
+
 
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());
@@ -273,6 +278,14 @@ public class Home_screen extends AppCompatActivity {
             Glide.with(this).load(recipe.getImage()).into(recipeImage);
             recipeTitle.setText(recipe.getTitle());
 
+            // Check if the recipe contains any allergens
+            if (containsAllergens(recipe)) {
+                allergenWarning.setVisibility(View.VISIBLE);
+            } else {
+                allergenWarning.setVisibility(View.GONE);
+            }
+
+            // Set up click listener for the recipe details
             View.OnClickListener recipeClickListener = v -> {
                 Intent intent = new Intent(Home_screen.this, RecipeDetailActivity.class);
                 intent.putExtra("RECIPE_IMAGE", recipe.getImage());
@@ -281,7 +294,6 @@ public class Home_screen extends AppCompatActivity {
 
                 Gson gson = new Gson();
                 String instructionsJson = gson.toJson(recipe.getInstructions());
-
                 Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
                 String ingredientsJson = gson.toJson(recipe.getIngredients(), ingredientListType);
 
@@ -335,6 +347,24 @@ public class Home_screen extends AppCompatActivity {
             }
         });
     }
+
+    private boolean containsAllergens(Recipe recipe) {
+        Set<String> userAllergens = getUserAllergens();
+        for (RecipeDetail.Ingredient ingredient : recipe.getIngredients()) {
+            if (userAllergens.contains(ingredient.getName().toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Set<String> getUserAllergens() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        return sharedPreferences.getStringSet("allergens", new HashSet<>());
+    }
+
+
+
 
 
 

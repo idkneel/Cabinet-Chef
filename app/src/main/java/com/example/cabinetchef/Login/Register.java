@@ -160,14 +160,14 @@ public class Register extends AppCompatActivity {
 
                             user2.put("User ID", uSettings.userID);
 
-                            CollectionReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
-                                    .collection("favorites");
+                            DocumentReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
+                                    .collection("favorites").document("User ID");
 
 
-                            collectionReference2.add(user2).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            collectionReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG,"On Success: user favorites profile is created for " + uSettings.userID);
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG,"On Success: user profile is created for " + uSettings.userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

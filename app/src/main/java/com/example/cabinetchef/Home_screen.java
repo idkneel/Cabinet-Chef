@@ -1,4 +1,5 @@
 package com.example.cabinetchef;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -287,7 +288,7 @@ public class Home_screen extends AppCompatActivity {
 
             // Set up click listener for the recipe details
             View.OnClickListener recipeClickListener = v -> {
-                Intent intent = new Intent(Home_screen.this, RecipeDetailActivity.class);
+                Intent intent = new Intent(Home_screen.this, CookingScreen.class);
                 intent.putExtra("RECIPE_IMAGE", recipe.getImage());
                 intent.putExtra("RECIPE_TITLE", recipe.getTitle());
                 intent.putExtra("RECIPE_TIME", recipe.getReadyInMinutes());

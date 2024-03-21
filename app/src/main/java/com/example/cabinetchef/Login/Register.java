@@ -1,30 +1,24 @@
 package com.example.cabinetchef.Login;
 
 // Import statements for Android and Firebase components
-import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -37,6 +31,7 @@ public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+    CheckBox hidePassword;
 
     // Method called when activity is starting
     @Override
@@ -65,6 +60,7 @@ public class Register extends AppCompatActivity {
         buttonReg = findViewById(R.id.button_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
+        hidePassword = findViewById(R.id.hide_password);
 
         // Set an onClickListener for the textView to redirect to the Login activity
         textView.setOnClickListener(view -> {
@@ -120,6 +116,19 @@ public class Register extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
+        });
+
+        hidePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // This method is called whenever the checked state of the hidePassword CompoundButton changes
+            if (!isChecked) {
+                // If the hidePassword button is checked, change the editTextPassword's transformation method
+                // to HideReturnsTransformationMethod to show the password
+                editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                // If the hidePassword button is not checked, change the editTextPassword's transformation method
+                // back to PasswordTransformationMethod to hide the password
+                editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
         });
     }
 }

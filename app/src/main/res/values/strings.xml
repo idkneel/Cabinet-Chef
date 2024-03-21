@@ -66,6 +66,7 @@
     <string name="no">No</string>
     <string name="yes">yes</string>
     <string name="toggle_color_theme">Toggle Color Theme</string>
-    <string name="recipe_image">recipeImage\n</string>
     <string name="finish_cooking">Finish Cooking</string>
+    <string name="delete">Delete?\n</string>
+    <string name="allergen_warning">Allergen Warning!</string>
 </resources>

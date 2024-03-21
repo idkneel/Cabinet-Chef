@@ -18,7 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Recipe.Recipe;
@@ -110,7 +109,6 @@ public class Home_screen extends AppCompatActivity {
         Button showScreenSelectButton = findViewById(R.id.showPopupButton);
 
         Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-
 
         showScreenSelectButton.setOnClickListener(v -> showScreenSelectPopup());
         showFilterPopupButton.setOnClickListener(v -> showFilterPopup());

@@ -88,8 +88,9 @@
         android:id="@+id/allergenWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Allergen Warning!"
-        android:textColor="@color/Dark.Mode.Text"
+        android:text="@string/allergen_warning"
+        android:textColor="@color/Light.Mode.3"
+        android:textSize="20sp"
         android:visibility="gone" />
 
 

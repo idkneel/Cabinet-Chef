@@ -160,7 +160,7 @@ public class Register extends AppCompatActivity {
 
                             user2.put("User ID", uSettings.userID);
 
-                            CollectionReference collectionReference2 = fStore.collection("favorite recipes").document(uSettings.userID)
+                            CollectionReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
                                     .collection("favorites");
 
 

@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -154,15 +155,18 @@ public class Register extends AppCompatActivity {
                                 }
                             });
 
-                            DocumentReference documentReference2 = fStore.collection("favorite recipes").document(uSettings.userID);
                             Map<String,Object> user2 = new HashMap<>();
                             // Set the user's household size to 1 by default
 
                             user2.put("User ID", uSettings.userID);
 
-                            documentReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            CollectionReference collectionReference2 = fStore.collection("favorite recipes").document(uSettings.userID)
+                                    .collection("favorites");
+
+
+                            collectionReference2.add(user2).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
-                                public void onSuccess(Void unused) {
+                                public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG,"On Success: user favorites profile is created for " + uSettings.userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

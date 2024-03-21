@@ -181,13 +181,9 @@ public class CookingScreen extends AppCompatActivity {
         fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (!task.getResult().exists()){
-                    userDetail.put("User ID", userId);
-                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
-                } else {
-                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
+                    fStore.collection("users").document(userId).collection("favorites").document(recipeTitle).set(userDetail);
                 }
-            }
+
         });
 
     }

@@ -6,7 +6,6 @@
     android:padding="8dp"
     android:background="@color/Dark.Mode.1">
 
-    <!-- Other UI elements for the profile screen at the top -->
     <Button
         android:id="@+id/allergies_page"
         android:layout_width="match_parent"
@@ -49,7 +48,6 @@
         android:padding="8dp"
         />
 
-    <!-- "Back" button at the bottom-left -->
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"

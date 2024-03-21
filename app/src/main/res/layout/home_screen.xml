@@ -15,7 +15,7 @@
     -->
 
     <LinearLayout
-        android:id="@+id/searchEditText"
+        android:id="@+id/searchContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,10 +23,6 @@
         android:layout_marginTop="0dp"
         android:padding="8dp"
         tools:ignore="UselessParent">
-
-
-
-        <!-- LinearLayout content or views -->
 
         <Button
             android:id="@+id/showPopupButton"
@@ -41,6 +37,7 @@
             android:textSize="25sp" />
 
         <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -68,11 +65,12 @@
     </LinearLayout>
 
 
+
     <TextView
         android:id="@+id/recipeTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchEditText"
+        android:layout_below="@id/searchContainer"
         android:padding="8dp"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -82,9 +80,19 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@id/recipeTitle"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="7dp"
         android:contentDescription="@string/recipe_image"
         android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/allergenWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Allergen Warning!"
+        android:textColor="@color/Dark.Mode.Text"
+        android:visibility="gone" />
+
+
 
 
 </RelativeLayout>

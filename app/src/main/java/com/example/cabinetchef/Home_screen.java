@@ -366,14 +366,6 @@ public class Home_screen extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
     //DONT REMOVE IT PLEASE IT IS VERY IMPORTANT BECAUSE BECAUSE------------------------------------------------------------------------------------------------------------!!!
 
     /*private void validateIngredientsDataType(DatabaseReference databaseReference) {

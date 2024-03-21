@@ -79,14 +79,16 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@id/recipeTitle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:contentDescription="@string/recipe_image"
         android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/allergenWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Allergen Warning!"
+        android:textColor="@color/Dark.Mode.Text"
         android:visibility="gone" />
 
 

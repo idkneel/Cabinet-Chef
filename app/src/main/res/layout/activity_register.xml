@@ -29,6 +29,7 @@
             android:inputType="textEmailAddress"
             android:backgroundTint="@color/Light.Mode.1"
             android:layout_width="match_parent"
+            android:backgroundTint="@color/Light.Mode.1"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,5 +89,6 @@
         android:text="@string/click_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
 </LinearLayout>

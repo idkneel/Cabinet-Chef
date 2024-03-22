@@ -1,4 +1,6 @@
+
 package com.example.cabinetchef;
+/*package com.example.cabinetchef;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +33,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         this.inflater = LayoutInflater.from(context);
     }
 
+import java.util.List;
+
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+
+    private List<Recipe> recipes;
+    private Context context;
+    private LayoutInflater inflater;
+
+    public RecipeAdapter(Context context, List<Recipe> recipes) {
+        this.context = context;
+        this.recipes = recipes;
+        this.inflater = LayoutInflater.from(context);
+    }
+
+    @NonNull
+    @Override
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.recipe_item, parent, false);
+        return new RecipeViewHolder(view);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
@@ -60,6 +83,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RecipeDetailActivity.class);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, RecipeDetailActivity.class);
+            // Pass recipe details to RecipeDetailActivity
+
             intent.putExtra("RECIPE_IMAGE", recipe.getImage());
             intent.putExtra("RECIPE_TITLE", recipe.getTitle());
             // Add other details as needed
@@ -67,15 +95,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         });
     }
 
-
-
-
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.recipe_item, parent, false);
         return new RecipeViewHolder(view);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -86,6 +113,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         this.recipes = recipes;
         notifyDataSetChanged();
     }
+
 
     public void setAllergen(String allergen) {
         this.userAllergens = new ArrayList<>();
@@ -101,6 +129,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         ImageView recipeImage;
         TextView allergenWarning;
 
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+        TextView recipeTitle;
+        ImageView recipeImage;
+
+
         public RecipeViewHolder(View itemView) {
             super(itemView);
             recipeTitle = itemView.findViewById(R.id.recipeTitle);
@@ -110,3 +143,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
 }
+
+        }
+    }
+}
+
+*/
+

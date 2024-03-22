@@ -118,6 +118,7 @@
             android:textColor="@color/Dark.Mode.Text"
             android:background="@drawable/lightmode_button_outlines"/>
 
+
     </LinearLayout>
 
 

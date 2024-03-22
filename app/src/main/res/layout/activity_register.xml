@@ -27,6 +27,7 @@
             android:id="@+id/email"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
+            android:backgroundTint="@color/Light.Mode.1"
             android:layout_width="match_parent"
             android:backgroundTint="@color/Light.Mode.1"
             android:layout_height="wrap_content"/>
@@ -61,8 +62,6 @@
                 android:button="@drawable/baseline_eye_24"/>
 
         </RelativeLayout>
-
-
 
     </com.google.android.material.textfield.TextInputLayout>
 

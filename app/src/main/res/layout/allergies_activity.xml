@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/Dark.Mode.1"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/allergyInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="Enter an ingredient you're allergic to"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
+        android:padding="12dp"
+        android:layout_margin="8dp"/>
+
+
+    <Button
+        android:id="@+id/addAllergyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Allergen"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"/>
+
+    <ListView
+        android:id="@+id/allergenListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"/>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:background="@drawable/lightmode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

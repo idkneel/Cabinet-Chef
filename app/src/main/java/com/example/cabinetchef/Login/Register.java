@@ -1,37 +1,35 @@
 package com.example.cabinetchef.Login;
 
 // Import statements for Android and Firebase components
-import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetchef.Enums.UserSettings;
 import com.example.cabinetchef.MainActivity;
 import com.example.cabinetchef.R;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -193,6 +191,16 @@ public class Register extends AppCompatActivity {
                     });
         });
 
+        hidePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // This method is called whenever the checked state of the hidePassword CompoundButton changes
+            if (!isChecked) {
+                // If the hidePassword button is checked, change the editTextPassword's transformation method
+                // to HideReturnsTransformationMethod to show the password
+                editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                // If the hidePassword button is not checked, change the editTextPassword's transformation method
+                // back to PasswordTransformationMethod to hide the password
+                editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         // Set a listener on the hidePassword checkbox to listen for check changes
         hidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,10 +29,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -127,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void fetchDataAndSaveToFirebase() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.spoonacular.com/")

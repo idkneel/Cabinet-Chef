@@ -175,19 +175,14 @@ public class CookingScreen extends AppCompatActivity {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Reference to the specific user's document in the "users" collection
-        DocumentReference userDocRef = fStore.collection("favorite recipes").document(userId);
+        DocumentReference userDocRef = fStore.collection("users").document(userId);
 
         // Try to get the document for the current user
-        fStore.collection("favorite recpies").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (!task.getResult().exists()){
-                    userDetail.put("User ID", userId);
-                    fStore.collection("favorite recpies").document(userId).collection("favorites").add(userDetail);
-                } else {
-                    fStore.collection("favorite recpies").document(userId).collection("favorites").add(userDetail);
+                    fStore.collection("users").document(userId).collection("favorites").document(recipeTitle).set(userDetail);
                 }
-            }
         });
 
     }

@@ -425,11 +425,4 @@ public class Home_screen extends AppCompatActivity {
             }
         });
     }*/
-
-
-
-
-
-
-
 }

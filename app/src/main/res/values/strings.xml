@@ -69,6 +69,4 @@
     <string name="finish_cooking">Finish Cooking</string>
     <string name="delete">Delete?\n</string>
     <string name="allergen_warning">Allergen Warning!</string>
-    <string name="recipe_image">recipeImage\n</string>
-    <string name="finish_cooking">Finish Cooking</string>
 </resources>

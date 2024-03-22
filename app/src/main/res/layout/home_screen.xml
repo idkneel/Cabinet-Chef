@@ -81,7 +81,6 @@
         android:layout_height="200dp"
         android:layout_below="@id/recipeTitle"
         android:layout_marginTop="7dp"
-        android:layout_marginTop="8dp"
         android:contentDescription="@string/recipe_image"
         android:scaleType="centerCrop" />
 
@@ -93,9 +92,6 @@
         android:textColor="@color/Light.Mode.3"
         android:textSize="20sp"
         android:visibility="gone" />
-
-
-
 
 
 

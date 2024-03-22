@@ -20,6 +20,10 @@
     <string name="please_enter_your_email_address">Please enter your email address:</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
+    <string name="recipe_image">Recipe image</string>
+    <string name="cook_time">Cook Time: %1$d minutes</string>
+
+
 
     <string name="filters">FILTERS</string>
     <string name="meal_time">Meal Time</string>
@@ -62,6 +66,9 @@
     <string name="no">No</string>
     <string name="yes">yes</string>
     <string name="toggle_color_theme">Toggle Color Theme</string>
+    <string name="finish_cooking">Finish Cooking</string>
+    <string name="delete">Delete?\n</string>
+    <string name="allergen_warning">Allergen Warning!</string>
     <string name="recipe_image">recipeImage\n</string>
     <string name="finish_cooking">Finish Cooking</string>
 </resources>

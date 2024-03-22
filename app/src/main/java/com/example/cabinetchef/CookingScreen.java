@@ -86,7 +86,6 @@ public class CookingScreen extends AppCompatActivity {
         }
         recipeIngredientsView.setText(ingredientsText.toString());
 
-        recipeInstructionsView.setText(processInstructions(instructionsJson));
         recipeInstructionsView.setText(processInstructions(instructionsJson, "</?li>|</?ol>"));
 
         finishCookingButton.setOnClickListener(v -> {
@@ -95,12 +94,9 @@ public class CookingScreen extends AppCompatActivity {
 
         addToFavoritesButton.setOnClickListener( v -> {
             updateData(recipe);
-
-            startActivity(new Intent(CookingScreen.this, Home_screen.class));
         });
 
     }
-
 
     private String processInstructions(String instructionsJson, String removeChars) {
         // Convert JSON string to List<String> using Gson
@@ -109,8 +105,6 @@ public class CookingScreen extends AppCompatActivity {
         List<String> instructionsList = gson.fromJson(instructionsJson, instructionsType);
 
         // Define characters to be removed
-        String charactersToRemove = "</?li>|</?ol>";
-
         // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();
         if (instructionsList != null) {
@@ -184,77 +178,16 @@ public class CookingScreen extends AppCompatActivity {
         DocumentReference userDocRef = fStore.collection("favorite recipes").document(userId);
 
         // Try to get the document for the current user
-        userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    // If the document exists, update it with the new details
-                    userDocRef.update(userDetail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            // Success: Show a success message
-                            Log.d(TAG, "successfully Updated");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Failure: Show an error message
-                            Log.d(TAG, "Error updating document");
-                        }
-                    });
-                } else {
-                    // If the document does not exist (fallback scenario),
-                    // attempt to find the document by "Household members" field and old number
-                    fStore.collection("favorite recipes")
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                                        // If successful and documents are found,
-                                        // get the first document and its ID
-                                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                                        String documentID = documentSnapshot.getId();
-                                        // Update the found document with the new details
-                                        fStore.collection("favorite recipes")
-                                                .document(documentID)
-                                                .update(userDetail)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        // Success: Show a success message
-                                                        Log.d(TAG, "successfully Updated");
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // Failure: Show an error message
-                                                        Log.d(TAG, "Some error occurred");
-                                                    }
-                                                });
-                                    } else {
-                                        Log.d(TAG, "Failure to find document");
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // If there was an error accessing the document, show an error message
-                                    Log.d(TAG, "Error accessing document");
-                                }
-                            });
-                }
-            }
-        });
-      
-        DocumentReference userDocRef = fStore.collection("users").document(userId);
-
-        // Try to get the document for the current user
-        fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        fStore.collection("favorite recpies").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    fStore.collection("users").document(userId).collection("favorites").document(recipeTitle).set(userDetail);
+                if (!task.getResult().exists()){
+                    userDetail.put("User ID", userId);
+                    fStore.collection("favorite recpies").document(userId).collection("favorites").add(userDetail);
+                } else {
+                    fStore.collection("favorite recpies").document(userId).collection("favorites").add(userDetail);
                 }
-
+            }
         });
 
     }

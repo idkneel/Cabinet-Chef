@@ -101,11 +101,6 @@ public class CookingScreen extends AppCompatActivity {
 
     }
 
-    private String processInstructions(String instructionsJson) {
-
-        });
-
-    }
 
     private String processInstructions(String instructionsJson, String removeChars) {
         // Convert JSON string to List<String> using Gson
@@ -116,12 +111,6 @@ public class CookingScreen extends AppCompatActivity {
         // Define characters to be removed
         String charactersToRemove = "</?li>|</?ol>";
 
-        // Replace all occurrences of charactersToRemove with an empty string
-        StringBuilder processedInstructions = new StringBuilder();
-        for (String instruction : instructionsList) {
-            String cleanInstruction = instruction.replaceAll(charactersToRemove, "");
-            processedInstructions.append(cleanInstruction).append("\n");
-        }
         // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();
         if (instructionsList != null) {

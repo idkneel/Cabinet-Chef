@@ -309,8 +309,6 @@ public class Home_screen extends AppCompatActivity {
                 String instructionsJson = gson.toJson(recipe.getInstructions());
                 Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
 
-                Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>() {
-                }.getType();
                 String ingredientsJson = gson.toJson(recipe.getIngredients(), ingredientListType);
 
                 intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);
@@ -364,12 +362,11 @@ public class Home_screen extends AppCompatActivity {
         });
     }
 
-            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("HomeScreen", "Failed to read recipe", databaseError.toException());
             }
-        });
-    }
+
+
 
     private boolean containsAllergens(Recipe recipe) {
         Set<String> userAllergens = getUserAllergens();
@@ -385,7 +382,6 @@ public class Home_screen extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         return sharedPreferences.getStringSet("allergens", new HashSet<>());
     }
-
 
 
     //DONT REMOVE IT PLEASE IT IS VERY IMPORTANT BECAUSE BECAUSE------------------------------------------------------------------------------------------------------------!!!

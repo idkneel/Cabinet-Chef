@@ -87,6 +87,7 @@ public class CookingScreen extends AppCompatActivity {
         recipeIngredientsView.setText(ingredientsText.toString());
 
         recipeInstructionsView.setText(processInstructions(instructionsJson));
+        recipeInstructionsView.setText(processInstructions(instructionsJson, "</?li>|</?ol>"));
 
         finishCookingButton.setOnClickListener(v -> {
             startActivity(new Intent(CookingScreen.this, Home_screen.class));
@@ -94,12 +95,19 @@ public class CookingScreen extends AppCompatActivity {
 
         addToFavoritesButton.setOnClickListener( v -> {
             updateData(recipe);
+
             startActivity(new Intent(CookingScreen.this, Home_screen.class));
         });
 
     }
 
     private String processInstructions(String instructionsJson) {
+
+        });
+
+    }
+
+    private String processInstructions(String instructionsJson, String removeChars) {
         // Convert JSON string to List<String> using Gson
         Gson gson = new Gson();
         Type instructionsType = new com.google.gson.reflect.TypeToken<List<String>>() {}.getType();
@@ -114,6 +122,17 @@ public class CookingScreen extends AppCompatActivity {
             String cleanInstruction = instruction.replaceAll(charactersToRemove, "");
             processedInstructions.append(cleanInstruction).append("\n");
         }
+        // Replace all occurrences of charactersToRemove with an empty string
+        StringBuilder processedInstructions = new StringBuilder();
+        if (instructionsList != null) {
+            for (String instruction : instructionsList) {
+                String cleanInstruction = instruction.replaceAll(removeChars, "");
+                processedInstructions.append(cleanInstruction).append("\n");
+            }
+        } else {
+            Log.e(TAG, "Instructions list is null.");
+        }
+
         return processedInstructions.toString().trim(); // Trim any leading or trailing whitespaces
     }
 
@@ -140,7 +159,6 @@ public class CookingScreen extends AppCompatActivity {
         // Create a map to hold the update, in this case, the new "Household members" value
         Map<String, Object> userDetail = new HashMap<>();
 
-
         Gson gson = new Gson();
         String instructionsJson = gson.toJson(recipe.getInstructions());
 
@@ -150,7 +168,15 @@ public class CookingScreen extends AppCompatActivity {
         String instructionsJson2 = getIntent().getStringExtra("RECIPE_INSTRUCTIONS_JSON");
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
-
+        if (instructionsJson2.contains("u003col\\u003e\\u003cli\\u003e")){
+            instructionsJson2 = processInstructions(instructionsJson2, "u003col\\u003e\\u003cli\\u003e");
+        } else if (instructionsJson2.contains("<ol><li>")){
+            instructionsJson2 = processInstructions(instructionsJson2, "<ol><li>");
+        } else if (instructionsJson2.contains("</li></ol>")){
+            instructionsJson2 = processInstructions(instructionsJson2, "</li></ol>");
+        } else if (instructionsJson2.contains("</li></li>")) {
+            instructionsJson2 = processInstructions(instructionsJson2, "</li></li>");
+        }
 
         userDetail.put("Recipe Name", recipeTitle);
         userDetail.put("Recipe image", recipeImage);
@@ -230,5 +256,21 @@ public class CookingScreen extends AppCompatActivity {
                 }
             }
         });
+      
+        DocumentReference userDocRef = fStore.collection("users").document(userId);
+
+        // Try to get the document for the current user
+        fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (!task.getResult().exists()){
+                    userDetail.put("User ID", userId);
+                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
+                } else {
+                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
+                }
+            }
+        });
+
     }
 }

@@ -47,14 +47,14 @@
 
     <Button
         android:id="@+id/backButton"
-        android:textStyle="bold"
-        android:typeface="monospace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:layout_gravity="bottom|start"
+        android:layout_marginTop="2dp"
         android:background="@drawable/lightmode_button_outlines"
         android:text="@string/back"
-        android:textColor="@color/Light.Mode.Text"/>
+        android:textColor="@color/Light.Mode.Text"
+        android:textStyle="bold"
+        android:typeface="monospace" />
 
 </LinearLayout>

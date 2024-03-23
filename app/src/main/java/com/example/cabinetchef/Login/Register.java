@@ -163,7 +163,6 @@ public class Register extends AppCompatActivity {
                             CollectionReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
                                     .collection("favorites");
 
-
                             collectionReference2.add(user2).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {

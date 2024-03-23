@@ -20,7 +20,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
@@ -44,7 +46,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -59,12 +63,16 @@ import java.util.Set;
 public class FavoritesScreen extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseFirestore fStore;
+
     private ImageView recipeImage;
     private TextView recipeTitle;
     private TextView allergenWarning;
     private EditText searchEditText;
-    private String recipeImageURL;
+
+    RecyclerView recyclerView;
+    ArrayList<Recipe> recipeArrayList;
+    RecipeAdapter recipeAdapter;
+    private FirebaseFirestore fStore;
 
     @SuppressLint("InflateParams")
     @Override
@@ -167,27 +175,29 @@ public class FavoritesScreen extends AppCompatActivity {
 
     private void getRecipe(Recipe recipe) {
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        Map<String, Object> recipeDetail = new HashMap<>();
-        recipeImageURL = recipe.getImage();
-
         fStore = FirebaseFirestore.getInstance();
-        fStore.collection("users")
-                .document(userID)
-                .collection("Favorites")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
 
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
+
+
+//        Map<String, Object> recipeDetail = new HashMap<>();
+
+//        fStore.collection("users")
+//                .document(userID)
+//                .collection("Favorites")
+//                .whereNotEqualTo(userID, true)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//
+//                            }
+//                        } else {
+//                            Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
     }
 }

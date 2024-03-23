@@ -3,15 +3,14 @@
         import java.util.List;
 
         public class Recipe {
-            private String title;
-            private List<RecipeDetail.Ingredient> ingredients;
-            private int readyInMinutes;
-            private String image;
-            private List<String> instructions;
+            public String title;
+            List<RecipeDetail.Ingredient> ingredients;
+            int readyInMinutes;
+            public String image;
+            List<String> instructions;
 
             // Constructors
-            public Recipe() {
-            }
+            public Recipe(){}
 
             public Recipe(String title, List<RecipeDetail.Ingredient> ingredients, int readyInMinutes, String image, List<String> instructions) {
                 this.title = title;
@@ -61,8 +60,6 @@
             public void setInstructions(List<String> instructions) {
                 this.instructions = instructions;
             }
-
-
 
             @Override
             public String toString() {

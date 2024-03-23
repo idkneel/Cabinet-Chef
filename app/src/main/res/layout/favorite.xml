@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Dark.Mode.1"
+    android:backgroundTint="@color/Dark.Mode.1"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        tools:ignore="UselessParent">
+
+        <!-- LinearLayout content or views -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:background="@drawable/lightmode_button_outlines"
+            android:textColor="@color/Light.Mode.Text"
+            android:text="@string/back"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/Dark.Mode.Text"
+            android:hint="@string/search"
+            android:textColorHint="@color/Dark.Mode.Text"
+            android:paddingBottom="8dp"
+            android:inputType="text"
+            android:backgroundTint="@color/Light.Mode.2"
+            android:importantForAutofill="no"
+            android:padding="16dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/recipeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search"
+        android:layout_marginTop="6dp"
+        android:padding="8dp"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/recipeImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/recipeTitle"
+        android:layout_marginTop="7dp"
+        android:contentDescription="@string/recipe_image"
+        android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/allergenWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/allergen_warning"
+        android:textColor="@color/Light.Mode.3"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+</androidx.cardview.widget.CardView>

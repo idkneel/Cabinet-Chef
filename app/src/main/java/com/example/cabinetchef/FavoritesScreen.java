@@ -3,6 +3,7 @@ package com.example.cabinetchef;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabinetchef.Recipe.Recipe;
@@ -49,6 +51,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -60,144 +63,77 @@ import java.util.Random;
 import java.util.Set;
 
 
+/** @noinspection deprecation*/
 public class FavoritesScreen extends AppCompatActivity {
-
-    private DatabaseReference databaseReference;
-
-    private ImageView recipeImage;
-    private TextView recipeTitle;
-    private TextView allergenWarning;
-    private EditText searchEditText;
 
     RecyclerView recyclerView;
     ArrayList<Recipe> recipeArrayList;
     RecipeAdapter recipeAdapter;
-    private FirebaseFirestore fStore;
+    FirebaseFirestore fStore;
+    FirebaseAuth mAuth;
+    ProgressDialog progressDialog;
 
     @SuppressLint("InflateParams")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Setting the content view to the home_screen layout
-        setContentView(R.layout.home_screen);
+        setContentView(R.layout.favorite_recipes);
 
-        recipeImage = findViewById(R.id.recipeImage);
-        recipeTitle = findViewById(R.id.recipeTitle);
-        allergenWarning = findViewById(R.id.allergenWarning);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+        progressDialog.show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("recipes");
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Finding and setting up the button to show the screen selection popup
-        Button showScreenSelectButton = findViewById(R.id.showPopupButton);
-        Button showFilterPopupButton = findViewById(R.id.showFiltersButton);
-
-        displayRandomRecipe();
-
-        searchEditText = findViewById(R.id.searchEditText);
-    }
-
-    private void displayRandomRecipe() {
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Recipe> recipes = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Recipe recipe = snapshot.getValue(Recipe.class);
-                    recipes.add(recipe);
-                }
-
-                if (!recipes.isEmpty()) {
-                    Random random = new Random();
-                    Recipe randomRecipe = recipes.get(random.nextInt(recipes.size()));
-                    displayRecipe(randomRecipe);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FavoritesScreen", "Failed to read recipe", error.toException());
-            }
-        });
-    }
-
-    private void displayRecipe(Recipe recipe) {
-        if (recipe != null) {
-
-            getRecipe(recipe);
-
-            Glide.with(this).load(recipe.getImage()).into(recipeImage);
-            recipeTitle.setText(recipe.getTitle());
-
-            // Check if the recipe contains any allergens
-            if (containsAllergens(recipe)) {
-                allergenWarning.setVisibility(View.VISIBLE);
-            } else {
-                allergenWarning.setVisibility(View.GONE);
-            }
-
-            // Set up click listener for the recipe details
-            View.OnClickListener recipeClickListener = v -> {
-                Intent intent = new Intent(FavoritesScreen.this, CookingScreen.class);
-                intent.putExtra("RECIPE_IMAGE", recipe.getImage());
-                intent.putExtra("RECIPE_TITLE", recipe.getTitle());
-                intent.putExtra("RECIPE_TIME", recipe.getReadyInMinutes());
-
-                Gson gson = new Gson();
-                String instructionsJson = gson.toJson(recipe.getInstructions());
-                Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
-                String ingredientsJson = gson.toJson(recipe.getIngredients(), ingredientListType);
-
-                intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);
-                intent.putExtra("RECIPE_INGREDIENTS_JSON", ingredientsJson);
-
-                startActivity(intent);
-            };
-
-            recipeImage.setOnClickListener(recipeClickListener);
-            recipeTitle.setOnClickListener(recipeClickListener);
-        }
-    }
-
-    private boolean containsAllergens(Recipe recipe) {
-        Set<String> userAllergens = getUserAllergens();
-        for (RecipeDetail.Ingredient ingredient : recipe.getIngredients()) {
-            if (userAllergens.contains(ingredient.getName().toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Set<String> getUserAllergens() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        return sharedPreferences.getStringSet("allergens", new HashSet<>());
-    }
-
-    private void getRecipe(Recipe recipe) {
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         fStore = FirebaseFirestore.getInstance();
+        recipeArrayList = new ArrayList<Recipe>();
+        recipeAdapter = new RecipeAdapter(FavoritesScreen.this, recipeArrayList);
 
+        recyclerView.setAdapter(recipeAdapter);
 
+        EventChangeListener();
+    }
 
-//        Map<String, Object> recipeDetail = new HashMap<>();
+    private void EventChangeListener() {
 
-//        fStore.collection("users")
-//                .document(userID)
-//                .collection("Favorites")
-//                .whereNotEqualTo(userID, true)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//
-//                            }
-//                        } else {
-//                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                        }
-//                    }
-//                });
+        mAuth = FirebaseAuth.getInstance();
+        String userID = mAuth.getCurrentUser().getUid();
+
+        fStore.collection("users")
+                .document(userID)
+                .collection("favorites")
+                .orderBy("Recipe Name", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                        if (error != null){
+
+                            if (progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc: value.getDocumentChanges()){
+
+                            if (dc.getType() == DocumentChange.Type.ADDED){
+                                recipeArrayList.add(dc.getDocument().toObject(Recipe.class));
+                            }
+
+                            recipeAdapter.notifyDataSetChanged();
+                            if (progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                        }
+
+                    }
+                });
+
     }
 }

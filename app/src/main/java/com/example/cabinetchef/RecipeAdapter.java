@@ -28,7 +28,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     @Override
     public RecipeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.favorite_recipes,parent,false); // layout might be cooking screen
+        View v = LayoutInflater.from(context).inflate(R.layout.favorite,parent,false); // layout might be cooking screen
 
         return new MyViewHolder(v);
     }
@@ -36,10 +36,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.MyViewHolder holder, int position) {
 
-        Recipe recipes = recipeArrayList.get(position);
+        Recipe recipe = recipeArrayList.get(position);
 
-        holder.recipeTitle.setText(recipes.title);
-        holder.recipeImage.setTag(recipes.image);
+        holder.title.setText(recipe.title);
+        holder.image.setTag(recipe.image);
 
 
     }
@@ -51,13 +51,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView recipeTitle;
-        ImageView recipeImage;
+        TextView title;
+        ImageView image;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeTitle = itemView.findViewById(R.id.recipeTitle);
-            recipeImage = itemView.findViewById(R.id.recipeImage);
+            title = itemView.findViewById(R.id.recipeTitle);
+            image = itemView.findViewById(R.id.recipeImage);
         }
     }
 

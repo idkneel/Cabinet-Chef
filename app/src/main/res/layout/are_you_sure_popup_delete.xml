@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dark_mode_popup_background"
-    android:padding="16dp"
-    android:layout_weight="1"
-    android:orientation="horizontal">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/areYouSureTxt"
@@ -18,36 +15,41 @@
         android:padding="50dp"
         android:typeface="monospace"
         android:textColor="@color/Dark.Mode.Text"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
-    <Button
-        android:id="@+id/confirmNo"
-        android:layout_width="170dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/lightmode_button_outlines"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:text="@string/no"
-        android:layout_below="@+id/areYouSureTxt"
-        android:layout_alignParentEnd="true"/>
+        android:layout_below="@id/areYouSureTxt"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/confirmYes"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/areYouSureTxt"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/lightmode_button_outlines"
-        android:text="@string/yes"
-        android:textColor="@color/Light.Mode.Text"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:typeface="monospace" />
+        <Button
+            android:id="@+id/confirmNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/lightmode_button_outlines"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/Light.Mode.Text"
+            android:typeface="monospace"
+            android:text="@string/no"
+            android:layout_marginEnd="8dp"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/confirmYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/lightmode_button_outlines"
+            android:text="@string/yes"
+            android:textColor="@color/Light.Mode.Text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:layout_marginStart="8dp"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
 </RelativeLayout>

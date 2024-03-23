@@ -3,6 +3,7 @@ package com.example.cabinetchef;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class AllergiesActivity extends AppCompatActivity {
             finish();
         });
 
-        allergenListView.setOnItemLongClickListener(this::deleteAllergen);
+        allergenListView.setOnItemClickListener(this::deleteAllergen);
     }
 
     private void addAllergen() {
@@ -60,13 +62,37 @@ public class AllergiesActivity extends AppCompatActivity {
         }
     }
 
-    private boolean deleteAllergen(AdapterView<?> parent, View view, int position, long id) {
+    private void deleteAllergen(AdapterView<?> parent, View view, int position, long id) {
         String allergenToRemove = userAllergens.get(position);
-        userAllergens.remove(allergenToRemove);
-        saveAllergens(userAllergens);
-        allergenAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Allergen removed", Toast.LENGTH_SHORT).show();
-        return true;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.are_you_sure_popup_delete, null);
+        builder.setView(dialogView);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        Button confirmYes = dialogView.findViewById(R.id.confirmYes);
+        Button confirmNo = dialogView.findViewById(R.id.confirmNo);
+
+        confirmYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userAllergens.remove(allergenToRemove);
+                saveAllergens(userAllergens);
+                allergenAdapter.notifyDataSetChanged();
+                Toast.makeText(AllergiesActivity.this, "Allergen removed", Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
+            }
+        });
+
+        confirmNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
     private void saveAllergens(List<String> allergens) {

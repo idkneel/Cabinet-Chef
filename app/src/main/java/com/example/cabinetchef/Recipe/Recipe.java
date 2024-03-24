@@ -64,11 +64,11 @@
             @Override
             public String toString() {
                 return "Recipe{" +
-                        "title='" + title + '\'' +
-                        ", ingredients=" + ingredients.toString() +
+                        "title='" + (title != null ? title : "N/A") + '\'' +
+                        ", ingredients=" + (ingredients != null ? ingredients.toString() : "[]") +
                         ", readyInMinutes=" + readyInMinutes +
-                        ", image='" + image + '\'' +
-                        ", instructions=" + instructions +
+                        ", image='" + (image != null ? image : "N/A") + '\'' +
+                        ", instructions=" + (instructions != null ? instructions : "N/A") +
                         '}';
             }
         }

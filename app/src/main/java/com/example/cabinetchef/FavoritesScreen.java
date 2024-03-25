@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,64 +79,12 @@ public class FavoritesScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Setting the content view to the home_screen layout
-        setContentView(R.layout.favorite_recipes);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Fetching Data...");
-        progressDialog.show();
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        Recipe recipe = new Recipe();
-
-        fStore = FirebaseFirestore.getInstance();
-        recipeArrayList = new ArrayList<Recipe>();
-        recipeAdapter = new RecipeAdapter(FavoritesScreen.this, recipeArrayList);
-
-        recyclerView.setAdapter(recipeAdapter);
-
-        EventChangeListener();
+        setContentView(R.layout.favorite);
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            finish(); // Close the current activity and go back
+        });
     }
 
-    private void EventChangeListener() {
-
-        mAuth = FirebaseAuth.getInstance();
-        String userID = mAuth.getCurrentUser().getUid();
-
-        fStore.collection("users")
-                .document(userID)
-                .collection("favorites")
-                .orderBy("Recipe Name", Query.Direction.ASCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                        if (error != null){
-
-                            if (progressDialog.isShowing()){
-                                progressDialog.dismiss();
-                            }
-                            Log.e("Firestore error", error.getMessage());
-                            return;
-                        }
-
-                        for (DocumentChange dc: value.getDocumentChanges()){
-
-                            if (dc.getType() == DocumentChange.Type.ADDED){
-                                recipeArrayList.add(dc.getDocument().toObject(Recipe.class));
-                            }
-
-                            recipeAdapter.notifyDataSetChanged();
-                            if (progressDialog.isShowing()){
-                                progressDialog.dismiss();
-                            }
-                        }
-
-                    }
-                });
-
-    }
 }

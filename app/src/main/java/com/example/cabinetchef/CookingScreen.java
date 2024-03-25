@@ -2,6 +2,7 @@ package com.example.cabinetchef;
 
 import static android.content.ContentValues.TAG;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,16 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.reflect.Type;
@@ -32,12 +26,10 @@ import java.util.List;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 
 public class CookingScreen extends AppCompatActivity {
@@ -69,13 +61,12 @@ public class CookingScreen extends AppCompatActivity {
         recipeTimeView.setText(String.format("%d minutes", recipeTime));
 
         Gson gson = new Gson();
-        Type instructionsType = new com.google.gson.reflect.TypeToken<List<String>>() {}.getType();
-        List<String> instructions = gson.fromJson(instructionsJson, instructionsType);
 
         Type ingredientListType = new com.google.gson.reflect.TypeToken<List<RecipeDetail.Ingredient>>() {}.getType();
         List<RecipeDetail.Ingredient> ingredients = gson.fromJson(ingredientsJson, ingredientListType);
 
         StringBuilder ingredientsText = new StringBuilder();
+        assert ingredients != null;
         for (RecipeDetail.Ingredient ingredient : ingredients) {
             ingredientsText.append(ingredient.getName())
                     .append(": ")
@@ -86,23 +77,14 @@ public class CookingScreen extends AppCompatActivity {
         }
         recipeIngredientsView.setText(ingredientsText.toString());
 
-        recipeInstructionsView.setText(processInstructions(instructionsJson));
         recipeInstructionsView.setText(processInstructions(instructionsJson, "</?li>|</?ol>"));
 
-        finishCookingButton.setOnClickListener(v -> {
-            startActivity(new Intent(CookingScreen.this, Home_screen.class));
-        });
+        finishCookingButton.setOnClickListener(v -> startActivity(new Intent(CookingScreen.this, Home_screen.class)));
 
         addToFavoritesButton.setOnClickListener( v -> {
             updateData(recipe);
 
             startActivity(new Intent(CookingScreen.this, Home_screen.class));
-        });
-
-    }
-
-    private String processInstructions(String instructionsJson) {
-
         });
 
     }
@@ -113,15 +95,7 @@ public class CookingScreen extends AppCompatActivity {
         Type instructionsType = new com.google.gson.reflect.TypeToken<List<String>>() {}.getType();
         List<String> instructionsList = gson.fromJson(instructionsJson, instructionsType);
 
-        // Define characters to be removed
-        String charactersToRemove = "</?li>|</?ol>";
 
-        // Replace all occurrences of charactersToRemove with an empty string
-        StringBuilder processedInstructions = new StringBuilder();
-        for (String instruction : instructionsList) {
-            String cleanInstruction = instruction.replaceAll(charactersToRemove, "");
-            processedInstructions.append(cleanInstruction).append("\n");
-        }
         // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();
         if (instructionsList != null) {
@@ -159,8 +133,6 @@ public class CookingScreen extends AppCompatActivity {
         // Create a map to hold the update, in this case, the new "Household members" value
         Map<String, Object> userDetail = new HashMap<>();
 
-        Gson gson = new Gson();
-        String instructionsJson = gson.toJson(recipe.getInstructions());
 
         String recipeImage = getIntent().getStringExtra("RECIPE_IMAGE");
         String recipeTitle = getIntent().getStringExtra("RECIPE_TITLE");
@@ -168,6 +140,7 @@ public class CookingScreen extends AppCompatActivity {
         String instructionsJson2 = getIntent().getStringExtra("RECIPE_INSTRUCTIONS_JSON");
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
+        assert instructionsJson2 != null;
         if (instructionsJson2.contains("u003col\\u003e\\u003cli\\u003e")){
             instructionsJson2 = processInstructions(instructionsJson2, "u003col\\u003e\\u003cli\\u003e");
         } else if (instructionsJson2.contains("<ol><li>")){
@@ -189,86 +162,61 @@ public class CookingScreen extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         // Get the current user's ID from FirebaseAuth (assuming user is logged in)
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         // Reference to the specific user's document in the "users" collection
-        DocumentReference userDocRef = fStore.collection("favorite recipes").document(userId);
+        DocumentReference userRecipeDocRef = fStore.collection("favorite recipes").document(userId);
 
         // Try to get the document for the current user
-        userDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    // If the document exists, update it with the new details
-                    userDocRef.update(userDetail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            // Success: Show a success message
-                            Log.d(TAG, "successfully Updated");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Failure: Show an error message
-                            Log.d(TAG, "Error updating document");
-                        }
-                    });
-                } else {
-                    // If the document does not exist (fallback scenario),
-                    // attempt to find the document by "Household members" field and old number
-                    fStore.collection("favorite recipes")
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                                        // If successful and documents are found,
-                                        // get the first document and its ID
-                                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                                        String documentID = documentSnapshot.getId();
-                                        // Update the found document with the new details
-                                        fStore.collection("favorite recipes")
-                                                .document(documentID)
-                                                .update(userDetail)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        // Success: Show a success message
-                                                        Log.d(TAG, "successfully Updated");
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // Failure: Show an error message
-                                                        Log.d(TAG, "Some error occurred");
-                                                    }
-                                                });
-                                    } else {
-                                        Log.d(TAG, "Failure to find document");
-                                    }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // If there was an error accessing the document, show an error message
-                                    Log.d(TAG, "Error accessing document");
-                                }
-                            });
-                }
+        userRecipeDocRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                // If the document exists, update it with the new details
+                userRecipeDocRef.update(userDetail).addOnSuccessListener(unused -> {
+                    // Success: Show a success message
+                    Log.d(TAG, "successfully Updated");
+                }).addOnFailureListener(e -> {
+                    // Failure: Show an error message
+                    Log.d(TAG, "Error updating document");
+                });
+            } else {
+                // If the document does not exist (fallback scenario),
+                // attempt to find the document by "Household members" field and old number
+                fStore.collection("favorite recipes")
+                        .get().addOnCompleteListener(task -> {
+                            if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                                // If successful and documents are found,
+                                // get the first document and its ID
+                                DocumentSnapshot documentSnapshot1 = task.getResult().getDocuments().get(0);
+                                String documentID = documentSnapshot1.getId();
+                                // Update the found document with the new details
+                                fStore.collection("favorite recipes")
+                                        .document(documentID)
+                                        .update(userDetail)
+                                        .addOnSuccessListener(unused -> {
+                                            // Success: Show a success message
+                                            Log.d(TAG, "successfully Updated");
+                                        }).addOnFailureListener(e -> {
+                                            // Failure: Show an error message
+                                            Log.d(TAG, "Some error occurred");
+                                        });
+                            } else {
+                                Log.d(TAG, "Failure to find document");
+                            }
+                        }).addOnFailureListener(e -> {
+                            // If there was an error accessing the document, show an error message
+                            Log.d(TAG, "Error accessing document");
+                        });
             }
         });
-      
-        DocumentReference userDocRef = fStore.collection("users").document(userId);
+
 
         // Try to get the document for the current user
-        fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (!task.getResult().exists()){
-                    userDetail.put("User ID", userId);
-                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
-                } else {
-                    fStore.collection("users").document(userId).collection("favorites").add(userDetail);
-                }
+        fStore.collection("users").document(userId).get().addOnCompleteListener(task -> {
+            if (!task.getResult().exists()){
+                userDetail.put("User ID", userId);
+                fStore.collection("users").document(userId).collection("favorites").add(userDetail);
+            } else {
+                fStore.collection("users").document(userId).collection("favorites").add(userDetail);
             }
         });
 

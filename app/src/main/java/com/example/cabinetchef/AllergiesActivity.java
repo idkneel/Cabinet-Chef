@@ -23,10 +23,8 @@ import java.util.Set;
 public class AllergiesActivity extends AppCompatActivity {
 
     private EditText allergyInput;
-    private ListView allergenListView;
     private ArrayAdapter<String> allergenAdapter;
     private List<String> userAllergens = new ArrayList<>();
-    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +32,8 @@ public class AllergiesActivity extends AppCompatActivity {
         setContentView(R.layout.allergies_activity);
 
         allergyInput = findViewById(R.id.allergyInput);
-        allergenListView = findViewById(R.id.allergenListView);
-        backButton = findViewById(R.id.backButton);
+        ListView allergenListView = findViewById(R.id.allergenListView);
+        Button backButton = findViewById(R.id.backButton);
 
         userAllergens = getAllergens();
         allergenAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, userAllergens);
@@ -43,9 +41,7 @@ public class AllergiesActivity extends AppCompatActivity {
 
         Button addButton = findViewById(R.id.addAllergyButton);
         addButton.setOnClickListener(v -> addAllergen());
-        backButton.setOnClickListener(view -> {
-            finish();
-        });
+        backButton.setOnClickListener(view -> finish());
 
         allergenListView.setOnItemClickListener(this::deleteAllergen);
     }
@@ -76,23 +72,15 @@ public class AllergiesActivity extends AppCompatActivity {
         Button confirmYes = dialogView.findViewById(R.id.confirmYes);
         Button confirmNo = dialogView.findViewById(R.id.confirmNo);
 
-        confirmYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userAllergens.remove(allergenToRemove);
-                saveAllergens(userAllergens);
-                allergenAdapter.notifyDataSetChanged();
-                Toast.makeText(AllergiesActivity.this, "Allergen removed", Toast.LENGTH_SHORT).show();
-                alertDialog.dismiss();
-            }
+        confirmYes.setOnClickListener(v -> {
+            userAllergens.remove(allergenToRemove);
+            saveAllergens(userAllergens);
+            allergenAdapter.notifyDataSetChanged();
+            Toast.makeText(AllergiesActivity.this, "Allergen removed", Toast.LENGTH_SHORT).show();
+            alertDialog.dismiss();
         });
 
-        confirmNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
+        confirmNo.setOnClickListener(v -> alertDialog.dismiss());
     }
 
     private void saveAllergens(List<String> allergens) {

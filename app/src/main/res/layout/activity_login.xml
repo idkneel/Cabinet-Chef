@@ -2,13 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
     android:padding="15dp"
     android:background="@color/Light.Mode.1"
     tools:context=".Login.Login">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_logo"
+        android:src="@mipmap/app_logo_foreground"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp"/>
 
     <TextView
         android:text="@string/login"

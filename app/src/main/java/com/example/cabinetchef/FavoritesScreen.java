@@ -89,6 +89,8 @@ public class FavoritesScreen extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Recipe recipe = new Recipe();
+
         fStore = FirebaseFirestore.getInstance();
         recipeArrayList = new ArrayList<Recipe>();
         recipeAdapter = new RecipeAdapter(FavoritesScreen.this, recipeArrayList);

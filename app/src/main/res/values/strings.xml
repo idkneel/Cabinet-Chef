@@ -22,6 +22,10 @@
     <string name="reset">Reset</string>
     <string name="recipe_image">Recipe image</string>
     <string name="cook_time">Cook Time: %1$d minutes</string>
+    <string name="add_ingredient_hint">Add an ingredient</string>
+    <string name="add_ingredient">Add</string>
+    <string name="add">Add</string>
+
 
 
 

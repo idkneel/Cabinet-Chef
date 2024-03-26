@@ -352,12 +352,15 @@ public class Home_screen extends AppCompatActivity {
     private boolean containsAllergens(Recipe recipe) {
         Set<String> userAllergens = getUserAllergens();
         for (RecipeDetail.Ingredient ingredient : recipe.getIngredients()) {
-            if (userAllergens.contains(ingredient.getName().toLowerCase())) {
-                return true;
+            for (String allergen : userAllergens) {
+                if (ingredient.getName().toLowerCase().contains(allergen.toLowerCase())) {
+                    return true;
+                }
             }
         }
         return false;
     }
+
 
     private Set<String> getUserAllergens() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);

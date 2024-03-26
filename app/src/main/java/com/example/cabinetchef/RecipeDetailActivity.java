@@ -1,6 +1,7 @@
 package com.example.cabinetchef;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,14 +17,21 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RecipeDetailActivity extends AppCompatActivity {
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+
+        sharedPreferences = getSharedPreferences("UserPantry", MODE_PRIVATE);
+        SharedPreferences userPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        Set<String> userAllergens = userPreferences.getStringSet("allergens", new HashSet<>());
 
         ImageView recipeImageView = findViewById(R.id.recipeImageDialog);
         TextView recipeTitleView = findViewById(R.id.recipeTitleDialog);
@@ -49,14 +57,27 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>() {}.getType();
         List<RecipeDetail.Ingredient> ingredients = gson.fromJson(ingredientsJson, ingredientListType);
 
+        String cookingDifficulty = determineCookingDifficulty(ingredients.size());
+        recipeTitleView.setText(recipeTitle + " - " + cookingDifficulty);
+
         StringBuilder ingredientsText = new StringBuilder();
         for (RecipeDetail.Ingredient ingredient : ingredients) {
+            boolean isInPantry = sharedPreferences.getBoolean(ingredient.getName().toLowerCase(), false);
+
+            // Building the ingredient string
             ingredientsText.append(ingredient.getName())
                     .append(": ")
                     .append(ingredient.getAmount())
                     .append(" ")
-                    .append(ingredient.getUnit())
-                    .append("\n");
+                    .append(ingredient.getUnit());
+
+            // Append the asterisk if the ingredient is in the pantry
+            if (isInPantry) {
+                ingredientsText.append(" !");
+            }
+
+            // Append the newline character to move to the next ingredient
+            ingredientsText.append("\n");
         }
         recipeIngredientsView.setText(ingredientsText.toString());
 
@@ -64,13 +85,39 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         startCookingButton.setOnClickListener(v -> {
             startActivity(new Intent(RecipeDetailActivity.this, CookingScreen.class));
-
-            //add code to save recipe to recents
-            //make favorites page and ask user if they wish to favorite recipe
-
+            // Additional code for starting cooking, saving recipe to recents, or favoriting recipes
         });
-
     }
+
+    private boolean containsAllergens(String ingredientName, Set<String> allergens) {
+        String lowerCaseIngredient = ingredientName.toLowerCase().trim();
+        for (String allergen : allergens) {
+            String lowerCaseAllergen = allergen.toLowerCase().trim();
+            if (lowerCaseIngredient.contains(lowerCaseAllergen)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String determineCookingDifficulty(int numberOfIngredients) {
+        if (numberOfIngredients <= 4) {
+            return "Easy";
+        } else if (numberOfIngredients <= 8) {
+            return "Medium";
+        } else {
+            return "Hard";
+        }
+    }
+
+
+    private boolean isIngredientInPantry(String ingredient) {
+        return sharedPreferences.getBoolean(ingredient, false);
+    }
+
+
+
+
 
     private String processInstructions(String instructionsJson) {
         // Convert JSON string to List<String> using Gson

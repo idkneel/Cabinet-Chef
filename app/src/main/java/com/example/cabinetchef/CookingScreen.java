@@ -93,8 +93,8 @@ public class CookingScreen extends AppCompatActivity {
         });
 
         addToFavoritesButton.setOnClickListener( v -> {
-
             updateData(recipe);
+            startActivity(new Intent(CookingScreen.this, Home_screen.class));
         });
 
     }
@@ -140,7 +140,6 @@ public class CookingScreen extends AppCompatActivity {
         // Create a map to hold the update, in this case, the new "Household members" value
         Map<String, Object> userDetail = new HashMap<>();
 
-        Intent intent = new Intent(CookingScreen.this, RecipeDetailActivity.class);
 
         Gson gson = new Gson();
         String instructionsJson = gson.toJson(recipe.getInstructions());
@@ -152,7 +151,6 @@ public class CookingScreen extends AppCompatActivity {
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
 
-        startActivity(intent);
 
         userDetail.put("Recipe Name", recipeTitle);
         userDetail.put("Recipe image", recipeImage);

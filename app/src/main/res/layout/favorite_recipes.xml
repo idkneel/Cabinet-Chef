@@ -7,6 +7,7 @@
     android:background="@color/Dark.Mode.1">
 
     <LinearLayout
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -41,5 +42,13 @@
             android:importantForAutofill="no"
             android:padding="16dp"/>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
 </RelativeLayout>

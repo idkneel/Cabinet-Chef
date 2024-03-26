@@ -1,7 +1,9 @@
 package com.example.cabinetchef.Login;
 
 // Import statements for Android and Firebase components
-import static android.content.ContentValues.TAG;
+
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -143,38 +145,18 @@ public class Register extends AppCompatActivity {
                             user.put("Cooking difficulty", "0");
                             user.put("User ID", uSettings.userID);
 
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG,"On Success: user profile is created for " + uSettings.userID);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: "+ e.toString());
-                                }
-                            });
+                            documentReference.set(user).addOnSuccessListener(unused -> Log.d(TAG,"On Success: user profile is created for " + uSettings.userID)).addOnFailureListener(e -> Log.d(TAG, "onFailure: "+ e));
 
                             Map<String,Object> user2 = new HashMap<>();
                             // Set the user's household size to 1 by default
 
                             user2.put("User ID", uSettings.userID);
 
-                            DocumentReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
-                                    .collection("favorites").document("User ID");
+                            CollectionReference collectionReference2 = fStore.collection("users").document(uSettings.userID)
+                                    .collection("favorites");
 
 
-                            collectionReference2.set(user2).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG,"On Success: user profile is created for " + uSettings.userID);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: "+ e.toString());
-                                }
-                            });
+                            collectionReference2.add(user2).addOnSuccessListener(documentReference1 -> Log.d(TAG,"On Success: user favorites profile is created for " + uSettings.userID)).addOnFailureListener(e -> Log.d(TAG, "onFailure: "+ e));
 
                             // Where you designate where to go after the account has been created
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -193,20 +175,29 @@ public class Register extends AppCompatActivity {
                     });
         });
 
-        // Set a listener on the hidePassword checkbox to listen for check changes
-        hidePassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // This method is called whenever the checked state of the hidePassword CompoundButton changes
-                if (isChecked) {
-                    // If the hidePassword button is checked, change the editTextPassword's transformation method
-                    // to HideReturnsTransformationMethod to show the password
-                    editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    // If the hidePassword button is not checked, change the editTextPassword's transformation method
-                    // back to PasswordTransformationMethod to hide the password
-                    editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+        hidePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // This method is called whenever the checked state of the hidePassword CompoundButton changes
+            if (!isChecked) {
+                // If the hidePassword button is checked, change the editTextPassword's transformation method
+                // to HideReturnsTransformationMethod to show the password
+                editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                // If the hidePassword button is not checked, change the editTextPassword's transformation method
+                // back to PasswordTransformationMethod to hide the password
+                editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                // Set a listener on the hidePassword checkbox to listen for check changes
+                hidePassword.setOnCheckedChangeListener((buttonView1, isChecked1) -> {
+                    // This method is called whenever the checked state of the hidePassword CompoundButton changes
+                    if (isChecked1) {
+                        // If the hidePassword button is checked, change the editTextPassword's transformation method
+                        // to HideReturnsTransformationMethod to show the password
+                        editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        // If the hidePassword button is not checked, change the editTextPassword's transformation method
+                        // back to PasswordTransformationMethod to hide the password
+                        editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    }
+                });
             }
         });
     }

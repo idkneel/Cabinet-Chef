@@ -44,15 +44,15 @@
         android:typeface="monospace"
         android:text="@string/pantry"/>
 
-    <Button
-        android:id="@+id/Utensils"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/lightmode_button_outlines"
-        android:textColor="@color/Light.Mode.Text"
-        android:layout_marginTop="2dp"
-        android:typeface="monospace"
-        android:text="@string/utensils"/>
+<!--    <Button-->
+<!--        android:id="@+id/Utensils"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/lightmode_button_outlines"-->
+<!--        android:textColor="@color/Light.Mode.Text"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:typeface="monospace"-->
+<!--        android:text="@string/utensils"/>-->
 
     <Button
         android:id="@+id/Settings"

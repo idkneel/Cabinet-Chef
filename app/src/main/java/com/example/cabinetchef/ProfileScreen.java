@@ -1,6 +1,7 @@
 package com.example.cabinetchef;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,6 +49,18 @@ public class ProfileScreen extends AppCompatActivity {
         // household members button handling
         Button householdMembersButton = findViewById(R.id.household_members);
         householdMembersButton.setOnClickListener(v -> showNumberSelectorPopup());
+
+        Button allergiesButton = findViewById(R.id.allergies_page);
+        allergiesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileScreen.this, AllergiesActivity.class);
+            startActivity(intent);
+        });
+
+        Button itemToUseButton = findViewById(R.id.ingredients_to_use);
+        itemToUseButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileScreen.this, ItemToBeUsed.class);
+            startActivity(intent);
+        });
     }
 
     private void showNumberSelectorPopup() {

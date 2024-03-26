@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIngredientClickListener {
+public class ItemToBeUsed extends AppCompatActivity implements IngredientAdapter.OnIngredientClickListener {
 
     private RecyclerView ingredientsRecyclerView;
     private IngredientAdapter adapter;
@@ -36,7 +36,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pantry_screen);
+        setContentView(R.layout.cooking_item_to_be_used);
 
         sharedPreferences = getSharedPreferences("UserPantry", MODE_PRIVATE);
 

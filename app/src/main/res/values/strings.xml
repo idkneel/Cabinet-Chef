@@ -20,6 +20,14 @@
     <string name="please_enter_your_email_address">Please enter your email address:</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
+    <string name="recipe_image">Recipe image</string>
+    <string name="cook_time">Cook Time: %1$d minutes</string>
+    <string name="add_ingredient_hint">Add an ingredient</string>
+    <string name="add_ingredient">Add</string>
+    <string name="add">Add</string>
+
+
+
 
     <string name="filters">FILTERS</string>
     <string name="meal_time">Meal Time</string>
@@ -54,4 +62,17 @@
     <string name="delete_warning">This action cannot be undone.</string>
     <string name="delete_confirmation">Are you sure you want to delete your account?</string>
     <string name="lets_get_cooking">Lets Get Cooking</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="time_to_cook">Time to Cook</string>
+    <string name="instructions">Instructions (READ ALL BEFORE STARTING)</string>
+    <string name="done_cooking">Done Cooking</string>
+    <string name="are_you_sure">Are You Sure?</string>
+    <string name="no">No</string>
+    <string name="yes">yes</string>
+    <string name="toggle_color_theme">Toggle Color Theme</string>
+    <string name="finish_cooking">Finish Cooking</string>
+    <string name="delete">Delete?\n</string>
+    <string name="allergen_warning">Allergen Warning!</string>
+    <string name="app_logo">app logo</string>
+    <string name="rah">rah</string>
 </resources>

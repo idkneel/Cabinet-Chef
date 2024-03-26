@@ -40,9 +40,15 @@
                 android:theme="@style/Theme.CabinetChef">
             </activity>
 
+            <activity android:name=".AllergiesActivity"></activity>
+
+
             <activity
                 android:name=".Home_screen"
                 android:exported="true">
+            </activity>
+
+            <activity android:name=".RecipeDetailActivity">
             </activity>
 
             <activity
@@ -74,6 +80,11 @@
                 android:name=".IngredientsList"
                 android:exported="true">
             </activity>
+            <activity android:name=".ItemToBeUsed"
+                android:exported="true">
+            </activity>
+            <activity android:name=".CookingScreen"
+                android:exported="true"/>
 
         </application>
 

@@ -25,13 +25,23 @@
         android:textColor="@color/Light.Mode.Text"
         android:textStyle="bold" />
 
-
+    <Button
+        android:id="@+id/textSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textStyle="bold"
+        android:background="@drawable/dark_mode_button_outlines"
+        android:textColor="@color/Light.Mode.Text"
+        android:padding="8dp"
+        android:text="@string/textSize"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/ColorModePreference"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/lightmode_button_outlines"
+        android:background="@drawable/dark_mode_button_outlines"
         android:textColor="@color/Light.Mode.Text"
         android:typeface="monospace"
         android:text="@string/LightMode"
@@ -51,17 +61,6 @@
         android:text="@string/logout"
         android:typeface="monospace" />
 
-    <Button
-        android:id="@+id/textSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textStyle="bold"
-        android:background="@drawable/lightmode_button_outlines"
-        android:textColor="@color/Light.Mode.Text"
-        android:padding="8dp"
-        android:text="@string/textSize"
-        android:typeface="monospace" />
 
     <Button
         android:id="@+id/deleteAccount"

@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- res/layout/home_screen.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dark_mode_popup_background"
+    android:padding="16dp">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="8dp"
+    android:theme="@style/DarkTheme"
     android:background="@color/Light.Mode.1">
 
     <!--background tint is background color
@@ -14,7 +22,7 @@
     -->
 
     <LinearLayout
-        android:id="@+id/searchEditText"
+        android:id="@+id/searchContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,18 +31,20 @@
         android:padding="8dp"
         tools:ignore="UselessParent">
 
-        <!-- LinearLayout content or views -->
-
         <Button
             android:id="@+id/showPopupButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/screen_select_button_design"
-            android:padding="4dp"/>
+            android:backgroundTint="@color/Dark.Mode.4"
+            android:textColor="@color/Dark.Mode.Text"
+            android:padding="4dp"
+            android:text="@string/menu_button"
+            android:textSize="25sp" />
 
         <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -54,12 +64,24 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/filter_select_button_design"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:backgroundTint="@color/Dark.Mode.4"
+            android:text="@string/menu_button"
+            android:textColor="@color/Dark.Mode.Text"
+            android:textSize="25sp" />
     </LinearLayout>
 
 
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchContainer"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
 </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>

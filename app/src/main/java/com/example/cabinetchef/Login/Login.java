@@ -183,7 +183,7 @@ public class Login  extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // This method is called whenever the checked state of the hidePassword CompoundButton changes
-                if (isChecked) {
+                if (!isChecked) {
                     // If the hidePassword button is checked, change the editTextPassword's transformation method
                     // to HideReturnsTransformationMethod to show the password
                     editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());

@@ -5,27 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="20dp"
     android:background="@drawable/dark_mode_popup_background">
+
+    <TextView
+        android:id="@+id/deleteTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/delete_account"
+        android:textSize="17sp"
+        android:typeface="monospace"
+        android:background="@drawable/lock_round"
+        android:textColor="@color/Light.Mode.Text"
+        android:drawablePadding="8dp"
+        app:drawableLeftCompat="@drawable/baseline_delete_outline_24"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialogBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/deleteTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="@string/delete_account"
-            android:textSize="17sp"
-            android:background="@drawable/lock_round"
-            android:textColor="@color/Light.Mode.Text"
-            android:drawablePadding="8dp"
-            app:drawableLeftCompat="@drawable/baseline_delete_outline_24"
-            app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/deleteTitle"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/desc"
@@ -37,29 +38,31 @@
             android:layout_marginEnd="20dp"
             android:layout_marginTop="8dp"
             android:textSize="22sp"
+            android:typeface="monospace"
             android:textColor="@color/Dark.Mode.Text"
-            app:layout_constraintTop_toBottomOf="@id/deleteTitle" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/warningBox"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/Light.Mode.3"
             android:textSize="18sp"
             android:textAllCaps="true"
             android:layout_marginTop="40dp"
             android:text="@string/delete_warning"
             android:gravity="center"
             android:textStyle="bold"
+            android:typeface="monospace"
             android:layout_marginBottom="30dp"
             android:textColorHint="@color/Dark.Mode.Text"
             android:maxLines="1"
             android:backgroundTint="@color/Light.Mode.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/deleteTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/desc"/>
 
-        <TextView
+        <Button
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -67,17 +70,19 @@
             android:layout_marginEnd="10dp"
             android:text="@string/cancel"
             android:gravity="center"
-            android:textColor="@color/Dark.Mode.Text"
+            android:textColor="@color/Light.Mode.Text"
             android:textSize="18sp"
+            android:typeface="monospace"
             app:cornerRadius="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/lightmode_button_outlines"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/warningBox"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"
             app:layout_constraintEnd_toStartOf="@id/btnConfirm"/>
 
-        <TextView
+        <Button
             android:id="@+id/btnConfirm"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -88,7 +93,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:textSize="18sp"
-            android:textColor="@color/Dark.Mode.Text"
+            android:typeface="monospace"
+            android:background="@drawable/lightmode_button_outlines"
+            android:textColor="@color/Light.Mode.Text"
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"

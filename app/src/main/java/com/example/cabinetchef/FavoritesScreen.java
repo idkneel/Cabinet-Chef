@@ -58,19 +58,18 @@ public class FavoritesScreen extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Recipe> allRecipes = new ArrayList<>();
+                List<Recipe> favoriteRecipes = new ArrayList<>();
+                int count = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = snapshot.getValue(Recipe.class);
                     if (recipe != null) {
-                        allRecipes.add(recipe);
+                        favoriteRecipes.add(recipe);
+                        count++;
+                        if (count >= 5) {
+                            break; // Exit the loop after retrieving the first 5 recipes
+                        }
                     }
                 }
-
-                // Shuffle the list of recipes
-                Collections.shuffle(allRecipes);
-
-                // Display the first 5 recipes
-                List<Recipe> favoriteRecipes = allRecipes.subList(0, Math.min(allRecipes.size(), 5));
 
                 // Update the list of favorite recipes
                 favoriteRecipesList.addAll(favoriteRecipes);
@@ -85,4 +84,5 @@ public class FavoritesScreen extends AppCompatActivity {
             }
         });
     }
+
 }

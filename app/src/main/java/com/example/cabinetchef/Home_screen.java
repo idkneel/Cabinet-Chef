@@ -225,7 +225,7 @@ public class Home_screen extends AppCompatActivity {
         cookingDifficultyWindow.showAtLocation(rootView, Gravity.RIGHT, 0, 0);
     }
 
-
+// ID LOH
 
 
 }

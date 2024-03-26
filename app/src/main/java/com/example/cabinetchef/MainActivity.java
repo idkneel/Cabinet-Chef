@@ -37,6 +37,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The main activity class responsible for handling the initial screen and user authentication.
+ */
 public class MainActivity extends AppCompatActivity {
 
     // Firebase authentication object
@@ -78,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(user.getEmail());
         }
 
-
-
         // Setting an onClickListener for the logout button
         logout_button.setOnClickListener(view -> {
             // Signing out the user
@@ -98,22 +99,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Home_screen.class);
             startActivity(intent);
         });
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fetchDataAndSaveToFirebase();
-//            }
-//        });
-
+        // Firebase database reference
         DatabaseReference recipesRef = database.getReference("recipes");
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot recipeSnapshot) {
 
-                    Recipe recipe = recipeSnapshot.getValue(Recipe.class);
-                    //use or display recipes - later
+                Recipe recipe = recipeSnapshot.getValue(Recipe.class);
+                //use or display recipes - later
 
             }
 
@@ -124,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to fetch data from Spoonacular API and save to Firebase.
+     */
     private void fetchDataAndSaveToFirebase() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.spoonacular.com/")
@@ -144,18 +141,24 @@ public class MainActivity extends AppCompatActivity {
                             fetchRecipeDetailsById(summary.getId(), service);
                         }
                     } else {
-                        // ??API error 2 fuck this shit
+                        // Handle API error
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<RecipesResponse> call, @NonNull Throwable t) {
-                    // API error
+                    // Handle API failure
                 }
             });
         }
     }
 
+    /**
+     * Method to fetch recipe details by ID from Spoonacular API.
+     *
+     * @param recipeId ID of the recipe to fetch.
+     * @param service   Retrofit service for Spoonacular API.
+     */
     private void fetchRecipeDetailsById(int recipeId, SpoonacularService service) {
         Call<RecipeDetail> recipeDetailCall = service.getRecipeDetails(recipeId, String.valueOf("cb765e381a874b6abf2f6f605c92ecec"));
         recipeDetailCall.enqueue(new Callback<RecipeDetail>() {
@@ -179,27 +182,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to convert RecipeDetail object to Recipe object.
+     *
+     * @param detail RecipeDetail object to convert.
+     * @return Converted Recipe object.
+     */
     private Recipe convertToRecipe(RecipeDetail detail) {
         List<RecipeDetail.Ingredient> ingredients = detail.getExtendedIngredients();
         List<String> instructions;
         if (detail.getInstructions() != null && !detail.getInstructions().isEmpty()) {
             instructions = Arrays.asList(detail.getInstructions().split("\n"));
         } else {
-
             instructions = Collections.emptyList();
         }
         return new Recipe(detail.getTitle(), ingredients, detail.getReadyInMinutes(), detail.getImage(), instructions);
     }
 
+    /**
+     * Method to save recipe data to Firebase.
+     *
+     * @param recipes List of recipes to save.
+     */
     private void saveDataToFirebase(List<Recipe> recipes) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("recipes");
         for (Recipe recipe : recipes) {
             databaseReference.push().setValue(recipe);
         }
     }
-
-
-
-
-
 }

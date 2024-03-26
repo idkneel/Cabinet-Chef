@@ -4,50 +4,44 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.cabinetchef.Recipe.Recipe;
 import com.example.cabinetchef.Recipe.RecipeDetail;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-
+// This class represents the Cooking Screen activity
 public class CookingScreen extends AppCompatActivity {
     FirebaseFirestore fStore;
     Recipe recipe = new Recipe();
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cooking_screen);
+        setContentView(R.layout.cooking_screen); // Set the layout for this activity
 
+        // Initialize views
         ImageView recipeImageView = findViewById(R.id.recipeImageDialog);
         TextView recipeTitleView = findViewById(R.id.recipeTitleDialog);
         TextView recipeTimeView = findViewById(R.id.recipeTimeDialog);
@@ -56,21 +50,22 @@ public class CookingScreen extends AppCompatActivity {
         Button finishCookingButton = findViewById(R.id.finishCooking);
         Button addToFavoritesButton = findViewById(R.id.addToFavorites);
 
+        // Retrieve recipe details from intent
         String recipeImage = getIntent().getStringExtra("RECIPE_IMAGE");
         String recipeTitle = getIntent().getStringExtra("RECIPE_TITLE");
         int recipeTime = getIntent().getIntExtra("RECIPE_TIME", 0);
         String instructionsJson = getIntent().getStringExtra("RECIPE_INSTRUCTIONS_JSON");
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
+        // Load recipe image using Glide
         Glide.with(this).load(recipeImage).into(recipeImageView);
         recipeTitleView.setText(recipeTitle);
         recipeTimeView.setText(String.format("%d minutes", recipeTime));
 
+        // Parse ingredients JSON and display in TextView
         Gson gson = new Gson();
-
         Type ingredientListType = new com.google.gson.reflect.TypeToken<List<RecipeDetail.Ingredient>>() {}.getType();
         List<RecipeDetail.Ingredient> ingredients = gson.fromJson(ingredientsJson, ingredientListType);
-
         StringBuilder ingredientsText = new StringBuilder();
         assert ingredients != null;
         for (RecipeDetail.Ingredient ingredient : ingredients) {
@@ -83,26 +78,25 @@ public class CookingScreen extends AppCompatActivity {
         }
         recipeIngredientsView.setText(ingredientsText.toString());
 
+        // Process instructions JSON and display in TextView
         recipeInstructionsView.setText(processInstructions(instructionsJson, "</?li>|</?ol>"));
 
+        // OnClickListener for finishCookingButton to return to Home screen
         finishCookingButton.setOnClickListener(v -> startActivity(new Intent(CookingScreen.this, Home_screen.class)));
 
+        // OnClickListener for addToFavoritesButton to add the recipe to favorites
         addToFavoritesButton.setOnClickListener( v -> {
-            updateData(recipe);
-
-            startActivity(new Intent(CookingScreen.this, Home_screen.class));
+            updateData(recipe); // Update data in Firestore
+            startActivity(new Intent(CookingScreen.this, Home_screen.class)); // Return to Home screen
         });
-
     }
 
+    // Method to process instructions JSON and format it for display
     private String processInstructions(String instructionsJson, String removeChars) {
-        // Convert JSON string to List<String> using Gson
         Gson gson = new Gson();
         Type instructionsType = new com.google.gson.reflect.TypeToken<List<String>>() {}.getType();
         List<String> instructionsList = gson.fromJson(instructionsJson, instructionsType);
 
-
-        // Replace all occurrences of charactersToRemove with an empty string
         StringBuilder processedInstructions = new StringBuilder();
         if (instructionsList != null) {
             for (String instruction : instructionsList) {
@@ -113,9 +107,10 @@ public class CookingScreen extends AppCompatActivity {
             Log.e(TAG, "Instructions list is null.");
         }
 
-        return processedInstructions.toString().trim(); // Trim any leading or trailing whitespaces
+        return processedInstructions.toString().trim();
     }
 
+    // Method to toggle visibility of ingredients dropdown
     public void toggleIngredientsDropdown(View view) {
         LinearLayout ingredientsContent = findViewById(R.id.recipeIngredientsContent);
         if (ingredientsContent.getVisibility() == View.VISIBLE) {
@@ -125,6 +120,7 @@ public class CookingScreen extends AppCompatActivity {
         }
     }
 
+    // Method to toggle visibility of instructions dropdown
     public void toggleInstructionsDropdown(View view) {
         LinearLayout instructionsContent = findViewById(R.id.recipeInstructionsContent);
         if (instructionsContent.getVisibility() == View.VISIBLE) {
@@ -134,29 +130,24 @@ public class CookingScreen extends AppCompatActivity {
         }
     }
 
-
+    // Method to update data in Firestore when adding to favorites
     private void updateData(Recipe recipe) {
-        // Create a map to hold the update, in this case, the new "Household members" value
+        // Create a map to hold the update
         Map<String, Object> userDetail = new HashMap<>();
 
+        Gson gson = new Gson();
+        String instructionsJson = gson.toJson(recipe.getInstructions());
 
+        // Retrieve recipe details from intent
         String recipeImage = getIntent().getStringExtra("RECIPE_IMAGE");
         String recipeTitle = getIntent().getStringExtra("RECIPE_TITLE");
         int recipeTime = getIntent().getIntExtra("RECIPE_TIME", 0);
-        String instructionsJson2 = getIntent().getStringExtra("RECIPE_INSTRUCTIONS_JSON");
         String ingredientsJson = getIntent().getStringExtra("RECIPE_INGREDIENTS_JSON");
 
-        assert instructionsJson2 != null;
-        if (instructionsJson2.contains("u003col\\u003e\\u003cli\\u003e")){
-            instructionsJson2 = processInstructions(instructionsJson2, "u003col\\u003e\\u003cli\\u003e");
-        } else if (instructionsJson2.contains("<ol><li>")){
-            instructionsJson2 = processInstructions(instructionsJson2, "<ol><li>");
-        } else if (instructionsJson2.contains("</li></ol>")){
-            instructionsJson2 = processInstructions(instructionsJson2, "</li></ol>");
-        } else if (instructionsJson2.contains("</li></li>")) {
-            instructionsJson2 = processInstructions(instructionsJson2, "</li></li>");
-        }
+        // Process instructions JSON to remove unnecessary characters
+        String instructionsJson2 = processInstructions(instructionsJson, "u003col\u003e\u003cli\u003e|<ol><li>|</li></ol>|</li></li>");
 
+        // Add recipe details to the map
         userDetail.put("Recipe Name", recipeTitle);
         userDetail.put("Recipe image", recipeImage);
         userDetail.put("Ready in (Minutes)", recipeTime);
@@ -164,67 +155,20 @@ public class CookingScreen extends AppCompatActivity {
         userDetail.put("Instructions", instructionsJson2);
 
         // Initialize Firestore instance
-
         fStore = FirebaseFirestore.getInstance();
 
-        // Get the current user's ID from FirebaseAuth (assuming user is logged in)
-        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        // Get the current user's ID from FirebaseAuth
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Reference to the specific user's document in the "users" collection
-        DocumentReference userRecipeDocRef = fStore.collection("favorite recipes").document(userId);
+        DocumentReference userDocRef = fStore.collection("users").document(userId);
 
         // Try to get the document for the current user
-        userRecipeDocRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                // If the document exists, update it with the new details
-                userRecipeDocRef.update(userDetail).addOnSuccessListener(unused -> {
-                    // Success: Show a success message
-                    Log.d(TAG, "successfully Updated");
-                }).addOnFailureListener(e -> {
-                    // Failure: Show an error message
-                    Log.d(TAG, "Error updating document");
-                });
-            } else {
-                // If the document does not exist (fallback scenario),
-                // attempt to find the document by "Household members" field and old number
-                fStore.collection("favorite recipes")
-                        .get().addOnCompleteListener(task -> {
-                            if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                                // If successful and documents are found,
-                                // get the first document and its ID
-                                DocumentSnapshot documentSnapshot1 = task.getResult().getDocuments().get(0);
-                                String documentID = documentSnapshot1.getId();
-                                // Update the found document with the new details
-                                fStore.collection("favorite recipes")
-                                        .document(documentID)
-                                        .update(userDetail)
-                                        .addOnSuccessListener(unused -> {
-                                            // Success: Show a success message
-                                            Log.d(TAG, "successfully Updated");
-                                        }).addOnFailureListener(e -> {
-                                            // Failure: Show an error message
-                                            Log.d(TAG, "Some error occurred");
-                                        });
-                            } else {
-                                Log.d(TAG, "Failure to find document");
-                            }
-                        }).addOnFailureListener(e -> {
-                            // If there was an error accessing the document, show an error message
-                            Log.d(TAG, "Error accessing document");
-                        });
+        fStore.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                fStore.collection("users").document(userId).collection("favorites").document(recipeTitle).set(userDetail);
             }
         });
-
-
-        // Try to get the document for the current user
-        fStore.collection("users").document(userId).get().addOnCompleteListener(task -> {
-            if (!task.getResult().exists()){
-                userDetail.put("User ID", userId);
-                fStore.collection("users").document(userId).collection("favorites").add(userDetail);
-            } else {
-                fStore.collection("users").document(userId).collection("favorites").add(userDetail);
-            }
-        });
-
     }
 }

@@ -1,4 +1,3 @@
-
 package com.example.cabinetchef;
 
 import android.content.Context;
@@ -25,34 +24,37 @@ import com.example.cabinetchef.Recipe.RecipeDetail;
 import java.util.ArrayList;
 import java.util.List;
 
+// Adapter class for the RecyclerView that displays recipes
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private List<Recipe> mRecipeList;
-    private OnItemClickListener listener;
+    private List<Recipe> mRecipeList; // List to store recipe data
+    private OnItemClickListener listener; // Listener for item clicks
 
-    // Constructor and other methods...
+    // Constructor to initialize the adapter with a list of recipes
     public RecipeAdapter(Context context, List<Recipe> recipeList) {
         mRecipeList = recipeList;
     }
 
-    // Method to set item click listener
+    // Method to set the item click listener
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    // Inner interface to handle item clicks
+    // Interface for handling item clicks
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
+    // Method to create view holder instances
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the layout for the recipe item view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item, parent, false);
         return new RecipeViewHolder(view);
     }
 
-
+    // Method to bind data to view holder instances
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe currentItem = mRecipeList.get(position);
@@ -71,22 +73,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         });
     }
 
-
-
+    // Method to retrieve the total number of items in the list
     @Override
     public int getItemCount() {
         return mRecipeList.size();
     }
 
+    // View holder class to hold references to views
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         private ImageView recipeImage;
         private TextView recipeTitle;
         private TextView allergenWarning;
 
-        private List<String> userAllergens;
-        private Context context;
+        private List<String> userAllergens; // List to store user's allergens
+        private Context context; // Context reference
 
-
+        // Constructor to initialize views
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImage = itemView.findViewById(R.id.recipeImage);
@@ -94,7 +96,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             allergenWarning = itemView.findViewById(R.id.allergenWarning);
         }
 
-
+        // Method to bind recipe data to views
         public void bind(Recipe recipe) {
             // Bind recipe data to views
             recipeTitle.setText(recipe.getTitle());
@@ -108,7 +110,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                Log.e("Glide", "Failed to load image: " + e != null ? e.getMessage() : "");
+                                Log.e("Glide", "Failed to load image: " + (e != null ? e.getMessage() : ""));
                                 return false;
                             }
 
@@ -136,7 +138,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             }
         }
 
-
         // Method to check if a recipe contains allergens
         private boolean containsAllergens(Recipe recipe) {
             if (userAllergens == null || userAllergens.isEmpty()) {
@@ -154,9 +155,5 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             }
             return false; // Recipe does not contain allergen
         }
-
-
-
-
     }
 }

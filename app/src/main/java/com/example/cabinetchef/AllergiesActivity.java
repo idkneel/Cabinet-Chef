@@ -20,6 +20,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Activity for managing user allergies.
+ */
 public class AllergiesActivity extends AppCompatActivity {
 
     private EditText allergyInput;
@@ -46,6 +49,9 @@ public class AllergiesActivity extends AppCompatActivity {
         allergenListView.setOnItemClickListener(this::deleteAllergen);
     }
 
+    /**
+     * Adds a new allergen to the list of user allergens.
+     */
     private void addAllergen() {
         String allergen = allergyInput.getText().toString().trim();
         if (!allergen.isEmpty() && !userAllergens.contains(allergen)) {
@@ -58,6 +64,14 @@ public class AllergiesActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Deletes an allergen from the list of user allergens.
+     *
+     * @param parent   The AdapterView where the click happened.
+     * @param view     The view within the AdapterView that was clicked.
+     * @param position The position of the view in the adapter.
+     * @param id       The row id of the item that was clicked.
+     */
     private void deleteAllergen(AdapterView<?> parent, View view, int position, long id) {
         String allergenToRemove = userAllergens.get(position);
 
@@ -83,6 +97,11 @@ public class AllergiesActivity extends AppCompatActivity {
         confirmNo.setOnClickListener(v -> alertDialog.dismiss());
     }
 
+    /**
+     * Saves the list of user allergens in SharedPreferences.
+     *
+     * @param allergens List of user allergens to be saved.
+     */
     private void saveAllergens(List<String> allergens) {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -90,6 +109,11 @@ public class AllergiesActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    /**
+     * Retrieves the list of user allergens from SharedPreferences.
+     *
+     * @return List of user allergens.
+     */
     private List<String> getAllergens() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
         Set<String> allergenSet = sharedPreferences.getStringSet("allergens", new HashSet<>());

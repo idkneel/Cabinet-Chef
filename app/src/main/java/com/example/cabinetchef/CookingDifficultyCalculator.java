@@ -9,12 +9,29 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for calculating cooking difficulty based on the number of ingredients in a recipe.
+ */
 public class CookingDifficultyCalculator {
 
+    /**
+     * Listener interface for receiving the calculated cooking difficulty.
+     */
     public interface CookingDifficultyListener {
+        /**
+         * Callback method to receive the calculated cooking difficulty.
+         *
+         * @param difficulty The calculated cooking difficulty.
+         */
         void onDifficultyCalculated(String difficulty);
     }
 
+    /**
+     * Calculates the cooking difficulty for a given recipe.
+     *
+     * @param recipeId The ID of the recipe to calculate the difficulty for.
+     * @param listener The listener to receive the calculated difficulty.
+     */
     public void calculateDifficulty(String recipeId, final CookingDifficultyListener listener) {
         FirebaseDatabase.getInstance().getReference().child("recipes").child(recipeId)
                 .addValueEventListener(new ValueEventListener() {
@@ -37,6 +54,12 @@ public class CookingDifficultyCalculator {
                 });
     }
 
+    /**
+     * Determines the cooking difficulty based on the number of ingredients.
+     *
+     * @param numberOfIngredients The number of ingredients in the recipe.
+     * @return The cooking difficulty level.
+     */
     private String determineCookingDifficulty(int numberOfIngredients) {
         if (numberOfIngredients <= 4) {
             return "Easy";
@@ -47,4 +70,3 @@ public class CookingDifficultyCalculator {
         }
     }
 }
-

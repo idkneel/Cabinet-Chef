@@ -30,6 +30,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
 
     private SharedPreferences sharedPreferences;
 
+    // List to store all ingredient names
     private List<String> allIngredientNames = new ArrayList<>();
     private EditText searchEditText;
 
@@ -38,17 +39,21 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantry_screen);
 
+        // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("UserPantry", MODE_PRIVATE);
 
+        // Initialize RecyclerView and Adapter
         ingredientsRecyclerView = findViewById(R.id.ingredientsRecyclerView);
         adapter = new IngredientAdapter(sharedPreferences, this);
 
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ingredientsRecyclerView.setAdapter(adapter);
 
+        // Back button functionality
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
 
+        // Search functionality
         searchEditText = findViewById(R.id.searchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,8 +68,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
             public void afterTextChanged(Editable s) {}
         });
 
-
-
+        // Fetch ingredients from Firebase
         fetchSimpleIngredients();
     }
 
@@ -74,6 +78,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
         fetchSimpleIngredients(); // Refresh the ingredients list
     }
 
+    // Toggle the pantry state of an ingredient
     private void togglePantryItem(String ingredient, boolean isInPantry) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(ingredient, isInPantry);
@@ -86,6 +91,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
         fetchSimpleIngredients();  // Refresh the ingredients list to reflect the latest state
     }
 
+    // Save pantry items to SharedPreferences
     private void savePantryItems() {
         // Here you might want to loop through the pantry items and save their state
         // However, since the state is saved on each click, this method could just confirm the save operation
@@ -94,6 +100,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
         Toast.makeText(this, "Pantry items saved.", Toast.LENGTH_SHORT).show();
     }
 
+    // Filter ingredients based on search query
     private void filterIngredients(String query) {
         List<String> filteredList = new ArrayList<>();
         for (String ingredient : allIngredientNames) {
@@ -104,6 +111,7 @@ public class Pantry extends AppCompatActivity implements IngredientAdapter.OnIng
         adapter.setIngredients(filteredList);
     }
 
+    // Fetch ingredients from Firebase database
     private void fetchSimpleIngredients() {
         FirebaseDatabase.getInstance().getReference().child("recipes")
                 .addValueEventListener(new ValueEventListener() {

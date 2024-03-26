@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Activity to display favorite recipes.
+ */
 public class FavoritesScreen extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -53,20 +56,26 @@ public class FavoritesScreen extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish());
     }
 
+    /**
+     * Fetches favorite recipes from the Firebase Realtime Database.
+     */
     private void fetchFavoriteRecipes() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("recipes");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // List to store fetched favorite recipes
                 List<Recipe> favoriteRecipes = new ArrayList<>();
                 int count = 0;
+                // Loop through the data snapshot to get favorite recipes
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = snapshot.getValue(Recipe.class);
                     if (recipe != null) {
                         favoriteRecipes.add(recipe);
                         count++;
+                        // Exit the loop after retrieving the first 5 recipes
                         if (count >= 5) {
-                            break; // Exit the loop after retrieving the first 5 recipes
+                            break;
                         }
                     }
                 }
@@ -80,9 +89,9 @@ public class FavoritesScreen extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Log an error message if reading recipes fails
                 Log.e("FavoritesScreen", "Failed to read recipes", databaseError.toException());
             }
         });
     }
-
 }

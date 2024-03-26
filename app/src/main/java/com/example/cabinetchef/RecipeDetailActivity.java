@@ -63,13 +63,26 @@ public class RecipeDetailActivity extends AppCompatActivity {
         recipeInstructionsView.setText(processInstructions(instructionsJson));
 
         startCookingButton.setOnClickListener(v -> {
-            startActivity(new Intent(RecipeDetailActivity.this, CookingScreen.class));
+             Intent intent = new Intent(RecipeDetailActivity.this, CookingScreen.class);
 
-            //add code to save recipe to recents
-            //make favorites page and ask user if they wish to favorite recipe
+//            intent.putExtra("RECIPE_IMAGE", clickedRecipe.getImage());
+//            intent.putExtra("RECIPE_TITLE", clickedRecipe.getTitle());
+//            intent.putExtra("RECIPE_TIME", clickedRecipe.getReadyInMinutes());
+//
+//            // Convert instructions and ingredients to JSON strings
+//            Gson gson = new Gson();
+//            String instructionsJson = gson.toJson(clickedRecipe.getInstructions());
+//            Type ingredientListType = new com.google.common.reflect.TypeToken<List<RecipeDetail.Ingredient>>(){}.getType();
+//            String ingredientsJson = gson.toJson(clickedRecipe.getIngredients(), ingredientListType);
+//
+//            // Pass JSON strings to the intent
+//            intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);
+//            intent.putExtra("RECIPE_INGREDIENTS_JSON", ingredientsJson);
+
+            // Start the CookingScreen activity with the intent
+            startActivity(intent);
 
         });
-
     }
 
     private String processInstructions(String instructionsJson) {

@@ -43,23 +43,12 @@
             android:padding="16dp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/recipeName"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search"
-        android:layout_marginTop="6dp"
-        android:padding="8dp"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/recipeImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/recipeName"
-        android:layout_marginTop="7dp"
-        android:contentDescription="@string/recipe_image"
-        android:padding="8dp"/>
-
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
 </RelativeLayout>

@@ -26,9 +26,7 @@
                 return title;
             }
 
-            public void setTitle(String title) {
-                this.title = title;
-            }
+            public void setTitle(String title) {this.title = title;}
 
             public List<RecipeDetail.Ingredient> getIngredients() {
                 return ingredients;
@@ -40,6 +38,8 @@
             public String getImage() {
                 return image;
             }
+
+            public void setImage(String image){this.image = image;}
             public List<String> getInstructions() {
                 return instructions;
             }

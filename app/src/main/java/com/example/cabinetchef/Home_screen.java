@@ -171,7 +171,7 @@ public class Home_screen extends AppCompatActivity {
         Button profileButton = screenSelectView.findViewById(R.id.profile);
         Button favoritesButton = screenSelectView.findViewById(R.id.Favorites);
         Button pantryButton = screenSelectView.findViewById(R.id.Pantry);
-        Button utensilsButton = screenSelectView.findViewById(R.id.Utensils);
+        //Button utensilsButton = screenSelectView.findViewById(R.id.Utensils);
         Button settingsButton = screenSelectView.findViewById(R.id.Settings);
 
         // Set up onClick listeners for each button to start different activities and dismiss the popup
@@ -187,10 +187,10 @@ public class Home_screen extends AppCompatActivity {
             startActivity(new Intent(Home_screen.this, Pantry.class));
             screenSelectWindow.dismiss();
         });
-        utensilsButton.setOnClickListener(v -> {
-            startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
-            screenSelectWindow.dismiss();
-        });
+//        utensilsButton.setOnClickListener(v -> {
+//            startActivity(new Intent(Home_screen.this, UtensilsScreen.class));
+//            screenSelectWindow.dismiss();
+//        });
         settingsButton.setOnClickListener(v -> {
             startActivity(new Intent(Home_screen.this, Settings.class));
             screenSelectWindow.dismiss();
@@ -330,6 +330,8 @@ public class Home_screen extends AppCompatActivity {
             RecipeAdapter adapter = new RecipeAdapter(this, recipes);
             recyclerView.setAdapter(adapter);
 
+            // Check if the recipe contains any allergens
+
             adapter.setOnItemClickListener(new RecipeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
@@ -359,9 +361,6 @@ public class Home_screen extends AppCompatActivity {
             });
         }
     }
-
-
-
 
 
 

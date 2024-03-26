@@ -7,24 +7,32 @@
     android:background="@color/Dark.Mode.1"
     android:padding="8dp">
 
-    <EditText
-        android:id="@+id/searchEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type an ingredient"
-        android:inputType="text"/>
+        android:padding="8dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/lightmode_button_outlines"
+            android:text="@string/back"
+            android:textColor="@color/Light.Mode.Text"/>
 
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type an ingredient"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:inputType="text"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/lightmode_button_outlines"
-        android:text="@string/back"
-        android:textColor="@color/Light.Mode.Text"/>
-
+    
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientsRecyclerView"
         android:layout_width="match_parent"

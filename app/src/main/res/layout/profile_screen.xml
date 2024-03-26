@@ -38,15 +38,13 @@
         android:id="@+id/ingredients_to_use"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/lightmode_button_outlines"
-        android:textColor="@color/Light.Mode.Text"
-        android:typeface="monospace"
-        android:text="@string/ingredients_to_use"
         android:layout_below="@+id/household_members"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
+        android:background="@drawable/lightmode_button_outlines"
         android:padding="8dp"
-        />
+        android:text="@string/ingredients_to_use"
+        android:textColor="@color/Light.Mode.Text"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/backButton"

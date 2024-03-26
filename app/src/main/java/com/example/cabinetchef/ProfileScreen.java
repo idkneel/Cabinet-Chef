@@ -51,12 +51,15 @@ public class ProfileScreen extends AppCompatActivity {
         householdMembersButton.setOnClickListener(v -> showNumberSelectorPopup());
 
         Button allergiesButton = findViewById(R.id.allergies_page);
-        allergiesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileScreen.this, AllergiesActivity.class);
-                startActivity(intent);
-            }
+        allergiesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileScreen.this, AllergiesActivity.class);
+            startActivity(intent);
+        });
+
+        Button itemToUseButton = findViewById(R.id.ingredients_to_use);
+        itemToUseButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileScreen.this, ItemToBeUsed.class);
+            startActivity(intent);
         });
     }
 

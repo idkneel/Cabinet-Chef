@@ -51,10 +51,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         recipeTimeView.setText(String.format("%d minutes", recipeTime));
 
         Gson gson = new Gson();
-        Type instructionsType = new TypeToken<List<String>>() {}.getType();
+        Type instructionsType = new TypeToken<List<String>>() {
+        }.getType();
         List<String> instructions = gson.fromJson(instructionsJson, instructionsType);
 
-        Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>() {}.getType();
+        Type ingredientListType = new TypeToken<List<RecipeDetail.Ingredient>>() {
+        }.getType();
         List<RecipeDetail.Ingredient> ingredients = gson.fromJson(ingredientsJson, ingredientListType);
 
         StringBuilder ingredientsText = new StringBuilder();
@@ -79,7 +81,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         recipeIngredientsView.setText(ingredientsText.toString());
 
         startCookingButton.setOnClickListener(v -> {
-             Intent intent = new Intent(RecipeDetailActivity.this, CookingScreen.class);
+            Intent intent = new Intent(RecipeDetailActivity.this, CookingScreen.class);
 
 //            intent.putExtra("RECIPE_IMAGE", clickedRecipe.getImage());
 //            intent.putExtra("RECIPE_TITLE", clickedRecipe.getTitle());
@@ -94,6 +96,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
 //            // Pass JSON strings to the intent
 //            intent.putExtra("RECIPE_INSTRUCTIONS_JSON", instructionsJson);
 //            intent.putExtra("RECIPE_INGREDIENTS_JSON", ingredientsJson);
+            startActivity(intent);
+        });
+    }
+
     private boolean containsAllergens(String ingredientName, Set<String> allergens) {
         String lowerCaseIngredient = ingredientName.toLowerCase().trim();
         for (String allergen : allergens) {
@@ -105,23 +111,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return false;
     }
 
-            // Start the CookingScreen activity with the intent
-            startActivity(intent);
-    private String determineCookingDifficulty(int numberOfIngredients) {
-        if (numberOfIngredients <= 4) {
-            return "Easy";
-        } else if (numberOfIngredients <= 8) {
-            return "Medium";
-        } else {
-            return "Hard";
-        }
-    }
 
-        });
-
-    private boolean isIngredientInPantry(String ingredient) {
-        return sharedPreferences.getBoolean(ingredient, false);
-    }
+//    private boolean isIngredientInPantry(String ingredient) {
+//        return sharedPreferences.getBoolean(ingredient, false);
+//    }
 
     private String processInstructions(String instructionsJson) {
         // Convert JSON string to List<String> using Gson

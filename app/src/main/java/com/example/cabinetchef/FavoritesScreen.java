@@ -1,29 +1,28 @@
 package com.example.cabinetchef;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.os.Bundle;
-
 import android.util.Log;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cabinetchef.Recipe.Recipe;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Random;
 
 public class FavoritesScreen extends AppCompatActivity {
 
-    private FirebaseFirestore fStore;
     private RecyclerView recyclerView;
     private FavoriteRecipesAdapter adapter;
     private List<Recipe> favoriteRecipesList;
@@ -33,59 +32,57 @@ public class FavoritesScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_recipes);
 
-        // Initialize Firestore instance
-        fStore = FirebaseFirestore.getInstance();
-
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialize the list of favorite recipes
         favoriteRecipesList = new ArrayList<>();
+
+        // Fetch favorite recipes from the database
+        fetchFavoriteRecipes();
+
+        // Initialize the adapter with the list of favorite recipes
         adapter = new FavoriteRecipesAdapter(favoriteRecipesList);
+
+        // Set the adapter to the RecyclerView
         recyclerView.setAdapter(adapter);
 
+        // Set up back button
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            finish(); // Close the current activity and go back
-        });
-
-        // Load favorite recipes from Firestore
-        loadFavoriteRecipes();
+        backButton.setOnClickListener(v -> finish());
     }
 
-    private void loadFavoriteRecipes() {
-        // Get the current user's ID from FirebaseAuth (assuming user is logged in)
-        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    private void fetchFavoriteRecipes() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("recipes");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Recipe> allRecipes = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Recipe recipe = snapshot.getValue(Recipe.class);
+                    if (recipe != null) {
+                        allRecipes.add(recipe);
+                    }
+                }
 
-        // Reference to the user's favorite recipes collection in Firestore
-        CollectionReference favoriteRecipesRef = fStore.collection("favorites").document(userId).getParent();
+                // Shuffle the list of recipes
+                Collections.shuffle(allRecipes);
 
-        // Query to get all favorite recipes
-        favoriteRecipesRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            //favoriteRecipesList.clear(); // Clear the list before adding new data
+                // Display the first 5 recipes
+                List<Recipe> favoriteRecipes = allRecipes.subList(0, Math.min(allRecipes.size(), 5));
 
-            // Loop through each document snapshot
-            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                // Get recipe details from the document snapshot
-                String recipeTitle = documentSnapshot.getString("Recipe Name");
-                String recipeImage = documentSnapshot.getString("Recipe Image");
-                // Add more fields as needed
+                // Update the list of favorite recipes
+                favoriteRecipesList.addAll(favoriteRecipes);
 
-                // Create a Recipe object and add it to the list
-                Recipe recipe = new Recipe();
-                recipe.setTitle(recipeTitle);
-                recipe.setImage(recipeImage);
-                // Set more fields as needed
-                favoriteRecipesList.add(recipe);
+                // Notify the adapter that the dataset has changed
+                adapter.notifyDataSetChanged();
             }
 
-            // Notify the adapter that the dataset has changed
-            adapter.notifyDataSetChanged();
-        }).addOnFailureListener(e -> {
-            // Handle failure to fetch favorite recipes
-            Log.e(TAG, "Error fetching favorite recipes", e);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FavoritesScreen", "Failed to read recipes", databaseError.toException());
+            }
         });
     }
-
 }
-
-

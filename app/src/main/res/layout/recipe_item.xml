@@ -29,8 +29,6 @@
         app:layout_constraintStart_toStartOf="@+id/recipeImage"
         app:layout_constraintTop_toBottomOf="@+id/recipeImage" />
 
-
-
     <TextView
         android:id="@+id/recipeTitle"
         android:layout_width="0dp"

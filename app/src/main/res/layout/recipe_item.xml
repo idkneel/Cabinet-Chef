@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/recipeImage"
+        android:contentDescription="@string/rah"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -22,7 +23,7 @@
         android:id="@+id/allergenWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Careful! Contains allergen product"
+        android:text="@string/allergen_warning"
         android:visibility="gone"
         android:textColor="#FF0000"
         app:layout_constraintStart_toStartOf="@+id/recipeImage"

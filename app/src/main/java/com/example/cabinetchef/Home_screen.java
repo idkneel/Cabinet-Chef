@@ -370,7 +370,6 @@ public class Home_screen extends AppCompatActivity {
         return new ArrayList<>(allergenSet);
     }
 
-
     private void setupSearchListener() {
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -425,7 +424,23 @@ public class Home_screen extends AppCompatActivity {
         });
     }
 
+    private boolean containsAllergens(Recipe recipe) {
+        Set<String> userAllergens = getUserAllergens();
+        for (RecipeDetail.Ingredient ingredient : recipe.getIngredients()) {
+            for (String allergen : userAllergens) {
+                if (ingredient.getName().toLowerCase().contains(allergen.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+
+    private Set<String> getUserAllergens() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        return sharedPreferences.getStringSet("allergens", new HashSet<>());
+    }
 
 
     //DON'T REMOVE IT PLEASE IT IS VERY IMPORTANT BECAUSE BECAUSE------------------------------------------------------------------------------------------------------------!!!

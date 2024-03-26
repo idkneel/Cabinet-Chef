@@ -122,8 +122,14 @@
             android:id="@+id/addToFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Favorite"/>
-
+            android:text="Favorite"
+            android:textColor="@color/Dark.Mode.Text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/lightmode_button_outlines"/>
     </LinearLayout>
 
 
